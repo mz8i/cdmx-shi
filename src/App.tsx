@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { StaticMap } from 'react-map-gl';
 import DeckGL from '@deck.gl/react';
@@ -39,10 +39,37 @@ function App() {
     scenario,
     budget
   });
+
+  const fillFunction = useCallback(
+    x => COLOR_SCALES[variable](x.properties[variableName]),
+    [variable, variableName]
+  );
+
+  const layers = useMemo(() => ([
+    new GeoJsonLayer({
+      id: variableName,
+      data: '/data/colonias.geojson',
+      getFillColor: fillFunction,
+      lineWidthUnits: 'pixels',
+      getLineWidth: () => 0.5,
+      filled: true,
+      pickable: true
+    }),
+    new GeoJsonLayer({
+      id: 'boundary-alcaldias',
+      data: '/data/alcaldias.geojson',
+      filled: false,
+      lineWidthUnits: 'pixels',
+    }),
+    new GeoJsonLayer({
+      id: 'boundary-cdmx',
+      data: '/data/spatial/cdmx.geojson',
+      filled: false,
+      lineWidthUnits: 'pixels',
+    })
+  ]), [variableName, fillFunction]);
   
   const [hoveredObject, setHoveredObject] = useState<any>({});
-
-  const fillFunction = x => COLOR_SCALES[variable](x.properties[variableName]);
 
   return (
     <div className="App">
@@ -53,29 +80,7 @@ function App() {
         <DeckGL
           initialViewState={viewport}
           onViewStateChange={({viewState}) => setViewport(viewState)}
-          layers={[
-            new GeoJsonLayer({
-              id: variableName,
-              data: '/data/colonias.geojson',
-              getFillColor: fillFunction,
-              lineWidthUnits: 'pixels',
-              getLineWidth: () => 0.5,
-              filled: true,
-              pickable: true
-            }),
-            new GeoJsonLayer({
-              id: 'boundary',
-              data: '/data/alcaldias.geojson',
-              filled: false,
-              lineWidthUnits: 'pixels',
-            }),
-            new GeoJsonLayer({
-              id: 'boundary',
-              data: '/data/spatial/cdmx.geojson',
-              filled: false,
-              lineWidthUnits: 'pixels',
-            })
-          ]}
+          layers={layers}
           onHover={(info: any, e) => setHoveredObject(info?.object)}
           controller={{
             scrollZoom: {
