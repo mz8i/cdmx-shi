@@ -51,24 +51,13 @@ export const COLOR_SCALES = objectMap(RAW_SCALES, (x) => {
     .domain(x.map((x) => x.to))
     .range(x.map((x) => hexToDeckColor(x.color)))
 });
-//   x.map((elem) => ({
-//     ...elem,
-//     color: hexToDeckColor(elem.color),
-//   }))
-// );
 
 function hexToDeckColor(hex: string): RGBAColor {
   let c = d3.color(hex);
-  if(c == undefined) {
+  if(c == null) {
     return [0, 0, 0, 255];
   } else {
     c = c.rgb();
     return [c.r, c.g, c.b, c.opacity * 255];
   }
 }
-
-// export const colorScaleFunctions = objectMap(COLOR_SCALES,
-//   x => scaleThreshold<number, RGBAColor>()
-//     .domain(x.map((x) => x.to))
-//     .range(x.map((x) => x.color))
-// );
