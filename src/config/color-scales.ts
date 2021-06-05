@@ -44,12 +44,32 @@ export const RAW_SCALES = {
     { from: 0.8, to: 0.9, class: "Very high", color: "#B2E7E6" },
     { from: 0.9, to: 1, class: "Very high", color: "#E5FAFE" },
   ],
+  CW: [
+    [
+      { break: 1, color: "#EAEBB2" },
+      { break: 2, color: "#D6D996" },
+      { break: 3, color: "#C3C87B" },
+      { break: 4, color: "#B0B760" },
+      { break: 5, color: "#9CA645" },
+      { break: 6, color: "#889334" },
+      { break: 7, color: "#727F2E" },
+      { break: 8, color: "#5D6A28" },
+      { break: 9, color: "#475522" },
+      { break: 10, color: "#32411C" },
+    ],
+  ],
 };
 
 export const COLOR_SCALES = objectMap(RAW_SCALES, (x) => {
-  return scaleThreshold<number, RGBAColor>()
+  const d3Scale = scaleThreshold<number, RGBAColor>()
     .domain(x.map((x) => x.to))
     .range(x.map((x) => hexToDeckColor(x.color)))
+
+  return (val: number) => {
+    if(val == null) {
+      return [0, 0, 0, 0] as RGBAColor;
+    } else return d3Scale(val);
+  }
 });
 
 function hexToDeckColor(hex: string): RGBAColor {
