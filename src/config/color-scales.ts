@@ -1,6 +1,4 @@
 import { scaleThreshold } from 'd3-scale';
-import * as d3 from 'd3-color';
-import { RGBAColor } from '@deck.gl/core';
 import { objectMap } from '../util';
 
 export const RAW_SCALES = {
@@ -61,23 +59,13 @@ export const RAW_SCALES = {
 };
 
 export const COLOR_SCALES = objectMap(RAW_SCALES, (x) => {
-  const d3Scale = scaleThreshold<number, RGBAColor>()
+  const d3Scale = scaleThreshold<number, string>()
     .domain(x.map((x) => x.to))
-    .range(x.map((x) => hexToDeckColor(x.color)))
+    .range(x.map((x) => x.color))
 
   return (val: number) => {
     if(val == null) {
-      return [0, 0, 0, 0] as RGBAColor;
+      return "rgba(0,0,0,0)";
     } else return d3Scale(val);
   }
 });
-
-function hexToDeckColor(hex: string): RGBAColor {
-  let c = d3.color(hex);
-  if(c == null) {
-    return [0, 0, 0, 255];
-  } else {
-    c = c.rgb();
-    return [c.r, c.g, c.b, c.opacity * 255];
-  }
-}

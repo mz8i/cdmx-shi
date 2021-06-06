@@ -1,15 +1,12 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet';
 
 import './App.css';
-import 'mapbox-gl/dist/mapbox-gl.css';
-import { config } from './config';
-import { VisualMap } from './VisualMap';
+import { DataMap } from './map/DataMap';
 import { BudgetName, ScenarioName, TimeName, VariableName, VariableSpec } from './data-types';
-import { HtmlOverlay, HtmlOverlayItem } from '@nebula.gl/overlays';
 
-function getVariableName(spec: VariableSpec): string {
-  return `${spec.variable}_${spec.time}_${spec.scenario}_${spec.budget}`;
+function getVariableName(variable, time, scenario, budget): string {
+  return `${variable}_${time}_${scenario}_${budget}`;
 }
 
 function App() {
@@ -18,14 +15,19 @@ function App() {
   const [scenario, setScenario] = useState<ScenarioName>('w1');
   const [budget, setBudget] = useState<BudgetName>('b1');
 
-  const [mapHoverInfo, setMapHoverInfo] = useState<any>({});
+  const [featureHover, setFeatureHover] = useState<any>();
 
-  const variableName = getVariableName({
-    variable,
-    time,
-    scenario,
-    budget,
-  });
+  const variableSpec = useMemo<VariableSpec>(
+    () => ({
+      variable,
+      time,
+      scenario,
+      budget,
+      fullName: getVariableName(variable, time, scenario, budget),
+    }),
+    [variable, time, scenario, budget]
+  );
+
 
   return (
     <div className="App">
@@ -33,50 +35,18 @@ function App() {
         <title>Socio-Hydrological Vulnerability in Mexico City</title>
       </Helmet>
       <header className="App-header">
-        <VisualMap
-          variable={variable}
-          time={time}
-          scenario={scenario}
-          budget={budget}
-          variableName={variableName}
-          setHoverInfo={setMapHoverInfo}
-        >
-          <HtmlOverlay>
-            <HtmlOverlayItem
-              style={{ pointerEvents: 'all'}}
-              coordinates={[config.initialViewport.longitude, config.initialViewport.latitude]}>
-              <div className="panel" onMouseMove={e => {
-                console.log("html", e.clientX, e.clientY);
-                e.preventDefault();
-                return false;
-              }}>
-                he he
-              </div>
-            </HtmlOverlayItem>
-          </HtmlOverlay>
-          {/* {mapHoverInfo?.object && (
-            <div
-              style={{
-                position: "absolute",
-                zIndex: 1,
-                pointerEvents: "none",
-                left: mapHoverInfo.x,
-                top: mapHoverInfo.y,
-              }}
-            >
-              <div className="panel">
-                {mapHoverInfo?.object?.properties?.[variableName]}
-
-              </div>
-            </div>
-          )} */}
-        </VisualMap>
+        <DataMap
+          variableSpec={variableSpec}
+          onFeatureHover={setFeatureHover}
+          featureHover={featureHover}
+        />
         <div
           className="panel-group"
           style={{
             position: "absolute",
             top: 10,
             right: 10,
+            zIndex: 1000,
           }}
         >
           <div className="panel">
@@ -149,15 +119,15 @@ function App() {
           <div className="panel">
             Colonia:
             <br />
-            {mapHoverInfo?.object?.properties?.Colonia}
+            {featureHover?.properties?.Colonia}
             <br />
             Alcaldia:
             <br />
-            {mapHoverInfo?.object?.properties?.Municipality}
+            {featureHover?.properties?.Municipality}
             <br />
             Value:
             <br />
-            {mapHoverInfo?.object?.properties?.[variableName]}
+            {featureHover?.properties?.[variableSpec.fullName]}
           </div>
         </div>
       </header>

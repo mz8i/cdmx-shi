@@ -8,4 +8,6 @@ export interface VariableSpec {
   time: TimeName;
   scenario: ScenarioName;
   budget: BudgetName;
+
+  fullName: string;
 }

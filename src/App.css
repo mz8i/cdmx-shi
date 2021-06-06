@@ -37,7 +37,7 @@
   }
 }
 
-.panel-group > .panel {
+.panel-group>.panel {
   margin-bottom: 10px;
 }
 
@@ -47,4 +47,9 @@
   color: #333;
   padding: 10px;
   text-align: left;
+}
+
+.leaflet-container {
+  height: 100vh;
+  width: 100%;
 }
