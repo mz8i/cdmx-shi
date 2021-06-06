@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet';
 import './App.css';
 import { DataMap } from './map/DataMap';
 import { BudgetName, ScenarioName, TimeName, VariableName, VariableSpec } from './data-types';
+import { useGeoJson } from './hooks/useGeoJson';
 
 function getVariableName(variable, time, scenario, budget): string {
   return `${variable}_${time}_${scenario}_${budget}`;
@@ -28,6 +29,19 @@ function App() {
     [variable, time, scenario, budget]
   );
 
+  const [coloniasData] = useGeoJson('/data/colonias.geojson');
+  const [alcaldiasData] = useGeoJson('/data/alcaldias.geojson');
+  const [cdmxData] = useGeoJson('/data/spatial/cdmx.geojson');
+
+  const [highlightedColonias, setHighlightedColonias] = useState<any>([]);
+
+  const sortedColoniasFeatures = useMemo(() => {
+    if(coloniasData == null) return null;
+
+    const coloniasCopy = [...coloniasData.features];
+    coloniasCopy.sort((a,b) => b.properties[variableSpec.fullName] - a.properties[variableSpec.fullName]);
+    return coloniasCopy;
+  }, [coloniasData, variableSpec]);
 
   return (
     <div className="App">
@@ -36,6 +50,10 @@ function App() {
       </Helmet>
       <header className="App-header">
         <DataMap
+          coloniasData={coloniasData}
+          alcaldiasData={alcaldiasData}
+          cdmxData={cdmxData}
+          coloniasHighlights={highlightedColonias}
           variableSpec={variableSpec}
           onFeatureHover={setFeatureHover}
           featureHover={featureHover}
@@ -116,7 +134,7 @@ function App() {
               }
             />
           </div>
-          <div className="panel">
+          <div className="panel" style={{ height: "150px" }}>
             Colonia:
             <br />
             {featureHover?.properties?.Colonia}
@@ -128,6 +146,34 @@ function App() {
             Value:
             <br />
             {featureHover?.properties?.[variableSpec.fullName]}
+          </div>
+          <div className="panel" style={{ height: "300px" }}>
+            <div style={{ maxHeight: "100%", overflowY: "scroll" }}>
+              {sortedColoniasFeatures?.map((x) => (
+                <div
+                  // key={x.properties.ID_colonia}
+                  style={{
+                    cursor: "pointer",
+                    width: "100%",
+                    padding: "2px",
+                    borderBottom: "1px solid white",
+                    color: "#eee",
+                    backgroundColor: featureHover === x ? "#33a" : "#ddd",
+                  }}
+                  onMouseOver={() => {
+                    setHighlightedColonias([x]);
+                    setFeatureHover(x);
+                  }}
+                  onMouseOut={() => {
+                    setHighlightedColonias([]);
+                    setFeatureHover(null);
+                  }}
+                >
+                  {x.properties.Colonia}
+                  <br />({x.properties.Municipality})
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </header>
