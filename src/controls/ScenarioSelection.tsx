@@ -10,9 +10,10 @@ export function ScenarioSelection({
 
     return (
       <Tabs
+        className="my-4"
         orientation={TabsOrientation.Vertical}
-        index={parseInt(value.substring(1), 10)-1}
-        onChange={(index) => onChange(`w${index+1}` as ScenarioName)}
+        index={parseInt(value.substring(1), 10) - 1}
+        onChange={(index) => onChange(`w${index + 1}` as ScenarioName)}
       >
         <TabList>
           <Tab key="w1">Stakeholder</Tab>
@@ -20,14 +21,14 @@ export function ScenarioSelection({
           <Tab key="w3">Social</Tab>
         </TabList>
         <TabPanels>
-          <TabPanel>
-Stakeholder weighting
+          <TabPanel className="text-center h-full p-2 align-middle">
+            Stakeholder weighting
           </TabPanel>
-          <TabPanel>
-Environmental weighting
+          <TabPanel className="text-center h-full p-2 align-middle">
+            Environmental weighting
           </TabPanel>
-          <TabPanel>
-Social weighting
+          <TabPanel className="text-center h-full p-2 align-middle">
+            Social weighting
           </TabPanel>
         </TabPanels>
       </Tabs>

@@ -3,24 +3,23 @@ export function VariableSelection({
     onChange
 }){
     return (
-      <div style={{ width: "100%", border: "none", borderRadius: 0 }}>
-        <div style={{ width: "100%" }}>
+      <div className="border-none rounded-none my-3 mx-1">
+        <div>
           <button
-            className="var-btn shi-bg"
-            style={{ width: "100%" }}
+            className="bg-shi-200 w-full p-3"
             onClick={() => onChange("SHI")}
           >
             SHI
           </button>
-          <div style={{ width: "100%", display: "flex" }}>
-            <button className="var-btn wsi-bg" onClick={() => onChange("WSI")}>
+          <div className="w-full flex">
+            <button className="bg-wsi-800 flex-1 p-3" onClick={() => onChange("WSI")}>
               WSI
             </button>
-            <button className="var-btn aci-bg" onClick={() => onChange("ACI")}>
+            <button className="bg-aci-800 flex-1 p-3" onClick={() => onChange("ACI")}>
               ACI
             </button>
           </div>
-          <div style={{ textAlign: "center" }}>Selected: {value}</div>
+          <div className="text-center">Selected: {value}</div>
         </div>
         {/* <div>
                 <span>CW</span>

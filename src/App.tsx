@@ -8,7 +8,6 @@ import { useGeoJson } from './hooks/useGeoJson';
 
 import { ScenarioSelection } from './controls/ScenarioSelection';
 import { BudgetSelection } from './controls/BudgetSelection';
-import { CustomControl } from './map/CustomControl';
 import { VariableSelection } from './controls/VariableSelection';
 import { TimeSelection } from './controls/TimeSelection';
 
@@ -50,120 +49,117 @@ function App() {
   }, [coloniasData, variableSpec]);
 
   return (
-    <div className="App">
+    <>
       <Helmet>
         <title>Socio-Hydrological Vulnerability in Mexico City</title>
       </Helmet>
-      <div className="sidebar" style={{ padding: "10px" }}>
-        <h1>Socio-Hydrological Vulnerability Index (SHI)</h1>
-        <p>
-          Indicator based method of evaluating the vulnerability of the
-          socio-hydrological system, based on a{" "}
-          <dfn className="var-txt wsi">Water Stress Index (WSI)</dfn>, or ability to
-          meet human and ecological demands for fresh water and an{" "}
-          <dfn className="var-txt aci">Adaptive Capacity Index (ACI)</dfn>, or ability
-          of environmental and social systems to adjust and respond to potential
-          pressures.
-        </p>
-        <div>
-          <figure>WSI diagram</figure>
-          <figure>ACI diagram</figure>
+      <div className="absolute inset-0 grid grid-cols-12">
+        <div className="col-span-3 bg-white p-4">
+          <h1 className="text-2xl uppercase font-bold my-4">
+            Socio-Hydrological Vulnerability Index (SHI)
+          </h1>
+          <p className="my-4">
+            Indicator based method of evaluating the vulnerability of the
+            socio-hydrological system, based on a{" "}
+            <strong className="font-extrabold text-wsi-800">
+              Water Stress Index (WSI)
+            </strong>
+            , or ability to meet human and ecological demands for fresh water
+            and an{" "}
+            <strong className="font-extrabold text-aci-800">
+              Adaptive Capacity Index (ACI)
+            </strong>
+            , or ability of environmental and social systems to adjust and
+            respond to potential pressures.
+          </p>
+          <div>
+            <figure>WSI diagram</figure>
+            <figure>ACI diagram</figure>
+          </div>
+          <section className="my-4">
+            <h2 className="text-xl uppercase my-4">
+              <span className="font-bold">01|</span> Scenarios
+            </h2>
+            <p className="my-4">
+              Choose scenario based on the weights of the indicators within the{" "}
+              <strong className="font-extrabold text-wsi-800">
+                Water Stress
+              </strong>{" "}
+              and the{" "}
+              <strong className="font-extrabold text-aci-800">
+                Adaptive Capacity
+              </strong>.
+            </p>
+            <ScenarioSelection value={scenario} onChange={setScenario} />
+          </section>
+          <section className="my-4">
+            <h2 className="text-xl uppercase my-4">
+              <span className="font-bold">02|</span> Decentralised Solutions
+            </h2>
+            <p className="my-4">
+              Choose amount of{" "}
+              <strong className="font-bold">Constructed Wetlands (CW)</strong>{" "}
+              based on budget.
+            </p>
+            <BudgetSelection value={budget} onChange={setBudget} />
+          </section>
         </div>
-        <section>
-          <h2>01| Scenarios</h2>
-          <p>
-            Choose scenario based on the weights of the indicators within the{" "}
-            <strong className="var-txt wsi">Water Stress</strong> and the{" "}
-            <strong className="var-txt aci">Adaptive Capacity</strong>.
-          </p>
-          <ScenarioSelection value={scenario} onChange={setScenario} />
-        </section>
-        <section>
-          <h2>02| Decentralised Solutions</h2>
-          <p>
-            Choose amount of <dfn className="var-txt">Constructed Wetlands (CW)</dfn> based on
-            budget.
-          </p>
-          <BudgetSelection value={budget} onChange={setBudget} />
-        </section>
-      </div>
-      <div>
-        <DataMap
-          coloniasData={coloniasData}
-          alcaldiasData={alcaldiasData}
-          cdmxData={cdmxData}
-          coloniasHighlights={highlightedColonias}
-          variableSpec={variableSpec}
-          onFeatureHover={setFeatureHover}
-          featureHover={featureHover}
-        >
-          <CustomControl position="topleft">
+        <div className="h-screen col-span-9 relative">
+          <DataMap
+            coloniasData={coloniasData}
+            alcaldiasData={alcaldiasData}
+            cdmxData={cdmxData}
+            coloniasHighlights={highlightedColonias}
+            variableSpec={variableSpec}
+            onFeatureHover={setFeatureHover}
+            featureHover={featureHover}
+          ></DataMap>
+          <div className="absolute top-0 left-0 m-8 z-50 bg-white">
             <VariableSelection value={variable} onChange={setVariable} />
-            <br />
             <TimeSelection value={time} onChange={setTime} />
-          </CustomControl>
-        </DataMap>
-        <div
-          className="panel-group"
-          style={{
-            position: "absolute",
-            top: 10,
-            right: 10,
-            zIndex: 1000,
-          }}
-        >
-          <div className="panel" style={{ height: "150px" }}>
-            Colonia:
-            <br />
-            {featureHover?.properties?.Colonia}
-            <br />
-            Alcaldia:
-            <br />
-            {featureHover?.properties?.Municipality}
-            <br />
-            Value:
-            <br />
-            {featureHover?.properties?.[variableSpec.fullName]}
           </div>
-          <div className="panel" style={{ height: "300px" }}>
-            <h3>All regions in descending order:</h3>
-            <ul
-              style={{
-                maxHeight: "100%",
-                overflowY: "scroll",
-                listStyle: "none",
-                paddingLeft: 0,
-              }}
-            >
-              {sortedColoniasFeatures?.map((x) => (
-                <li
-                  key={x.properties.ID_colonia}
-                  style={{
-                    cursor: "pointer",
-                    width: "100%",
-                    padding: "2px",
-                    borderBottom: "1px solid white",
-                    color: "#eee",
-                    backgroundColor: featureHover === x ? "#33a" : "#666",
-                  }}
-                  onMouseOver={() => {
-                    setHighlightedColonias([x]);
-                    setFeatureHover(x);
-                  }}
-                  onMouseOut={() => {
-                    setHighlightedColonias([]);
-                    setFeatureHover(null);
-                  }}
-                >
-                  {x.properties.Colonia}
-                  <br />({x.properties.Municipality})
-                </li>
-              ))}
-            </ul>
+          <div className="absolute top-4 right-4 z-50">
+            <div className="bg-white p-4 mb-4 w-80 h-44">
+              Colonia:
+              <br />
+              {featureHover?.properties?.Colonia}
+              <br />
+              Alcaldia:
+              <br />
+              {featureHover?.properties?.Municipality}
+              <br />
+              Value:
+              <br />
+              {featureHover?.properties?.[variableSpec.fullName]}
+            </div>
+            <div className="bg-white p-4 mb-4 w-80 h-96">
+              <h3>All regions in descending order:</h3>
+              <ul className="max-h-full overflow-y-scroll list-none pl-0 text-white">
+                {sortedColoniasFeatures?.map((x) => (
+                  <li
+                    key={x.properties.ID_colonia}
+                    className={`w-full cursor-pointer p-2 border border-white ${
+                      featureHover === x ? "bg-gray-500" : "bg-gray-700"
+                    }`}
+                    onMouseOver={() => {
+                      setHighlightedColonias([x]);
+                      setFeatureHover(x);
+                    }}
+                    onMouseOut={() => {
+                      setHighlightedColonias([]);
+                      setFeatureHover(null);
+                    }}
+                  >
+                    {x.properties.Colonia}
+                    <br />({x.properties.Municipality})
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

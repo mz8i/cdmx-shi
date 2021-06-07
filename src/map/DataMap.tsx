@@ -76,7 +76,7 @@ export const DataMap: React.FC<DataMapProps> = ({
           />
         )}
       </Pane>
-      <Pane name="alcaldias" style={{ pointerEvents: "none" }}>
+      <Pane name="alcaldias" className="pointer-events-none">
         {alcaldiasData && (
           <MemoizedGeoJSON
             data={alcaldiasData}
@@ -85,7 +85,7 @@ export const DataMap: React.FC<DataMapProps> = ({
           />
         )}
       </Pane>
-      <Pane name="cdmx">
+      <Pane name="cdmx" className="pointer-events-none">
         {cdmxData && (
           <MemoizedGeoJSON
             data={cdmxData}
@@ -95,7 +95,7 @@ export const DataMap: React.FC<DataMapProps> = ({
         )}
       </Pane>
       <ZoomControl position="bottomright" />
-      <AttributionControl position="bottomleft"/>
+      <AttributionControl position="bottomleft" />
       {children}
     </MapContainer>
   );
