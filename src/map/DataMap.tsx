@@ -5,7 +5,7 @@ import { config } from "../config";
 import 'leaflet/dist/leaflet.css';
 import './DataMap.css';
 
-import { MapContainer, GeoJSON, Pane, TileLayer } from "react-leaflet";
+import { MapContainer, GeoJSON, Pane, TileLayer, AttributionControl, ZoomControl } from "react-leaflet";
 import { mapLayers } from "../config/map-layers";
 import { GeoJSONDataLayer } from "./GeoJSONDataLayer";
 import { VariableSpec } from "../data-types";
@@ -49,10 +49,11 @@ export const DataMap: React.FC<DataMapProps> = ({
       ]}
       zoom={10}
       preferCanvas={false}
-      zoomAnimation={true}
-      zoomSnap={0}
-      zoomDelta={0.25}
-      wheelPxPerZoomLevel={20}
+      zoomControl={false}
+      attributionControl={false}
+      // zoomSnap={0}
+      // zoomDelta={0.25}
+      // wheelPxPerZoomLevel={20}
     >
       <TileLayer
         url="https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png"
@@ -93,6 +94,8 @@ export const DataMap: React.FC<DataMapProps> = ({
           />
         )}
       </Pane>
+      <ZoomControl position="bottomright" />
+      <AttributionControl position="bottomleft"/>
       {children}
     </MapContainer>
   );

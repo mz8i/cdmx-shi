@@ -6,6 +6,12 @@ import { DataMap } from './map/DataMap';
 import { BudgetName, ScenarioName, TimeName, VariableName, VariableSpec } from './data-types';
 import { useGeoJson } from './hooks/useGeoJson';
 
+import { ScenarioSelection } from './controls/ScenarioSelection';
+import { BudgetSelection } from './controls/BudgetSelection';
+import { CustomControl } from './map/CustomControl';
+import { VariableSelection } from './controls/VariableSelection';
+import { TimeSelection } from './controls/TimeSelection';
+
 function getVariableName(variable, time, scenario, budget): string {
   return `${variable}_${time}_${scenario}_${budget}`;
 }
@@ -48,7 +54,40 @@ function App() {
       <Helmet>
         <title>Socio-Hydrological Vulnerability in Mexico City</title>
       </Helmet>
-      <header className="App-header">
+      <div className="sidebar" style={{ padding: "10px" }}>
+        <h1>Socio-Hydrological Vulnerability Index (SHI)</h1>
+        <p>
+          Indicator based method of evaluating the vulnerability of the
+          socio-hydrological system, based on a{" "}
+          <dfn className="var-txt wsi">Water Stress Index (WSI)</dfn>, or ability to
+          meet human and ecological demands for fresh water and an{" "}
+          <dfn className="var-txt aci">Adaptive Capacity Index (ACI)</dfn>, or ability
+          of environmental and social systems to adjust and respond to potential
+          pressures.
+        </p>
+        <div>
+          <figure>WSI diagram</figure>
+          <figure>ACI diagram</figure>
+        </div>
+        <section>
+          <h2>01| Scenarios</h2>
+          <p>
+            Choose scenario based on the weights of the indicators within the{" "}
+            <strong className="var-txt wsi">Water Stress</strong> and the{" "}
+            <strong className="var-txt aci">Adaptive Capacity</strong>.
+          </p>
+          <ScenarioSelection value={scenario} onChange={setScenario} />
+        </section>
+        <section>
+          <h2>02| Decentralised Solutions</h2>
+          <p>
+            Choose amount of <dfn className="var-txt">Constructed Wetlands (CW)</dfn> based on
+            budget.
+          </p>
+          <BudgetSelection value={budget} onChange={setBudget} />
+        </section>
+      </div>
+      <div>
         <DataMap
           coloniasData={coloniasData}
           alcaldiasData={alcaldiasData}
@@ -57,7 +96,13 @@ function App() {
           variableSpec={variableSpec}
           onFeatureHover={setFeatureHover}
           featureHover={featureHover}
-        />
+        >
+          <CustomControl position="topleft">
+            <VariableSelection value={variable} onChange={setVariable} />
+            <br />
+            <TimeSelection value={time} onChange={setTime} />
+          </CustomControl>
+        </DataMap>
         <div
           className="panel-group"
           style={{
@@ -67,73 +112,6 @@ function App() {
             zIndex: 1000,
           }}
         >
-          <div className="panel">
-            <label htmlFor="variable">Index</label>
-            <br />
-            <select
-              id="variable"
-              value={variable}
-              onChange={(e) => setVariable(e.target.value as VariableName)}
-            >
-              <option value="SHI">SHI</option>
-              <option value="WSI">WSI</option>
-              <option value="ACI">ACI</option>
-            </select>
-            <br />
-            <br />
-
-            <label htmlFor="time">Year</label>
-            <br />
-            <input
-              type="radio"
-              id="time-c"
-              name="time"
-              value="c"
-              checked={time === "c"}
-              onChange={(e) => setTime(e.target.value as TimeName)}
-            />
-            <label htmlFor="time-c">Present (2020)</label>
-            <br />
-            <input
-              type="radio"
-              id="time-f"
-              name="time"
-              value="f"
-              checked={time === "f"}
-              onChange={(e) => setTime(e.target.value as TimeName)}
-            />
-            <label htmlFor="time-f">Future (2050)</label>
-            <br />
-            <br />
-
-            <label htmlFor="budget">Budget</label>
-            <br />
-            <input
-              type="range"
-              id="budget"
-              name="budget"
-              min="0"
-              max="4"
-              value={parseInt(budget.substring(1), 10)}
-              onChange={(e) => setBudget(`b${e.target.value}` as BudgetName)}
-            />
-            <br />
-            <br />
-
-            <label htmlFor="scenario">Scenario</label>
-            <br />
-            <input
-              type="range"
-              id="scenario"
-              name="scenario"
-              min="1"
-              max="3"
-              value={parseInt(scenario.substring(1), 10)}
-              onChange={(e) =>
-                setScenario(`w${e.target.value}` as ScenarioName)
-              }
-            />
-          </div>
           <div className="panel" style={{ height: "150px" }}>
             Colonia:
             <br />
@@ -148,17 +126,25 @@ function App() {
             {featureHover?.properties?.[variableSpec.fullName]}
           </div>
           <div className="panel" style={{ height: "300px" }}>
-            <div style={{ maxHeight: "100%", overflowY: "scroll" }}>
+            <h3>All regions in descending order:</h3>
+            <ul
+              style={{
+                maxHeight: "100%",
+                overflowY: "scroll",
+                listStyle: "none",
+                paddingLeft: 0,
+              }}
+            >
               {sortedColoniasFeatures?.map((x) => (
-                <div
-                  // key={x.properties.ID_colonia}
+                <li
+                  key={x.properties.ID_colonia}
                   style={{
                     cursor: "pointer",
                     width: "100%",
                     padding: "2px",
                     borderBottom: "1px solid white",
                     color: "#eee",
-                    backgroundColor: featureHover === x ? "#33a" : "#ddd",
+                    backgroundColor: featureHover === x ? "#33a" : "#666",
                   }}
                   onMouseOver={() => {
                     setHighlightedColonias([x]);
@@ -171,12 +157,12 @@ function App() {
                 >
                   {x.properties.Colonia}
                   <br />({x.properties.Municipality})
-                </div>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
         </div>
-      </header>
+      </div>
     </div>
   );
 }
