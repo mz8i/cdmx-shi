@@ -140,7 +140,7 @@ function App() {
                 </div>
               </section>
             </div>
-            {/* <div className="bg-white p-4 mb-4 w-80 h-96">
+            <div className="bg-white p-4 mb-4 w-80 h-96">
               <h3>All regions in descending order:</h3>
               <ul className="max-h-full overflow-y-scroll list-none pl-0 text-white">
                 {sortedColoniasFeatures?.map((x) => (
@@ -163,7 +163,7 @@ function App() {
                   </li>
                 ))}
               </ul>
-            </div> */}
+            </div>
           </div>
         </div>
       </div>
