@@ -1,5 +1,4 @@
 import { SliderHandle, SliderInput, SliderMarker, SliderTrack } from "@reach/slider";
-import "@reach/slider/styles.css";
 
 
 export function BudgetSelection({

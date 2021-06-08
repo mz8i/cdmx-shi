@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Import any external styles here, so that adding classes */
+@import url('@reach/tabs/styles.css');
+@import url('@reach/slider/styles.css');

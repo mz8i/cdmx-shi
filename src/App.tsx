@@ -88,7 +88,8 @@ function App() {
               and the{" "}
               <strong className="font-extrabold text-aci-800">
                 Adaptive Capacity
-              </strong>.
+              </strong>
+              .
             </p>
             <ScenarioSelection value={scenario} onChange={setScenario} />
           </section>
@@ -119,20 +120,27 @@ function App() {
             <TimeSelection value={time} onChange={setTime} />
           </div>
           <div className="absolute top-4 right-4 z-50">
-            <div className="bg-white p-4 mb-4 w-80 h-44">
-              Colonia:
-              <br />
-              {featureHover?.properties?.Colonia}
-              <br />
-              Alcaldia:
-              <br />
-              {featureHover?.properties?.Municipality}
-              <br />
-              Value:
-              <br />
-              {featureHover?.properties?.[variableSpec.fullName]}
+            <div className="bg-white p-4 mb-4 w-80 h-48">
+              <section>
+                <h3>Colonia:</h3>
+                <div className="font-bold h-8">
+                  {featureHover?.properties?.Colonia}
+                </div>
+              </section>
+              <section>
+                <h3>Alcaldia:</h3>
+                <div className="font-bold h-8">
+                  {featureHover?.properties?.Municipality}
+                </div>
+              </section>
+              <section>
+                <h3>Value:</h3>
+                <div className="font-bold h-8">
+                  {featureHover?.properties?.[variableSpec.fullName]}
+                </div>
+              </section>
             </div>
-            <div className="bg-white p-4 mb-4 w-80 h-96">
+            {/* <div className="bg-white p-4 mb-4 w-80 h-96">
               <h3>All regions in descending order:</h3>
               <ul className="max-h-full overflow-y-scroll list-none pl-0 text-white">
                 {sortedColoniasFeatures?.map((x) => (
@@ -155,7 +163,7 @@ function App() {
                   </li>
                 ))}
               </ul>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

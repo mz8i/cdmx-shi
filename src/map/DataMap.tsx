@@ -47,11 +47,11 @@ export const DataMap: React.FC<DataMapProps> = ({
         config.initialViewport.latitude,
         config.initialViewport.longitude,
       ]}
-      zoom={10}
+      zoom={config.initialViewport.zoom}
       preferCanvas={false}
       zoomControl={false}
       attributionControl={false}
-      // zoomSnap={0}
+      zoomSnap={0.25}
       // zoomDelta={0.25}
       // wheelPxPerZoomLevel={20}
     >
