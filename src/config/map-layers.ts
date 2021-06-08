@@ -15,24 +15,33 @@ export const mapLayers = {
       color: "#f00",
     },
   },
+  // colonias_hover: {
+  //   borderStyle: {
+  //     weight: 0,
+  //     fill: true,
+  //     fillColor: "#fff",
+  //   },
+  // },
   alcaldias: {
     borderStyle: {
-      color: "#888",
+      color: "#777",
       weight: 1,
       fill: false,
-      smoothFactor: 0,
+    },
+    hoverStyle: {
+      weight: 2,
+      color: "#ff0",
     },
     highlightStyle: {
       weight: 2,
-      color: "#aaa",
+      color: "#777",
     },
   },
   cdmx: {
     borderStyle: {
-      color: "#a00",
+      color: "#777",
       weight: 2,
       fill: false,
-      smoothFactor: 0,
     },
   },
 };

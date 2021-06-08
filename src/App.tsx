@@ -10,6 +10,9 @@ import { ScenarioSelection } from './controls/ScenarioSelection';
 import { BudgetSelection } from './controls/BudgetSelection';
 import { VariableSelection } from './controls/VariableSelection';
 import { TimeSelection } from './controls/TimeSelection';
+import { ColoniasMap } from './map/ColoniasMap';
+import { AlcaldiasMap } from './map/AlcaldiasMap';
+import { GeoLevelSelection } from './controls/GeoLevelSelection';
 
 function getVariableName(variable, time, scenario, budget): string {
   return `${variable}_${time}_${scenario}_${budget}`;
@@ -21,17 +24,21 @@ function App() {
   const [scenario, setScenario] = useState<ScenarioName>('w1');
   const [budget, setBudget] = useState<BudgetName>('b1');
 
+  const [geoLevel, setGeoLevel] = useState<'colonias' | 'alcaldias'>('alcaldias')
+
   const [featureHover, setFeatureHover] = useState<any>();
+
+  const geoVariable = geoLevel === 'colonias' ? variable : 'CW_budget';
 
   const variableSpec = useMemo<VariableSpec>(
     () => ({
-      variable,
+      variable: geoVariable,
       time,
       scenario,
       budget,
-      fullName: getVariableName(variable, time, scenario, budget),
+      fullName: getVariableName(geoVariable, time, scenario, budget),
     }),
-    [variable, time, scenario, budget]
+    [geoVariable, time, scenario, budget]
   );
 
   const [coloniasData] = useGeoJson('/data/colonias.geojson');
@@ -55,7 +62,7 @@ function App() {
       </Helmet>
       <div className="absolute inset-0 grid grid-cols-12">
         <div className="col-span-3 bg-white p-4">
-          <h1 className="text-2xl uppercase font-bold my-4">
+          <h1 className="text-3xl uppercase font-extrabold my-4 text-blue-900">
             Socio-Hydrological Vulnerability Index (SHI)
           </h1>
           <p className="my-4">
@@ -76,8 +83,8 @@ function App() {
             <figure>WSI diagram</figure>
             <figure>ACI diagram</figure>
           </div>
-          <section className="my-4">
-            <h2 className="text-xl uppercase my-4">
+          <section className="my-4 mt-10">
+            <h2 className="text-xl uppercase my-4 text-blue-900">
               <span className="font-bold">01|</span> Scenarios
             </h2>
             <p className="my-4">
@@ -93,8 +100,8 @@ function App() {
             </p>
             <ScenarioSelection value={scenario} onChange={setScenario} />
           </section>
-          <section className="my-4">
-            <h2 className="text-xl uppercase my-4">
+          <section className="my-4 mt-10">
+            <h2 className="text-xl uppercase my-4 text-blue-900">
               <span className="font-bold">02|</span> Decentralised Solutions
             </h2>
             <p className="my-4">
@@ -106,18 +113,34 @@ function App() {
           </section>
         </div>
         <div className="h-screen col-span-9 relative">
-          <DataMap
-            coloniasData={coloniasData}
-            alcaldiasData={alcaldiasData}
-            cdmxData={cdmxData}
-            coloniasHighlights={highlightedColonias}
-            variableSpec={variableSpec}
-            onFeatureHover={setFeatureHover}
-            featureHover={featureHover}
-          ></DataMap>
+          <DataMap>
+            {geoLevel === "colonias" ? (
+              <ColoniasMap
+                coloniasData={coloniasData}
+                alcaldiasData={alcaldiasData}
+                cdmxData={cdmxData}
+                coloniasHighlights={highlightedColonias}
+                variableSpec={variableSpec}
+                onFeatureHover={setFeatureHover}
+                featureHover={featureHover}
+              />
+            ) : (
+              <AlcaldiasMap
+                alcaldiasData={alcaldiasData}
+                cdmxData={cdmxData}
+                alcaldiasHighlights={[]}
+                featureHover={featureHover}
+                onFeatureHover={setFeatureHover}
+                variableSpec={variableSpec}
+              />
+            )}
+          </DataMap>
           <div className="absolute top-0 left-0 m-8 z-50 bg-white">
-            <VariableSelection value={variable} onChange={setVariable} />
+            <GeoLevelSelection value={geoLevel} onChange={setGeoLevel} />
             <TimeSelection value={time} onChange={setTime} />
+            {geoLevel !== "alcaldias" && (
+              <VariableSelection value={variable} onChange={setVariable} />
+            )}
           </div>
           <div className="absolute top-4 right-4 z-50">
             <div className="bg-white p-4 mb-4 w-80 h-48">
