@@ -1,41 +1,49 @@
+import { ToggleButton } from "../ui/ToggleButton";
+
 export function VariableSelection({
+    geoLevel,
     value,
     onChange
 }){
     return (
-      <div className="border-none rounded-none my-3 mx-1 flex flex-row gap-4">
+      <div className="border-none rounded-none my-1 mx-1 flex flex-row gap-4">
         <div className="flex-1">
-          <button
-            className="bg-shi-200 w-full p-3"
-            onClick={() => onChange("SHI")}
+          <ToggleButton
+            value="SHI"
+            toggleValue={value}
+            onChange={onChange}
+            selectedColor="border-shi-700"
           >
             SHI
-          </button>
+          </ToggleButton>
           <div className="w-full flex">
-            <button
-              className="bg-wsi-800 flex-1 p-3"
-              onClick={() => onChange("WSI")}
+            <ToggleButton
+              value="WSI"
+              toggleValue={value}
+              onChange={onChange}
+              selectedColor="border-wsi-800"
             >
               WSI
-            </button>
-            <button
-              className="bg-aci-800 flex-1 p-3"
-              onClick={() => onChange("ACI")}
+            </ToggleButton>
+            <ToggleButton
+              value="ACI"
+              toggleValue={value}
+              onChange={onChange}
+              selectedColor="border-aci-800"
             >
               ACI
-            </button>
+            </ToggleButton>
           </div>
-          <div className="text-center">Selected: {value}</div>
         </div>
         <div className="flex-1">
-          <button className="bg-green-300 p-3" onClick={() => onChange("CW_sqm")}>
-            CW (sqm)
-          </button>
-
-          {/* <span>CW</span>
-          <div>
-            <button>CW sqm</button>
-          </div> */}
+          <ToggleButton
+            value="CW_sqm"
+            toggleValue={value}
+            onChange={onChange}
+            selectedColor="border-green-800"
+          >
+            CW
+          </ToggleButton>
         </div>
       </div>
     );

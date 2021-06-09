@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef } from "react";
 import { GeoJSON } from 'react-leaflet';
+import { mapStyles } from "../config/map-layers";
 
 
 const MemoizedGeoJSONLayer = React.memo(GeoJSON);
@@ -33,6 +34,8 @@ export function GeoJSONDataLayer({
 
   const getStyle = useCallback(
     (x, hovered, highlighted = false) => {
+      const baseStyle = (type === 'data' ? layerDefinition.dataStyle : layerDefinition.borderStyle);
+
       const dataStyle = 
         (getData && getDataColor)
           ? {
@@ -40,18 +43,19 @@ export function GeoJSONDataLayer({
               fillOpacity: 1,
             } 
           : {};
-      const highlightStyle = highlighted ? layerDefinition.highlightStyle : {};
-      const hoveredStyle = hovered ? layerDefinition.hoverStyle : {};
+
+      const highlightStyle = highlighted ? (layerDefinition.highlightStyle ?? mapStyles.highlightStyle) : {};
+      const hoveredStyle = hovered ? (layerDefinition.hoverStyle ?? mapStyles.hoverStyle) : {};
 
       return {
         fillOpacity: 0,
-        ...layerDefinition.borderStyle,
+        ...baseStyle,
         ...dataStyle,
         ...highlightStyle,
         ...hoveredStyle,
       };
     },
-    [getData, getDataColor, layerDefinition]
+    [getData, getDataColor, layerDefinition, type]
   );
 
   const hovered = useRef<any>();
@@ -111,7 +115,7 @@ export function GeoJSONDataLayer({
       ref={layerRef}
       data={data}
       interactive={type === "data"}
-      style={layerDefinition.borderStyle}
+      style={type === 'data' ? layerDefinition.dataStyle : layerDefinition.borderStyle}
       onEachFeature={onEachFeature}
     />
   );

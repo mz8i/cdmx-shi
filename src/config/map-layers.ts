@@ -1,40 +1,32 @@
+export const mapStyles = {
+  hoverStyle: {
+    weight: 2,
+    color: '#ff0'
+  },
+  highlightStyle: {
+    weight: 2,
+    color: '#f00'
+  }
+}
+
 export const mapLayers = {
   colonias: {
-    borderStyle: {
+    dataStyle: {
       weight: 0.5,
       color: "#ccc",
       smoothFactor: 0.7,
-      noClip: true,
-    },
-    hoverStyle: {
-      weight: 2,
-      color: "#ff0",
-    },
-    highlightStyle: {
-      weight: 2,
-      color: "#f00",
     },
   },
-  // colonias_hover: {
-  //   borderStyle: {
-  //     weight: 0,
-  //     fill: true,
-  //     fillColor: "#fff",
-  //   },
-  // },
   alcaldias: {
+    dataStyle: {
+      weight: 1,
+      color: "#777",
+      smoothFactor: 0
+    },
     borderStyle: {
       color: "#777",
       weight: 1,
       fill: false,
-    },
-    hoverStyle: {
-      weight: 2,
-      color: "#ff0",
-    },
-    highlightStyle: {
-      weight: 2,
-      color: "#777",
     },
   },
   cdmx: {

@@ -1,3 +1,5 @@
+export type GeoLevel = 'colonias' | 'alcaldias';
+
 export type VariableName = "SHI" | "WSI" | "ACI" | "CW_perc" | "CW_sqm" | "CW_budget";
 export type TimeName = "c" | "f";
 export type ScenarioName = "w1" | "w2" | "w3";

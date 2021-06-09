@@ -1,6 +1,6 @@
 import { Tab, TabList, TabPanel, TabPanels, Tabs, TabsOrientation } from "@reach/tabs";
 
-import { ScenarioName } from "../data-types";
+import { ScenarioName } from "../data/data-types";
 import { W1Icon, W2Icon, W3Icon } from "../ui/icons";
 
 export function ScenarioSelection({

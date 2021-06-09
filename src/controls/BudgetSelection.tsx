@@ -17,7 +17,7 @@ export function BudgetSelection({
                 onChange={(val) => onChange(`b${val}`)}
             >
                 <SliderTrack>
-                    <SliderMarker value={0} />
+                    <SliderMarker value={0} title="test"/>
                     <SliderMarker value={1} />
                     <SliderMarker value={2} />
                     <SliderMarker value={3} />

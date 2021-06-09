@@ -3,10 +3,17 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { DataProvider } from './data/data-context';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <DataProvider dataset='cdmx'>
+      <DataProvider dataset='alcaldias'>
+        <DataProvider dataset='colonias'>
+          <App />
+        </DataProvider>
+      </DataProvider>
+    </DataProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

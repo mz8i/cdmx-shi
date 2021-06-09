@@ -2,13 +2,12 @@ import React from "react";
 
 import { config } from "../config";
 
-// import 'leaflet/dist/leaflet.css';
-import './DataMap.css';
+import './LeafletMap.css';
 
 import { MapContainer, TileLayer, AttributionControl, ZoomControl } from "react-leaflet";
 
 
-export const DataMap: React.FC<{}> = ({
+export const LeafletMap: React.FC<{}> = ({
   children
 }) => {
   return (
@@ -22,8 +21,6 @@ export const DataMap: React.FC<{}> = ({
       zoomControl={false}
       attributionControl={false}
       zoomSnap={0.25}
-      // zoomDelta={0.25}
-      // wheelPxPerZoomLevel={20}
     >
       <TileLayer
         url="https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png"

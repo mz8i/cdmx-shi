@@ -2,29 +2,29 @@ import React, { useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet';
 
 import './App.css';
-import { DataMap } from './map/DataMap';
-import { BudgetName, ScenarioName, TimeName, VariableName, VariableSpec } from './data-types';
-import { useGeoJson } from './hooks/useGeoJson';
+import { BudgetName, ScenarioName, TimeName, VariableName, VariableSpec } from './data/data-types';
 
 import { ScenarioSelection } from './controls/ScenarioSelection';
 import { BudgetSelection } from './controls/BudgetSelection';
 import { VariableSelection } from './controls/VariableSelection';
 import { TimeSelection } from './controls/TimeSelection';
-import { ColoniasMap } from './map/ColoniasMap';
-import { AlcaldiasMap } from './map/AlcaldiasMap';
 import { GeoLevelSelection } from './controls/GeoLevelSelection';
+import { MexicoMap } from './map/MexicoMap';
+import { useData } from './data/data-context';
+import { useFeatureDataValue } from './data/use-data-value';
 
 function getVariableName(variable, time, scenario, budget): string {
   return `${variable}_${time}_${scenario}_${budget}`;
 }
 
+
 function App() {
   const [variable, setVariable] = useState<VariableName>('SHI');
   const [time, setTime] = useState<TimeName>('c');
   const [scenario, setScenario] = useState<ScenarioName>('w1');
-  const [budget, setBudget] = useState<BudgetName>('b1');
+  const [budget, setBudget] = useState<BudgetName>('b2');
 
-  const [geoLevel, setGeoLevel] = useState<'colonias' | 'alcaldias'>('alcaldias')
+  const [geoLevel, setGeoLevel] = useState<'colonias' | 'alcaldias'>('colonias')
 
   const [featureHover, setFeatureHover] = useState<any>();
 
@@ -41,19 +41,26 @@ function App() {
     [geoVariable, time, scenario, budget]
   );
 
-  const [coloniasData] = useGeoJson('/data/colonias.geojson');
-  const [alcaldiasData] = useGeoJson('/data/alcaldias.geojson');
-  const [cdmxData] = useGeoJson('/data/spatial/cdmx.geojson');
+  const {data: coloniasData} = useData('colonias');
+  const { data: alcaldiasData } = useData('alcaldias');
 
-  const [highlightedColonias, setHighlightedColonias] = useState<any>([]);
+  const [highlightedRegions, setHighlightedRegions] = useState<any>([]);
 
-  const sortedColoniasFeatures = useMemo(() => {
-    if(coloniasData == null) return null;
+  const getFeatureData = useFeatureDataValue(variableSpec);
 
-    const coloniasCopy = [...coloniasData.features];
-    coloniasCopy.sort((a,b) => b.properties[variableSpec.fullName] - a.properties[variableSpec.fullName]);
-    return coloniasCopy;
-  }, [coloniasData, variableSpec]);
+  const visualisedData = geoLevel === 'colonias' ?
+    coloniasData :
+    alcaldiasData;
+
+  const sortedFilteredRegions = useMemo(() => {
+    if (visualisedData == null) return null;
+
+    const dataCopy = [...visualisedData.features].filter(x => (getFeatureData(x) ?? 0) !== 0);
+    dataCopy.sort(
+      (a, b) => getFeatureData(b) - getFeatureData(a)
+    );
+    return dataCopy;
+  }, [visualisedData, getFeatureData]);
 
   return (
     <>
@@ -113,34 +120,30 @@ function App() {
           </section>
         </div>
         <div className="h-screen col-span-9 relative">
-          <DataMap>
-            {geoLevel === "colonias" ? (
-              <ColoniasMap
-                coloniasData={coloniasData}
-                alcaldiasData={alcaldiasData}
-                cdmxData={cdmxData}
-                coloniasHighlights={highlightedColonias}
-                variableSpec={variableSpec}
-                onFeatureHover={setFeatureHover}
-                featureHover={featureHover}
+          <MexicoMap
+            geoLevel={geoLevel}
+            variableSpec={variableSpec}
+            highlightedRegions={highlightedRegions}
+            onFeatureHover={setFeatureHover}
+            featureHover={featureHover}
+          />
+          <div className="absolute top-0 left-0 m-8 z-50 bg-none w-52">
+            <div className=" rounded mb-4">
+              <h3>Geography</h3>
+              <GeoLevelSelection value={geoLevel} onChange={setGeoLevel} />
+            </div>
+            <div className=" rounded mb-4">
+              <h3>Current / future</h3>
+              <TimeSelection value={time} onChange={setTime} />
+            </div>
+            <div className="rounded mb-4">
+              <h3>Variable</h3>
+              <VariableSelection
+                geoLevel={geoLevel}
+                value={variable}
+                onChange={setVariable}
               />
-            ) : (
-              <AlcaldiasMap
-                alcaldiasData={alcaldiasData}
-                cdmxData={cdmxData}
-                alcaldiasHighlights={[]}
-                featureHover={featureHover}
-                onFeatureHover={setFeatureHover}
-                variableSpec={variableSpec}
-              />
-            )}
-          </DataMap>
-          <div className="absolute top-0 left-0 m-8 z-50 bg-white">
-            <GeoLevelSelection value={geoLevel} onChange={setGeoLevel} />
-            <TimeSelection value={time} onChange={setTime} />
-            {geoLevel !== "alcaldias" && (
-              <VariableSelection value={variable} onChange={setVariable} />
-            )}
+            </div>
           </div>
           <div className="absolute top-4 right-4 z-50">
             <div className="bg-white p-4 mb-4 w-80 h-48">
@@ -166,22 +169,26 @@ function App() {
             <div className="bg-white p-4 mb-4 w-80 h-96">
               <h3>All regions in descending order:</h3>
               <ul className="max-h-full overflow-y-scroll list-none pl-0 text-white">
-                {sortedColoniasFeatures?.map((x) => (
+                {sortedFilteredRegions?.map((x) => (
                   <li
-                    key={x.properties.ID_colonia}
+                    key={
+                      geoLevel === "colonias"
+                        ? x.properties.ID_colonia
+                        : x.properties.Municipality
+                    }
                     className={`w-full cursor-pointer p-2 border border-white ${
                       featureHover === x ? "bg-gray-500" : "bg-gray-700"
                     }`}
                     onMouseOver={() => {
-                      setHighlightedColonias([x]);
+                      setHighlightedRegions([x]);
                       setFeatureHover(x);
                     }}
                     onMouseOut={() => {
-                      setHighlightedColonias([]);
+                      setHighlightedRegions([]);
                       setFeatureHover(null);
                     }}
                   >
-                    {x.properties.Colonia}
+                    {x.properties.Colonia ?? ""}
                     <br />({x.properties.Municipality})
                   </li>
                 ))}

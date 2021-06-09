@@ -40,24 +40,6 @@ export function AlcaldiasMap({
           />
         )}
       </Pane>
-      {/* <Pane name="alcaldias" className="pointer-events-none">
-        {alcaldiasData && (
-          <MemoizedGeoJSON
-            data={alcaldiasData}
-            style={mapLayers.alcaldias.borderStyle}
-            interactive={false}
-          />
-        )}
-      </Pane> */}
-      <Pane name="cdmx" className="pointer-events-none">
-        {cdmxData && (
-          <MemoizedGeoJSON
-            data={cdmxData}
-            style={mapLayers.cdmx.borderStyle}
-            interactive={false}
-          />
-        )}
-      </Pane>
       {/* <Pane name="highlight" style={{ zIndex: 500 }}>
         {coloniasData && (
           <GeoJSONHighlightLayer
