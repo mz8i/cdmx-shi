@@ -66,6 +66,18 @@ export const RAW_SCALES = {
     { from: 6366888000, to: 9068724000, color: "#475522" },
     { from: 9068724000, to: 10000000000, color: "#32411C" },
   ],
+  pop: [
+    { from: 0, to: 500, color: "#EAEBB2" },
+    { from: 500, to: 1000, color: "#D6D996" },
+    { from: 1000, to: 2000, color: "#C3C87B" },
+    { from: 2000, to: 3000, color: "#B0B760" },
+    { from: 3000, to: 4000, color: "#9CA645" },
+    { from: 4000, to: 5000, color: "#889334" },
+    { from: 5000, to: 6000, color: "#727F2E" },
+    { from: 6000, to: 7000, color: "#5D6A28" },
+    { from: 7000, to: 8000, color: "#475522" },
+    { from: 8000, to: 1000000, color: "#32411C" },
+  ],
 };
 
 export const COLOR_SCALES = objectMap(RAW_SCALES, (x) => {

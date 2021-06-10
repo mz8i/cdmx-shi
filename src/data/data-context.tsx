@@ -1,6 +1,8 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { DATA_SOURCES } from "../config/data-sources";
+import { GeoLevel } from "../config/variables";
 import { objectMap } from "../util";
+import { transformDataset } from "./derive-data";
 
 type DataContextState = 
     { status: 'loading' | 'error', data: undefined }
@@ -26,20 +28,20 @@ export const useData = (key: keyof typeof DATA_SOURCES): DataContextState => {
     return contextState;
 }
 
-export const DataProvider: React.FC<{dataset: string}> = ({ dataset, children }) => {
-    const path = DATA_SOURCES[dataset]?.path;
-
+export const DataProvider: React.FC<{dataset: GeoLevel}> = ({ dataset, children }) => {
     const [status, setStatus] = useState<'loading' | 'loaded' | 'error'>('loading');
     const [data, setData] = useState(undefined);
 
     useEffect(() => {
         setStatus('loading');
-
+        
         (async () => {
             try {
+                const path = DATA_SOURCES[dataset]?.path;
+                
                 const response = await fetch(path);
                 const json = await response.json();
-                
+                transformDataset(json, dataset);
                 setStatus('loaded');
                 setData(json);
             } catch(err) {
@@ -47,7 +49,7 @@ export const DataProvider: React.FC<{dataset: string}> = ({ dataset, children })
             }
 
         })();
-    }, [path]);
+    }, [dataset]);
 
     const state = useMemo<DataContextState>(() => ({
         status,

@@ -44,6 +44,14 @@ export function VariableSelection({
           >
             CW
           </ToggleButton>
+          <ToggleButton
+            value="pop"
+            toggleValue={value}
+            onChange={onChange}
+            selectedColor="border-green-800"
+          >
+            Pop
+          </ToggleButton>
         </div>
       </div>
     );

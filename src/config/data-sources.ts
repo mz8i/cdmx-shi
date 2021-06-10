@@ -9,5 +9,3 @@ export const DATA_SOURCES = {
         path: '/data/spatial/cdmx.geojson'
     }
 };
-
-export type DatasetName = keyof typeof DATA_SOURCES;

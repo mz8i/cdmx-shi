@@ -1,6 +1,6 @@
 import { Tab, TabList, TabPanel, TabPanels, Tabs, TabsOrientation } from "@reach/tabs";
 
-import { ScenarioName } from "../data/data-types";
+import { WeightingName } from "../config/variables";
 import { W1Icon, W2Icon, W3Icon } from "../ui/icons";
 
 export function ScenarioSelection({
@@ -13,7 +13,7 @@ export function ScenarioSelection({
         className="my-4 h-56 rounded-2xl bg-blue-900 text-white overflow-hidden"
         orientation={TabsOrientation.Vertical}
         index={parseInt(value.substring(1), 10) - 1}
-        onChange={(index) => onChange(`w${index + 1}` as ScenarioName)}
+        onChange={(index) => onChange(`w${index + 1}` as WeightingName)}
       >
         <TabList className="bg-gray-300 rounded-2xl rounded-r-none w-18 mr-4 h-full flex flex-col justify-around">
           <Tab

@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet';
 
 import './App.css';
-import { BudgetName, ScenarioName, TimeName, VariableName, VariableSpec } from './data/data-types';
+import { BudgetName, GeoLevel, WeightingName, TimeName, VariableName, VariableSpec } from './config/variables';
 
 import { ScenarioSelection } from './controls/ScenarioSelection';
 import { BudgetSelection } from './controls/BudgetSelection';
@@ -11,54 +11,60 @@ import { TimeSelection } from './controls/TimeSelection';
 import { GeoLevelSelection } from './controls/GeoLevelSelection';
 import { MexicoMap } from './map/MexicoMap';
 import { useData } from './data/data-context';
-import { useFeatureDataValue } from './data/use-data-value';
-
-function getVariableName(variable, time, scenario, budget): string {
-  return `${variable}_${time}_${scenario}_${budget}`;
-}
-
+import { useFeatureDataValue } from './data/use-feature-data';
 
 function App() {
-  const [variable, setVariable] = useState<VariableName>('SHI');
-  const [time, setTime] = useState<TimeName>('c');
-  const [scenario, setScenario] = useState<ScenarioName>('w1');
-  const [budget, setBudget] = useState<BudgetName>('b2');
+  const [geoLevel, setGeoLevel] = useState<GeoLevel>("colonias");
 
-  const [geoLevel, setGeoLevel] = useState<'colonias' | 'alcaldias'>('colonias')
+  const [coloniasVariable, setColoniasVariable] = useState<VariableName>("SHI");
+  const [time, setTime] = useState<TimeName>("c");
+  const [weighting, setWeighting] = useState<WeightingName>("w1");
+  const [budget, setBudget] = useState<BudgetName>("b2");
 
   const [featureHover, setFeatureHover] = useState<any>();
 
-  const geoVariable = geoLevel === 'colonias' ? variable : 'CW_budget';
+  const variable = geoLevel === "colonias" ? coloniasVariable : "CW_budget";
 
   const variableSpec = useMemo<VariableSpec>(
     () => ({
-      variable: geoVariable,
-      time,
-      scenario,
-      budget,
-      fullName: getVariableName(geoVariable, time, scenario, budget),
+      dataset: geoLevel,
+      variable,
+      dimensions: {
+        time,
+        weighting,
+        budget,
+      },
     }),
-    [geoVariable, time, scenario, budget]
+    [geoLevel, variable, time, weighting, budget]
   );
 
-  const {data: coloniasData} = useData('colonias');
-  const { data: alcaldiasData } = useData('alcaldias');
+  const cattailVariableSpec = useMemo<VariableSpec>(
+    () => ({
+      dataset: "colonias",
+      variable: "cattail_plants_yearly",
+      dimensions: variableSpec.dimensions,
+    }),
+    [variableSpec]
+  );
+
+  const getCattailData = useFeatureDataValue(cattailVariableSpec);
+
+  const { data: coloniasData } = useData("colonias");
+  const { data: alcaldiasData } = useData("alcaldias");
 
   const [highlightedRegions, setHighlightedRegions] = useState<any>([]);
 
   const getFeatureData = useFeatureDataValue(variableSpec);
 
-  const visualisedData = geoLevel === 'colonias' ?
-    coloniasData :
-    alcaldiasData;
+  const visualisedData = geoLevel === "colonias" ? coloniasData : alcaldiasData;
 
   const sortedFilteredRegions = useMemo(() => {
     if (visualisedData == null) return null;
 
-    const dataCopy = [...visualisedData.features].filter(x => (getFeatureData(x) ?? 0) !== 0);
-    dataCopy.sort(
-      (a, b) => getFeatureData(b) - getFeatureData(a)
+    const dataCopy = [...visualisedData.features].filter(
+      (x) => (getFeatureData(x) ?? 0) !== 0
     );
+    dataCopy.sort((a, b) => getFeatureData(b) - getFeatureData(a));
     return dataCopy;
   }, [visualisedData, getFeatureData]);
 
@@ -105,7 +111,7 @@ function App() {
               </strong>
               .
             </p>
-            <ScenarioSelection value={scenario} onChange={setScenario} />
+            <ScenarioSelection value={weighting} onChange={setWeighting} />
           </section>
           <section className="my-4 mt-10">
             <h2 className="text-xl uppercase my-4 text-blue-900">
@@ -141,12 +147,12 @@ function App() {
               <VariableSelection
                 geoLevel={geoLevel}
                 value={variable}
-                onChange={setVariable}
+                onChange={setColoniasVariable}
               />
             </div>
           </div>
           <div className="absolute top-4 right-4 z-50">
-            <div className="bg-white p-4 mb-4 w-80 h-48">
+            <div className="bg-white p-4 mb-4 w-96">
               <section>
                 <h3>Colonia:</h3>
                 <div className="font-bold h-8">
@@ -162,11 +168,19 @@ function App() {
               <section>
                 <h3>Value:</h3>
                 <div className="font-bold h-8">
-                  {featureHover?.properties?.[variableSpec.fullName]}
+                  {featureHover && getFeatureData(featureHover)}
+                </div>
+                <h3>Population:</h3>
+                <div className="font-bold h-8">
+                  {featureHover?.properties.pop}
+                </div>
+                <h3>Cattail plants yearly:</h3>
+                <div className="font-bold h-8">
+                  {featureHover && getCattailData(featureHover)}
                 </div>
               </section>
             </div>
-            <div className="bg-white p-4 mb-4 w-80 h-96">
+            {/* <div className="bg-white p-4 mb-4 w-80 h-96">
               <h3>All regions in descending order:</h3>
               <ul className="max-h-full overflow-y-scroll list-none pl-0 text-white">
                 {sortedFilteredRegions?.map((x) => (
@@ -193,7 +207,7 @@ function App() {
                   </li>
                 ))}
               </ul>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

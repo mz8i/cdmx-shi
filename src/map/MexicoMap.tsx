@@ -1,15 +1,16 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { Pane, GeoJSON } from "react-leaflet";
-import { COLOR_SCALES } from "../config/color-scales";
 import { mapLayers } from "../config/map-layers";
 import { useData } from "../data/data-context";
-import { GeoLevel, VariableSpec } from "../data/data-types";
+import { GeoLevel, VariableSpec } from "../config/variables";
 import { GeoJSONDataLayer } from "./GeoJSONDataLayer";
 import { LeafletMap } from "./LeafletMap";
+import { useFeatureDataValue } from "../data/use-feature-data";
+import { useDataColor } from "../data/use-feature-data";
 
 const MemoizedGeoJSON = React.memo(GeoJSON);
 
-interface MexicoMapProps {
+interface MexicoMapProps{
     geoLevel: GeoLevel;
     variableSpec: VariableSpec;
     highlightedRegions: any[];
@@ -37,14 +38,8 @@ export function MexicoMap({
 
     const isColonias = geoLevel === 'colonias';
 
-    const getData = useCallback(
-        (x) => x.properties[variableSpec.fullName],
-        [variableSpec]
-    );
-    const getDataColor = useCallback(
-        (data) => COLOR_SCALES[variableSpec.variable](data),
-        [variableSpec]
-    );
+    const getData = useFeatureDataValue(variableSpec);
+    const getDataColor = useDataColor(variableSpec);
     
     return (
       <LeafletMap>
