@@ -1,13 +1,18 @@
+import { useRecoilState } from 'recoil';
+
+import { timeDimensionState } from '../recoil/data-selection';
 import { ToggleButton } from '../ui/ToggleButton';
 
-export function TimeSelection({ value, onChange }) {
+export function TimeSelection() {
+    const [time, setTime] = useRecoilState(timeDimensionState);
+
     return (
         <div className="my-1 mx-1">
             <div className="flex">
                 <ToggleButton
                     value="c"
-                    toggleValue={value}
-                    onChange={onChange}
+                    toggleValue={time}
+                    onChange={setTime}
                     selectedClassName="border-blue-900"
                     hoverClassName="hover:border-blue-900"
                 >
@@ -15,8 +20,8 @@ export function TimeSelection({ value, onChange }) {
                 </ToggleButton>
                 <ToggleButton
                     value="f"
-                    toggleValue={value}
-                    onChange={onChange}
+                    toggleValue={time}
+                    onChange={setTime}
                     selectedClassName="border-blue-900"
                     hoverClassName="hover:border-blue-900"
                 >

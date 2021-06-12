@@ -1,6 +1,11 @@
 import { SliderHandle, SliderInput, SliderMarker, SliderTrack } from '@reach/slider';
+import { useRecoilState } from 'recoil';
 
-export function BudgetSelection({ value, onChange }) {
+import { BudgetName } from '../config/variables';
+import { budgetDimensionState } from '../recoil/data-selection';
+
+export function BudgetSelection() {
+    const [budget, setBudget] = useRecoilState(budgetDimensionState);
     return (
         <div>
             <SliderInput
@@ -8,8 +13,8 @@ export function BudgetSelection({ value, onChange }) {
                 min={0}
                 max={4}
                 step={1}
-                value={parseInt(value.substring(1), 10)}
-                onChange={val => onChange(`b${val}`)}
+                value={parseInt(budget.substring(1), 10)}
+                onChange={val => setBudget(`b${val}` as BudgetName)}
             >
                 <SliderTrack>
                     <SliderMarker value={0} title="test" />

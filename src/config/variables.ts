@@ -37,17 +37,19 @@ export function valueType<C>() {
 
 const variableDef = valueType<VariableDefinition>();
 
+export const METADATA = {
+    colonias: {
+        ID_colonia: {},
+        Colonia: {},
+        Municipality: {},
+    },
+    alcaldias: {
+        Municipality: {},
+    },
+};
+
 export const VARIABLES = {
     colonias: variableDef({
-        ID_colonia: {
-            dimensions: false,
-        },
-        Colonia: {
-            dimensions: false,
-        },
-        Municipality: {
-            dimensions: false,
-        },
         pop: {
             dimensions: false,
         },
@@ -108,9 +110,6 @@ export const VARIABLES = {
         },
     }),
     alcaldias: variableDef({
-        Municipality: {
-            dimensions: true,
-        },
         CW_budget: {
             dimensions: true,
         },
@@ -122,14 +121,17 @@ export type TimeName = AllowedValues<Dim.Time>;
 export type WeightingName = AllowedValues<Dim.Weighting>;
 export type BudgetName = AllowedValues<Dim.Budget>;
 
+export type DimensionValue<T extends Dim = Dim> = AllowedValues<T>;
+
 export type VariableName = keyof typeof VARIABLES['colonias'] | keyof typeof VARIABLES['alcaldias'];
 
 // export type VariableFullKey<T extends GeoLevel> =`${VariableName<T>}_${TimeName}_${WeightingName}_${BudgetName}`;
 
+export type DimensionSpec = {
+    [key in Dim]: AllowedValues<key>;
+};
 export interface VariableSpec {
     dataset: GeoLevel;
     variable: VariableName;
-    dimensions: {
-        [key in Dim]: AllowedValues<key>;
-    };
+    dimensions: DimensionSpec;
 }

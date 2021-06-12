@@ -1,9 +1,13 @@
 import { Tab, TabList, TabPanel, TabPanels, Tabs, TabsOrientation } from '@reach/tabs';
+import { useRecoilState } from 'recoil';
 
 import { WeightingName } from '../config/variables';
+import { weightingDimensionState } from '../recoil/data-selection';
 import { W1Icon, W2Icon, W3Icon } from '../ui/icons';
 
-export function ScenarioSelection({ value, onChange }) {
+export function ScenarioSelection() {
+    const [value, onChange] = useRecoilState(weightingDimensionState);
+
     return (
         <Tabs
             className="my-4 h-56 rounded-2xl bg-blue-900 text-white overflow-hidden"
