@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import { GeoJSON } from 'react-leaflet';
+
 import { mapStyles } from '../config/map-layers';
 
 const MemoizedGeoJSONLayer = React.memo(GeoJSON);
@@ -56,7 +57,7 @@ export function GeoJSONDataLayer({
                 ...hoveredStyle,
             };
         },
-        [getData, getDataColor, layerDefinition, type]
+        [getData, getDataColor, layerDefinition, type],
     );
 
     const hovered = useRef<any>();
@@ -86,7 +87,7 @@ export function GeoJSONDataLayer({
             hovered.current = feature;
             onFeatureHover?.(feature);
         },
-        [onFeatureHover]
+        [onFeatureHover],
     );
 
     const onMouseOver = useCallback(
@@ -96,7 +97,7 @@ export function GeoJSONDataLayer({
             layer.bringToFront();
             onHover(feature);
         },
-        [onHover]
+        [onHover],
     );
 
     const onMouseOut = useCallback(
@@ -105,7 +106,7 @@ export function GeoJSONDataLayer({
             style && layer.setStyle(style);
             onHover(null);
         },
-        [onHover]
+        [onHover],
     );
 
     const onEachFeature = useCallback(
@@ -117,7 +118,7 @@ export function GeoJSONDataLayer({
             layer.on('mouseover', () => onMouseOver(layer, feature));
             layer.on('mouseout', () => onMouseOut(layer, feature));
         },
-        [getId, onMouseOver, onMouseOut]
+        [getId, onMouseOver, onMouseOut],
     );
 
     return (

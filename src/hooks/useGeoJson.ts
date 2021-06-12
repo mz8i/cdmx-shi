@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 function useGeoJson(url: string): [any, boolean] {
     const [data, setData] = useState(undefined);

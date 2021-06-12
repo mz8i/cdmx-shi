@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+
 import { COLOR_SCALES } from '../config/color-scales';
 import { VARIABLES, VariableSpec } from '../config/variables';
 
@@ -29,6 +30,6 @@ export function useFeatureDataColor(variableSpec: VariableSpec) {
 
     return useCallback(
         f => fullKey && COLOR_SCALES[variableSpec.variable](f.properties[fullKey]),
-        [variableSpec, fullKey]
+        [variableSpec, fullKey],
     );
 }

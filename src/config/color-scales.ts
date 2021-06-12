@@ -1,4 +1,5 @@
 import { scaleThreshold } from 'd3-scale';
+
 import { objectMap } from '../util';
 
 export const RAW_SCALES = {

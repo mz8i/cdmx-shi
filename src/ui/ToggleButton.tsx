@@ -9,7 +9,7 @@ export function ToggleButton({ value, toggleValue, onChange, selectedColor, chil
                 {
                     [`border-2 ${selectedColor}`]: isSelected,
                 },
-                `p-3 rounded bg-white text-gray-900 focus:outline-none outline-none border-2 hover:${selectedColor} w-full`
+                `p-3 rounded bg-white text-gray-900 focus:outline-none outline-none border-2 hover:${selectedColor} w-full`,
             )}
             onClick={e => {
                 e.preventDefault();

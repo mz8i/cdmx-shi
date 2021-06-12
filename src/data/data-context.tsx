@@ -1,5 +1,6 @@
 import { Feature, FeatureCollection, Geometry } from 'geojson';
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+
 import { DATA_SOURCES } from '../config/data-sources';
 import { GeoLevel, VariableName } from '../config/variables';
 import { objectMap } from '../util';
@@ -57,7 +58,7 @@ export const DataProvider: React.FC<{ dataset: GeoLevel }> = ({ dataset, childre
                 status,
                 data,
             } as DataContextState),
-        [status, data]
+        [status, data],
     );
 
     const Ctx = dataContexts[dataset];

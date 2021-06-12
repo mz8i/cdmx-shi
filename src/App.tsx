@@ -1,24 +1,24 @@
+import './App.css';
+
 import React, { useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet';
 
-import './App.css';
 import {
     BudgetName,
     GeoLevel,
-    WeightingName,
     TimeName,
     VariableName,
     VariableSpec,
+    WeightingName,
 } from './config/variables';
-
-import { ScenarioSelection } from './controls/ScenarioSelection';
 import { BudgetSelection } from './controls/BudgetSelection';
-import { VariableSelection } from './controls/VariableSelection';
-import { TimeSelection } from './controls/TimeSelection';
 import { GeoLevelSelection } from './controls/GeoLevelSelection';
-import { MexicoMap } from './map/MexicoMap';
+import { ScenarioSelection } from './controls/ScenarioSelection';
+import { TimeSelection } from './controls/TimeSelection';
+import { VariableSelection } from './controls/VariableSelection';
 import { useFeatureDataValue } from './data/use-feature-data';
 import { DataList } from './DataList';
+import { MexicoMap } from './map/MexicoMap';
 
 function App() {
     const [geoLevel, setGeoLevel] = useState<GeoLevel>('colonias');
@@ -42,7 +42,7 @@ function App() {
                 budget,
             },
         }),
-        [geoLevel, variable, time, weighting, budget]
+        [geoLevel, variable, time, weighting, budget],
     );
 
     const cattailVariableSpec = useMemo<VariableSpec>(
@@ -51,7 +51,7 @@ function App() {
             variable: 'cattail_plants_yearly',
             dimensions: variableSpec.dimensions,
         }),
-        [variableSpec]
+        [variableSpec],
     );
 
     const getCattailData = useFeatureDataValue(cattailVariableSpec);

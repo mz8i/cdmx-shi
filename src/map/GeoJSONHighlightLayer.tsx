@@ -34,7 +34,7 @@ export function GeoJSONHighlightLayer({
                 ...hoveredStyle,
             };
         },
-        [layerDefinition]
+        [layerDefinition],
     );
 
     const hovered = useRef<any>();
@@ -64,7 +64,7 @@ export function GeoJSONHighlightLayer({
             hovered.current = feature;
             onFeatureHover?.(feature);
         },
-        [onFeatureHover]
+        [onFeatureHover],
     );
 
     const onMouseOver = useCallback(
@@ -75,7 +75,7 @@ export function GeoJSONHighlightLayer({
             // layer.bringToFront();
             onHover(feature);
         },
-        [onHover]
+        [onHover],
     );
 
     const onMouseOut = useCallback(
@@ -86,7 +86,7 @@ export function GeoJSONHighlightLayer({
             // style && layer.setStyle(style);
             onHover(null);
         },
-        [onHover]
+        [onHover],
     );
 
     const onEachFeature = useCallback(
@@ -99,7 +99,7 @@ export function GeoJSONHighlightLayer({
             layer.on('mouseover', () => onMouseOver(layer, feature));
             layer.on('mouseout', () => onMouseOut(layer, feature));
         },
-        [getId, onMouseOver, onMouseOut]
+        [getId, onMouseOver, onMouseOut],
     );
 
     return (

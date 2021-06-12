@@ -1,12 +1,13 @@
 import React from 'react';
-import { Pane, GeoJSON } from 'react-leaflet';
+import { GeoJSON, Pane } from 'react-leaflet';
+
 import { mapLayers } from '../config/map-layers';
-import { useData } from '../data/data-context';
 import { GeoLevel, VariableSpec } from '../config/variables';
-import { GeoJSONDataLayer } from './GeoJSONDataLayer';
-import { LeafletMap } from './LeafletMap';
+import { useData } from '../data/data-context';
 import { useFeatureDataValue } from '../data/use-feature-data';
 import { useDataColor } from '../data/use-feature-data';
+import { GeoJSONDataLayer } from './GeoJSONDataLayer';
+import { LeafletMap } from './LeafletMap';
 
 const MemoizedGeoJSON = React.memo(GeoJSON);
 

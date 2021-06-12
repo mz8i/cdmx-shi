@@ -2,14 +2,14 @@
     @apply bg-none border-none;
 }
 
-.leaflet-control-zoom a[role="button"] {
+.leaflet-control-zoom a[role='button'] {
     @apply text-white bg-blue-800 border-white rounded-none;
 }
 
-.leaflet-control-zoom a[role="button"].leaflet-control-zoom-in {
+.leaflet-control-zoom a[role='button'].leaflet-control-zoom-in {
     @apply rounded-t-xl;
 }
 
-.leaflet-control-zoom a[role="button"].leaflet-control-zoom-out {
+.leaflet-control-zoom a[role='button'].leaflet-control-zoom-out {
     @apply rounded-b-xl;
 }

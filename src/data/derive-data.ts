@@ -1,8 +1,8 @@
 import {
+    ALL_DIMENSIONS,
+    DIMENSIONS_VALUES,
     GeoLevel,
     VARIABLES,
-    DIMENSIONS_VALUES,
-    ALL_DIMENSIONS,
     VariableName,
 } from '../config/variables';
 import { DatasetFeatureCollection } from './data-context';
@@ -74,7 +74,7 @@ export function transformDataset(geoJson: DatasetFeatureCollection, dataset: Geo
                                 variable: inp as VariableName,
                                 dimensions,
                                 dataset,
-                            })
+                            }),
                         );
                         keySets.push([outputKey, inputKeys]);
                     }

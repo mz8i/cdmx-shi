@@ -1,10 +1,9 @@
-import React from 'react';
-
-import { config } from '../config';
-
 import './LeafletMap.css';
 
-import { MapContainer, TileLayer, AttributionControl, ZoomControl } from 'react-leaflet';
+import React from 'react';
+import { AttributionControl, MapContainer, TileLayer, ZoomControl } from 'react-leaflet';
+
+import { config } from '../config';
 
 export const LeafletMap: React.FC<{}> = ({ children }) => {
     return (

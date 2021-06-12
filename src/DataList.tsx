@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+
 import { GeoLevel, VariableSpec } from './config/variables';
 import { DataFeature, useData } from './data/data-context';
 import { useFeatureDataValue } from './data/use-feature-data';
@@ -19,7 +20,7 @@ export function DataList({ geoLevel, variableSpec, featureHover, onItemHover }: 
                 .filter(x => (getFeatureData(x) ?? 0) !== 0)
                 .slice()
                 .sort((a, b) => getFeatureData(b) - getFeatureData(a)),
-        [currentData, getFeatureData]
+        [currentData, getFeatureData],
     );
 
     const [itemHover, setItemHover] = useState<DataFeature | null>(null);
