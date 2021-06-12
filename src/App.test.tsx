@@ -1,7 +1,5 @@
-import { render, screen } from '@testing-library/react';
+/* eslint-disable*/
 import React from 'react';
-
-import App from './App';
 
 test('renders data selection form', () => {
     // do nothing
