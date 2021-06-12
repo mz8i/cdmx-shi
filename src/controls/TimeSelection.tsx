@@ -8,7 +8,8 @@ export function TimeSelection({ value, onChange }) {
                     value="c"
                     toggleValue={value}
                     onChange={onChange}
-                    selectedColor="border-blue-900"
+                    selectedClassName="border-blue-900"
+                    hoverClassName="hover:border-blue-900"
                 >
                     2020
                 </ToggleButton>
@@ -16,7 +17,8 @@ export function TimeSelection({ value, onChange }) {
                     value="f"
                     toggleValue={value}
                     onChange={onChange}
-                    selectedColor="border-blue-900"
+                    selectedClassName="border-blue-900"
+                    hoverClassName="hover:border-blue-900"
                 >
                     2050
                 </ToggleButton>

@@ -7,7 +7,8 @@ export function GeoLevelSelection({ value, onChange }) {
                 value="colonias"
                 toggleValue={value}
                 onChange={onChange}
-                selectedColor={'border-blue-900'}
+                selectedClassName="border-blue-900"
+                hoverClassName="hover:border-blue-900"
             >
                 Colonias
             </ToggleButton>
@@ -15,7 +16,8 @@ export function GeoLevelSelection({ value, onChange }) {
                 value="alcaldias"
                 toggleValue={value}
                 onChange={onChange}
-                selectedColor={'border-blue-900'}
+                selectedClassName="border-blue-900"
+                hoverClassName="hover:border-blue-900"
             >
                 Alcaldias
             </ToggleButton>

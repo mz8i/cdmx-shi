@@ -8,7 +8,8 @@ export function VariableSelection({ geoLevel, value, onChange }) {
                     value="SHI"
                     toggleValue={value}
                     onChange={onChange}
-                    selectedColor="border-shi-700"
+                    selectedClassName="border-shi-700"
+                    hoverClassName="hover:border-shi-700"
                 >
                     SHI
                 </ToggleButton>
@@ -17,7 +18,8 @@ export function VariableSelection({ geoLevel, value, onChange }) {
                         value="WSI"
                         toggleValue={value}
                         onChange={onChange}
-                        selectedColor="border-wsi-800"
+                        selectedClassName="border-wsi-800"
+                        hoverClassName="hover:border-wsi-800"
                     >
                         WSI
                     </ToggleButton>
@@ -25,7 +27,8 @@ export function VariableSelection({ geoLevel, value, onChange }) {
                         value="ACI"
                         toggleValue={value}
                         onChange={onChange}
-                        selectedColor="border-aci-800"
+                        selectedClassName="border-aci-800"
+                        hoverClassName="hover:border-aci-800"
                     >
                         ACI
                     </ToggleButton>
@@ -36,7 +39,8 @@ export function VariableSelection({ geoLevel, value, onChange }) {
                     value="CW_sqm"
                     toggleValue={value}
                     onChange={onChange}
-                    selectedColor="border-green-800"
+                    selectedClassName="border-green-800"
+                    hoverClassName="hover:border-green-800"
                 >
                     CW
                 </ToggleButton>
@@ -44,7 +48,8 @@ export function VariableSelection({ geoLevel, value, onChange }) {
                     value="pop"
                     toggleValue={value}
                     onChange={onChange}
-                    selectedColor="border-green-800"
+                    selectedClassName="border-green-800"
+                    hoverClassName="hover:border-green-800"
                 >
                     Pop
                 </ToggleButton>
