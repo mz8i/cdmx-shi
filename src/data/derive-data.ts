@@ -1,20 +1,26 @@
-import { GeoLevel, VARIABLES, DIMENSIONS_VALUES, ALL_DIMENSIONS, VariableName} from "../config/variables";
-import { DatasetFeatureCollection } from "./data-context";
+import {
+    GeoLevel,
+    VARIABLES,
+    DIMENSIONS_VALUES,
+    ALL_DIMENSIONS,
+    VariableName,
+} from '../config/variables';
+import { DatasetFeatureCollection } from './data-context';
 import { getVariableFullKey } from './use-feature-data';
 
 function cartesian(args: any[][]) {
-  var r: any[] = [],
-    max = args.length - 1;
-  function helper(arr, i) {
-    for (var j = 0, l = args[i].length; j < l; j++) {
-      var a = arr.slice(0); // clone arr
-      a.push(args[i][j]);
-      if (i === max) r.push(a);
-      else helper(a, i + 1);
+    var r: any[] = [],
+        max = args.length - 1;
+    function helper(arr, i) {
+        for (var j = 0, l = args[i].length; j < l; j++) {
+            var a = arr.slice(0); // clone arr
+            a.push(args[i][j]);
+            if (i === max) r.push(a);
+            else helper(a, i + 1);
+        }
     }
-  }
-  helper([], 0);
-  return r;
+    helper([], 0);
+    return r;
 }
 
 // function getUniqueInputDimensions(inputs, datasetName) {
@@ -26,13 +32,13 @@ function cartesian(args: any[][]) {
 // }
 
 function dimensionCombinations(allDimensions) {
-    const dimValues = allDimensions.map((dim) => DIMENSIONS_VALUES[dim]);
+    const dimValues = allDimensions.map(dim => DIMENSIONS_VALUES[dim]);
     const dimProduct = cartesian(dimValues);
 
     const results: any[] = [];
     for (const prod of dimProduct) {
         const res = {};
-        for (let i=0; i<allDimensions.length; i++) {
+        for (let i = 0; i < allDimensions.length; i++) {
             res[allDimensions[i]] = prod[i];
         }
         results.push(res);

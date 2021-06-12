@@ -1,7 +1,7 @@
-import { useMemo, useState } from "react";
-import { GeoLevel, VariableSpec } from "./config/variables";
-import { DataFeature, useData } from "./data/data-context";
-import { useFeatureDataValue } from "./data/use-feature-data";
+import { useMemo, useState } from 'react';
+import { GeoLevel, VariableSpec } from './config/variables';
+import { DataFeature, useData } from './data/data-context';
+import { useFeatureDataValue } from './data/use-feature-data';
 
 interface DataListProps {
     geoLevel: GeoLevel;
@@ -9,21 +9,17 @@ interface DataListProps {
     featureHover: DataFeature;
     onItemHover: (x: DataFeature | null) => void;
 }
-export function DataList({
-    geoLevel,
-    variableSpec,
-    featureHover,
-    onItemHover,
-}: DataListProps) {
+export function DataList({ geoLevel, variableSpec, featureHover, onItemHover }: DataListProps) {
     const { data: currentData } = useData(geoLevel);
     const getFeatureData = useFeatureDataValue(variableSpec);
 
     const sortedFilteredRegions = useMemo(
-        () => currentData?.features
-            .filter(x => (getFeatureData(x) ?? 0) !== 0)
-            .slice()
-            .sort((a, b) => getFeatureData(b) - getFeatureData(a))
-        ,[currentData, getFeatureData]
+        () =>
+            currentData?.features
+                .filter(x => (getFeatureData(x) ?? 0) !== 0)
+                .slice()
+                .sort((a, b) => getFeatureData(b) - getFeatureData(a)),
+        [currentData, getFeatureData]
     );
 
     const [itemHover, setItemHover] = useState<DataFeature | null>(null);
@@ -40,7 +36,7 @@ export function DataList({
                                 : x.properties.Municipality
                         }
                         className={`w-full cursor-pointer p-2 border border-white ${
-                            (featureHover === x || itemHover === x) ? 'bg-gray-500' : 'bg-gray-700'
+                            featureHover === x || itemHover === x ? 'bg-gray-500' : 'bg-gray-700'
                         }`}
                         onMouseOver={() => {
                             setItemHover(x);

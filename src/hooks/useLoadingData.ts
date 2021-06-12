@@ -1,8 +1,12 @@
-import { useMemo } from "react";
+import { useMemo } from 'react';
 
-export function useLoadingData<D, R>(data: D, loading: boolean, callback: (data: D) => R): R | undefined {
+export function useLoadingData<D, R>(
+    data: D,
+    loading: boolean,
+    callback: (data: D) => R
+): R | undefined {
     return useMemo(() => {
-        if(loading) {
+        if (loading) {
             return undefined;
         } else {
             return callback(data);

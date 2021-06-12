@@ -1,11 +1,11 @@
 export const DATA_SOURCES = {
     colonias: {
-        path: '/data/colonias.geojson'
+        path: '/data/colonias.geojson',
     },
     alcaldias: {
-        path: '/data/alcaldias.geojson'
+        path: '/data/alcaldias.geojson',
     },
     cdmx: {
-        path: '/data/spatial/cdmx.geojson'
-    }
+        path: '/data/spatial/cdmx.geojson',
+    },
 };
