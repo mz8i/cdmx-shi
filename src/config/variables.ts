@@ -20,7 +20,6 @@ type AllowedValues<T extends Dim> = (typeof DIMENSIONS_VALUES)[T][number];
 
 export type GeoLevel = "colonias" | "alcaldias" | "cdmx";
 
-
 interface RawVariableDefinition {
   dimensions: boolean;
 };
@@ -43,6 +42,15 @@ const variableDef = valueType<VariableDefinition>();
 
 export const VARIABLES = {
   colonias: variableDef({
+    ID_colonia: {
+      dimensions: false,
+    },
+    Colonia: {
+      dimensions: false,
+    },
+    Municipality: {
+      dimensions: false,
+    },
     pop: {
       dimensions: false,
     },
@@ -103,13 +111,14 @@ export const VARIABLES = {
     },
   }),
   alcaldias: variableDef({
+    Municipality: {
+      dimensions: true,
+    },
     CW_budget: {
       dimensions: true,
     },
   }),
-  cdmx: {
-
-  }
+  cdmx: {}
 };
 
 
@@ -131,4 +140,3 @@ export interface VariableSpec {
     [key in Dim]: AllowedValues<key>;
   };
 }
-

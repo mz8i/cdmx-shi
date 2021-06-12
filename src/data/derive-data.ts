@@ -1,4 +1,5 @@
 import { GeoLevel, VARIABLES, DIMENSIONS_VALUES, ALL_DIMENSIONS, VariableName} from "../config/variables";
+import { DatasetFeatureCollection } from "./data-context";
 import { getVariableFullKey } from './use-feature-data';
 
 function cartesian(args: any[][]) {
@@ -45,24 +46,30 @@ function dimensionCombinations(allDimensions) {
 //     ) as Record<Dim, any>;
 // }
 
-export function transformDataset(geoJson, dataset: GeoLevel) {
-  const vars = VARIABLES[dataset];
-    if(vars == null) {
+export function transformDataset(geoJson: DatasetFeatureCollection, dataset: GeoLevel) {
+    const vars = VARIABLES[dataset];
+    if (vars == null) {
         return geoJson;
     } else {
         for (const [varName, varDef] of Object.entries(vars)) {
-            if("fn" in varDef) {
-              const variable = varName as VariableName;
+            if ('fn' in varDef) {
+                const variable = varName as VariableName;
                 const hasDimensions = varDef.inputs.some(vd => vars[vd].dimensions);
                 const currentDimensions = hasDimensions ? ALL_DIMENSIONS : [];
 
                 const keySets: any[] = [];
                 if (currentDimensions.length > 0) {
                     const dimCombinations = dimensionCombinations(currentDimensions);
-                    
+
                     for (const dimensions of dimCombinations) {
-                        const outputKey = getVariableFullKey({variable, dimensions, dataset});
-                        const inputKeys = varDef.inputs.map(inp => getVariableFullKey({variable: inp as VariableName, dimensions, dataset}));
+                        const outputKey = getVariableFullKey({ variable, dimensions, dataset });
+                        const inputKeys = varDef.inputs.map(inp =>
+                            getVariableFullKey({
+                                variable: inp as VariableName,
+                                dimensions,
+                                dataset,
+                            })
+                        );
                         keySets.push([outputKey, inputKeys]);
                     }
                 } else {
@@ -71,13 +78,12 @@ export function transformDataset(geoJson, dataset: GeoLevel) {
 
                 for (const [outputKey, inputKeys] of keySets) {
                     for (const feature of geoJson.features) {
-                      const inputValues = inputKeys.map(ik => feature.properties[ik]);
-                      feature.properties[outputKey] = varDef.fn(...inputValues);
+                        const inputValues = inputKeys.map(ik => feature.properties[ik]);
+                        feature.properties[outputKey] = varDef.fn(...inputValues);
                     }
                 }
             }
         }
         return geoJson;
     }
-
 }

@@ -1,12 +1,18 @@
+import { Feature, FeatureCollection, Geometry } from "geojson";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { DATA_SOURCES } from "../config/data-sources";
-import { GeoLevel } from "../config/variables";
+import { GeoLevel, VariableName } from "../config/variables";
 import { objectMap } from "../util";
 import { transformDataset } from "./derive-data";
 
-type DataContextState = 
-    { status: 'loading' | 'error', data: undefined }
-    | { status: 'loaded'; data: any};
+
+export type DataFeatureProperties = { [key in VariableName]?: any };
+export type DataFeature = Feature<Geometry, DataFeatureProperties>;
+export type DatasetFeatureCollection = FeatureCollection<Geometry, DataFeatureProperties>;
+
+export type DataContextState =
+    | { status: 'loading' | 'error'; data: null }
+    | { status: 'loaded'; data: DatasetFeatureCollection };
 
 
 const dataContexts = objectMap(
@@ -30,7 +36,7 @@ export const useData = (key: keyof typeof DATA_SOURCES): DataContextState => {
 
 export const DataProvider: React.FC<{dataset: GeoLevel}> = ({ dataset, children }) => {
     const [status, setStatus] = useState<'loading' | 'loaded' | 'error'>('loading');
-    const [data, setData] = useState(undefined);
+    const [data, setData] = useState<DatasetFeatureCollection | null>(null);
 
     useEffect(() => {
         setStatus('loading');
@@ -54,7 +60,7 @@ export const DataProvider: React.FC<{dataset: GeoLevel}> = ({ dataset, children 
     const state = useMemo<DataContextState>(() => ({
         status,
         data
-    }), [status, data])
+    } as DataContextState), [status, data])
 
     const Ctx = dataContexts[dataset];
 
