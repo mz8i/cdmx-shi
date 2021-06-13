@@ -2,6 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+    .text-shadow-white {
+        text-shadow: 0 0 2px #fff;
+    }
+
+    .text-shadow-black {
+        text-shadow: 0 0 2px #000;
+    }
+    .text-shadow-none {
+        text-shadow: none;
+    }
+}
+
 /* Import any external styles here, so that adding classes */
 @import url('@reach/tabs/styles.css');
 @import url('@reach/slider/styles.css');

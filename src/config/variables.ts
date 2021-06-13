@@ -24,6 +24,7 @@ interface CalculatedVariableDefinition {
     dimensions: boolean;
     inputs: string[];
     fn: (...inputs: any[]) => any;
+    description?: string;
 }
 
 type VariableDefinition = RawVariableDefinition | CalculatedVariableDefinition;
@@ -72,41 +73,49 @@ export const VARIABLES = {
             dimensions: true,
             inputs: ['CW_perc', 'pop'],
             fn: (CW_perc, pop) => CW_perc * pop,
+            description: 'Population impacted',
         },
         homes_impacted: {
             dimensions: true,
             inputs: ['CW_sqm'],
             fn: CW_sqm => CW_sqm / 2,
+            description: 'Homes impacted',
         },
         water_filtered_yearly: {
             dimensions: true,
             inputs: ['CW_sqm'],
             fn: CW_sqm => CW_sqm * 18000,
+            description: 'Water filtered yearly',
         },
         rain_filtered_yearly: {
             dimensions: true,
             inputs: ['CW_sqm'],
             fn: CW_sqm => CW_sqm * 6000,
+            description: 'Rain filtered yearly',
         },
         cattail_plants_yearly: {
             dimensions: true,
             inputs: ['CW_sqm'],
             fn: CW_sqm => CW_sqm * 3,
+            description: 'Cattail plants yearly',
         },
         arum_lillies_yearly: {
             dimensions: true,
             inputs: ['CW_sqm'],
             fn: CW_sqm => CW_sqm * 32,
+            description: 'Arum lillies yearly',
         },
         maintenance_jobs: {
             dimensions: true,
             inputs: ['CW_sqm'],
             fn: CW_sqm => CW_sqm * 0.0625,
+            description: 'Maintenance jobs',
         },
         manufacture_jobs: {
             dimensions: true,
             inputs: ['CW_sqm'],
             fn: CW_sqm => CW_sqm * 0.0115,
+            description: 'Manufacture jobs',
         },
     }),
     alcaldias: variableDef({
@@ -133,5 +142,5 @@ export type DimensionSpec = {
 export interface VariableSpec {
     dataset: GeoLevel;
     variable: VariableName;
-    dimensions: DimensionSpec;
+    dimensions?: DimensionSpec;
 }

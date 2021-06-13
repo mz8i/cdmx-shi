@@ -1,5 +1,5 @@
-import { BudgetSelection } from './controls/BudgetSelection';
-import { ScenarioSelection } from './controls/ScenarioSelection';
+import { BudgetSelection } from '../controls/BudgetSelection';
+import { ScenarioSelection } from '../controls/ScenarioSelection';
 
 export function SidebarContent() {
     return (

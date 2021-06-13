@@ -11,3 +11,8 @@ export const featureHighlightState = atom<string[]>({
     key: 'featureHighlight',
     default: [],
 });
+
+export const featureSelectionState = atom<DataFeature | null>({
+    key: 'featureSelection',
+    default: null,
+});

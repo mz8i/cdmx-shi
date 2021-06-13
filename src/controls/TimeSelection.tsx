@@ -7,7 +7,7 @@ export function TimeSelection() {
     const [time, setTime] = useRecoilState(timeDimensionState);
 
     return (
-        <div className="my-1 mx-1">
+        <div className="my-1">
             <div className="flex">
                 <ToggleButton
                     value="c"

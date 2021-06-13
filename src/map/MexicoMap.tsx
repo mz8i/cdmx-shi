@@ -11,6 +11,7 @@ import { variableSpecState } from '../recoil/data-selection';
 import { featureHighlightState, featureHoverState } from '../recoil/ui';
 import { GeoJSONDataLayer } from './GeoJSONDataLayer';
 import { LeafletMap } from './LeafletMap';
+import { PaneVisibility } from './PaneVisibility';
 
 const MemoizedGeoJSON = React.memo(GeoJSON);
 
@@ -36,6 +37,7 @@ export function MexicoMap() {
     return (
         <LeafletMap>
             <Pane name="colonias">
+                <PaneVisibility paneName="colonias" visible={isColonias} />
                 {coloniasData && (
                     <GeoJSONDataLayer
                         data={coloniasData}
@@ -49,26 +51,30 @@ export function MexicoMap() {
                     />
                 )}
             </Pane>
-            <Pane name="alcaldias" className={isColonias ? 'pointer-events-none' : ''}>
-                {alcaldiasData &&
-                    (isColonias ? (
-                        <MemoizedGeoJSON
-                            data={alcaldiasData}
-                            style={mapLayers.alcaldias.borderStyle}
-                            interactive={false}
-                        />
-                    ) : (
-                        <GeoJSONDataLayer
-                            data={alcaldiasData}
-                            getId={getAlcaldiasId}
-                            getData={getData}
-                            getDataColor={getDataColor}
-                            layerDefinition={mapLayers.alcaldias}
-                            type="data"
-                            onFeatureHover={setFeatureHover}
-                            highlightedFeatures={highlightedRegions}
-                        />
-                    ))}
+            <Pane name="alcaldias-data">
+                <PaneVisibility paneName="alcaldias-data" visible={!isColonias} />
+                {alcaldiasData && (
+                    <GeoJSONDataLayer
+                        data={alcaldiasData}
+                        getId={getAlcaldiasId}
+                        getData={getData}
+                        getDataColor={getDataColor}
+                        layerDefinition={mapLayers.alcaldias}
+                        type="data"
+                        onFeatureHover={setFeatureHover}
+                        highlightedFeatures={highlightedRegions}
+                    />
+                )}
+            </Pane>
+            <Pane name="alcaldias-boundary" className="pointer-events-none">
+                <PaneVisibility paneName="alcaldias-boundary" visible={isColonias} />
+                {alcaldiasData && (
+                    <MemoizedGeoJSON
+                        data={alcaldiasData}
+                        style={mapLayers.alcaldias.borderStyle}
+                        interactive={false}
+                    />
+                )}
             </Pane>
             <Pane name="cdmx" className="pointer-events-none">
                 {cdmxData && (

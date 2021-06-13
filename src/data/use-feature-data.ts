@@ -2,15 +2,23 @@ import { useCallback, useMemo } from 'react';
 
 import { COLOR_SCALES } from '../config/color-scales';
 import { DATA_SOURCES } from '../config/data-sources';
-import { GeoLevel, VARIABLES, VariableSpec } from '../config/variables';
+import {
+    DimensionSpec,
+    GeoLevel,
+    VARIABLES,
+    VariableName,
+    VariableSpec,
+} from '../config/variables';
+import { objectMap } from '../util';
+import { DataFeature } from './data-context';
 
 export function getVariableFullKey({ dataset, variable, dimensions }: VariableSpec) {
     const varDef = VARIABLES[dataset][variable];
     if (varDef == null) {
-        return null;
+        return undefined;
     }
 
-    if (varDef.dimensions) {
+    if (varDef.dimensions && dimensions) {
         return `${variable}_${dimensions.time}_${dimensions.weighting}_${dimensions.budget}` as const;
     } else {
         return `${variable}` as const;
@@ -20,6 +28,40 @@ export function getVariableFullKey({ dataset, variable, dimensions }: VariableSp
 export function useFeatureDataValue(variableSpec: VariableSpec) {
     const fullKey = getVariableFullKey(variableSpec);
     return useCallback(x => fullKey && x.properties[fullKey], [fullKey]);
+}
+
+export function useGetManyVariables(
+    variables: VariableName[],
+    dimensions: DimensionSpec,
+    dataset: GeoLevel,
+) {
+    const variableKeys = useMemo(
+        () =>
+            Object.fromEntries(
+                variables.map(variable => [
+                    variable,
+                    getVariableFullKey({ dataset, variable, dimensions }),
+                ]),
+            ),
+        [variables, dimensions, dataset],
+    );
+
+    return useCallback(
+        (feature: DataFeature) => {
+            return objectMap(variableKeys, vk => feature.properties[vk]);
+        },
+        [variableKeys],
+    );
+
+    // return useMemo(() => {
+
+    //     return objectMap(variableKeys, (variableKey) => {
+    //         (feature) =>
+    //     });
+
+    // }, [variables, dimensions, dataset]);
+
+    // return objectMap();
 }
 
 export function useDataColor(variableSpec: VariableSpec) {

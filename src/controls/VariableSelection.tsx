@@ -7,7 +7,7 @@ export function VariableSelection() {
     const [variable, setVariable] = useRecoilState(coloniasVariableState);
 
     return (
-        <div className="border-none rounded-none my-1 mx-1 flex flex-row gap-4">
+        <div className="border-none rounded-none my-1 flex flex-row gap-4">
             <div className="flex-1">
                 <ToggleButton
                     value="SHI"

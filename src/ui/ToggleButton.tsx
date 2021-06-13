@@ -16,7 +16,7 @@ export function ToggleButton({
                 {
                     [`border-2 ${selectedClassName}`]: isSelected,
                 },
-                `p-3 rounded bg-white text-gray-900 focus:outline-none outline-none border-2 ${hoverClassName} w-full`,
+                `p-2 rounded bg-white text-gray-900 focus:outline-none outline-none border-2 ${hoverClassName} w-full`,
             )}
             onClick={e => {
                 e.preventDefault();

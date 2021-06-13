@@ -51,6 +51,7 @@ function dimensionCombinations(allDimensions) {
 //       VARIABLES[dataset][variable].dimensions?.includes(dim)
 //     ) as Record<Dim, any>;
 // }
+const DIMENSION_COMBINATIONS = dimensionCombinations(ALL_DIMENSIONS);
 
 export function transformDataset(geoJson: DatasetFeatureCollection, dataset: GeoLevel) {
     const vars = VARIABLES[dataset];
@@ -61,13 +62,11 @@ export function transformDataset(geoJson: DatasetFeatureCollection, dataset: Geo
             if ('fn' in varDef) {
                 const variable = varName as VariableName;
                 const hasDimensions = varDef.inputs.some(vd => vars[vd].dimensions);
-                const currentDimensions = hasDimensions ? ALL_DIMENSIONS : [];
 
                 const keySets: any[] = [];
-                if (currentDimensions.length > 0) {
-                    const dimCombinations = dimensionCombinations(currentDimensions);
 
-                    for (const dimensions of dimCombinations) {
+                if (hasDimensions) {
+                    for (const dimensions of DIMENSION_COMBINATIONS) {
                         const outputKey = getVariableFullKey({ variable, dimensions, dataset });
                         const inputKeys = varDef.inputs.map(inp =>
                             getVariableFullKey({
