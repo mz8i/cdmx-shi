@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { FixedSizeList } from 'react-window';
 import { useRecoilValue } from 'recoil';
 
 import { useData } from '../data/data-context';
@@ -7,7 +8,7 @@ import { geoLevelState } from '../recoil/data-selection';
 import { variableSpecState } from '../recoil/data-selection';
 import { DataListItem } from './DataListItem';
 
-export function DataList({ count = 10 }) {
+export function DataList({ count = 10, height, itemHeight }) {
     const geoLevel = useRecoilValue(geoLevelState);
     const variableSpec = useRecoilValue(variableSpecState);
 
@@ -19,16 +20,22 @@ export function DataList({ count = 10 }) {
             currentData?.features
                 .filter(x => (getFeatureData(x) ?? 0) !== 0)
                 .slice()
-                .sort((a, b) => getFeatureData(b) - getFeatureData(a))
-                .slice(0, count),
-        [currentData, getFeatureData, count],
+                .sort((a, b) => getFeatureData(b) - getFeatureData(a)),
+        [currentData, getFeatureData],
     );
 
     return (
-        <ul className="max-h-full overflow-y-scroll list-none p-0 text-white">
-            {sorted?.map(x => (
-                <DataListItem geoLevel={geoLevel} feature={x} />
-            ))}
-        </ul>
+        <FixedSizeList
+            itemCount={sorted?.length ?? 0}
+            width="100%"
+            height={height}
+            itemSize={itemHeight}
+        >
+            {({ index, style }) => (
+                <div className="text-white" style={style}>
+                    <DataListItem geoLevel={geoLevel} feature={sorted?.[index]} />
+                </div>
+            )}
+        </FixedSizeList>
     );
 }

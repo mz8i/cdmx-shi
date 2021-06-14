@@ -8,7 +8,7 @@ export function ColoniaDetailsPane({ feature }) {
 
     return (
         <>
-            <section className="flex flex-row nowrap gap-4 h-16">
+            <section className="flex flex-row nowrap gap-4 h-16 text-sm">
                 <ValueIndicator
                     variableSpec={{ variable: 'SHI', dimensions, dataset: 'colonias' }}
                     feature={feature}

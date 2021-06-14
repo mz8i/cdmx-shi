@@ -2,17 +2,22 @@ import './App.css';
 
 import React from 'react';
 import { Helmet } from 'react-helmet';
+import { useRecoilValue } from 'recoil';
 
 import { GeoLevelSelection } from './controls/GeoLevelSelection';
+import { IndexVariableSelection } from './controls/IndexVariableSelection';
 import { TimeSelection } from './controls/TimeSelection';
-import { VariableSelection } from './controls/VariableSelection';
+import { WetlandsVariableSelection } from './controls/WetlandsVariableSelection';
 import { MexicoMap } from './map/MexicoMap';
 import { Benefits } from './panels/Benefits';
 import { DataList } from './panels/DataList';
 import { HoverDetailsPane } from './panels/details/HoverDetailsPane';
 import { SidebarContent } from './panels/SidebarContent';
+import { coloniasVariableState, geoLevelState } from './recoil/data-selection';
 
 function App() {
+    const geoLevel = useRecoilValue(geoLevelState);
+    const variable = useRecoilValue(coloniasVariableState);
     return (
         <>
             <Helmet>
@@ -24,30 +29,46 @@ function App() {
                 </div>
                 <div className="h-screen col-span-9 relative">
                     <MexicoMap />
-                    <div className="absolute top-0 left-0 m-8 z-50 bg-none w-40">
-                        <div className=" rounded mb-4">
-                            <h3>Geography</h3>
+                    <div className="absolute top-0 left-0 my-4 mx-8 z-50 bg-none w-52">
+                        <div className="mb-4 w-full">
+                            <h3 className="text-center">Geography</h3>
                             <GeoLevelSelection />
                         </div>
-                        <div className=" rounded mb-4">
-                            <h3>Current / future</h3>
-                            <TimeSelection />
-                        </div>
-                        <div className="rounded mb-4">
-                            <h3>Indices</h3>
-                            <VariableSelection />
+                        <div className="flex flex-row gap-4 w-full">
+                            <div className="flex-0 w-24">
+                                <h3 className="text-center">Impacts</h3>
+                                <WetlandsVariableSelection />
+                            </div>
+                            {geoLevel === 'colonias' && (
+                                <div className="flex-0">
+                                    <h3 className="text-center">Vulnerability</h3>
+                                    <IndexVariableSelection />
+                                </div>
+                            )}
                         </div>
                     </div>
-                    <div className="absolute top-4 right-4 z-50">
-                        <div className="bg-white p-4 mb-6 w-96">
+                    <div className="absolute top-0 right-1/2 m-4 z-50">
+                        <div className="mb-4">
+                            <h3>Current / Future</h3>
+                            <TimeSelection />
+                        </div>
+                    </div>
+                    <div className="absolute top-10 right-10 z-50 flex-column nowrap h-screen w-96">
+                        <div className="bg-white p-4 mb-6 w-full flex-0">
                             <HoverDetailsPane />
                         </div>
-                        <div className="bg-white p-4 mb-6 w-96">
-                            <Benefits />
+                        <div className="mb-6 w-full flex-0">
+                            <DataList height={350} itemHeight={70} />
                         </div>
-                        <div className="mb-6 w-96 h-96">
-                            <DataList count={20} />
-                        </div>
+                    </div>
+                    <div className="absolute bottom-0 left-0 my-4 mx-8 w-64 z-50">
+                        {geoLevel === 'colonias' &&
+                            (variable === 'CW_sqm' || variable === 'population_impacted') && (
+                                <div className="p-4 mb-6 w-full bg-blue-900 bg-opacity-90 filter brightness-125 text-white rounded-xl flex-0">
+                                    <h2>Constructed Wetlands Benefits</h2>
+                                    <Benefits />
+                                </div>
+                            )}
                     </div>
                 </div>
             </div>

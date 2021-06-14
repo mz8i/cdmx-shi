@@ -19,10 +19,10 @@ export function HoverDetailsPane() {
 
     return (
         <>
-            <section className="h-24">
+            <section className="h-28">
                 {feature ? (
                     <>
-                        <h3 className="font-bold min-h-8 text-xl uppercase" title="Colonia">
+                        <h3 className="font-bold min-h-8 text-lg uppercase" title="Colonia">
                             {getName(feature)}
                         </h3>
                         <h4 className="font-normal min-h-8" title="Alcaldía (Municipality)">

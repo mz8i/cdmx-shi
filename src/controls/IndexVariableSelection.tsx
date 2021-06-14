@@ -3,7 +3,7 @@ import { useRecoilState } from 'recoil';
 import { coloniasVariableState } from '../recoil/data-selection';
 import { ToggleButton } from '../ui/ToggleButton';
 
-export function VariableSelection() {
+export function IndexVariableSelection() {
     const [variable, setVariable] = useRecoilState(coloniasVariableState);
 
     return (
@@ -38,26 +38,6 @@ export function VariableSelection() {
                         ACI
                     </ToggleButton>
                 </div>
-            </div>
-            <div className="flex-1">
-                <ToggleButton
-                    value="CW_sqm"
-                    toggleValue={variable}
-                    onChange={setVariable}
-                    selectedClassName="border-green-800"
-                    hoverClassName="hover:border-green-800"
-                >
-                    CW
-                </ToggleButton>
-                <ToggleButton
-                    value="pop"
-                    toggleValue={variable}
-                    onChange={setVariable}
-                    selectedClassName="border-green-800"
-                    hoverClassName="hover:border-green-800"
-                >
-                    Pop
-                </ToggleButton>
             </div>
         </div>
     );

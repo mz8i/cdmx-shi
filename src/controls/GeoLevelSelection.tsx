@@ -7,7 +7,7 @@ export function GeoLevelSelection() {
     const [geoLevel, setGeoLevel] = useRecoilState(geoLevelState);
 
     return (
-        <div className="border-none rounded-none my-1">
+        <div className="my-1 flex flex-row">
             <ToggleButton
                 value="colonias"
                 toggleValue={geoLevel}

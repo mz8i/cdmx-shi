@@ -1,3 +1,6 @@
+import { valueType } from '../util';
+import { ColorScale, ScaleMapping } from './scales';
+
 export enum Dim {
     Weighting = 'weighting',
     Budget = 'budget',
@@ -16,27 +19,21 @@ type AllowedValues<T extends Dim> = typeof DIMENSIONS_VALUES[T][number];
 
 export type GeoLevel = 'colonias' | 'alcaldias' | 'cdmx';
 
-interface RawVariableDefinition {
+interface BaseVariableDefinition {
+    description?: string;
+    unit?: string;
     dimensions: boolean;
+    colorScale?: ColorScale;
+    scaleMapping?: ScaleMapping;
 }
+interface RawVariableDefinition extends BaseVariableDefinition {}
 
-interface CalculatedVariableDefinition {
-    dimensions: boolean;
+interface CalculatedVariableDefinition extends BaseVariableDefinition {
     inputs: string[];
     fn: (...inputs: any[]) => any;
-    description?: string;
 }
 
-type VariableDefinition = RawVariableDefinition | CalculatedVariableDefinition;
-
-export function valueType<C>() {
-    return <K extends string>(cfg: Record<K, C>) =>
-        cfg as {
-            [key in K]: typeof cfg[key];
-        };
-}
-
-const variableDef = valueType<VariableDefinition>();
+export type VariableDefinition = RawVariableDefinition | CalculatedVariableDefinition;
 
 export const METADATA = {
     colonias: {
@@ -49,61 +46,80 @@ export const METADATA = {
     },
 };
 
+const variableDef = valueType<VariableDefinition>();
+
 export const VARIABLES = {
     colonias: variableDef({
         pop: {
             dimensions: false,
+            colorScale: 'CW',
+            scaleMapping: 'pop',
         },
         SHI: {
             dimensions: true,
+            colorScale: 'SHI',
+            scaleMapping: 'SHI',
         },
         WSI: {
             dimensions: true,
+            colorScale: 'WSI',
+            scaleMapping: 'WSI',
         },
         ACI: {
             dimensions: true,
+            colorScale: 'ACI',
+            scaleMapping: 'ACI',
         },
         CW_perc: {
             dimensions: true,
         },
         CW_sqm: {
             dimensions: true,
+            colorScale: 'CW',
+            scaleMapping: 'CW_sqm',
         },
         population_impacted: {
             dimensions: true,
             inputs: ['CW_perc', 'pop'],
             fn: (CW_perc, pop) => CW_perc * pop,
             description: 'Population impacted',
+            unit: 'people',
+
+            colorScale: 'CW',
+            scaleMapping: 'pop',
         },
         homes_impacted: {
             dimensions: true,
             inputs: ['CW_sqm'],
             fn: CW_sqm => CW_sqm / 2,
             description: 'Homes impacted',
+            unit: 'homes',
         },
         water_filtered_yearly: {
             dimensions: true,
             inputs: ['CW_sqm'],
             fn: CW_sqm => CW_sqm * 18000,
-            description: 'Water filtered yearly',
+            description: 'Litres of water filtered',
+            unit: 'per year',
         },
         rain_filtered_yearly: {
             dimensions: true,
             inputs: ['CW_sqm'],
             fn: CW_sqm => CW_sqm * 6000,
-            description: 'Rain filtered yearly',
+            description: 'Litres of rain filtered',
+            unit: 'per year',
         },
         cattail_plants_yearly: {
             dimensions: true,
             inputs: ['CW_sqm'],
             fn: CW_sqm => CW_sqm * 3,
-            description: 'Cattail plants yearly',
+            description: 'Cattail plants',
         },
         arum_lillies_yearly: {
             dimensions: true,
             inputs: ['CW_sqm'],
             fn: CW_sqm => CW_sqm * 32,
-            description: 'Arum lillies yearly',
+            description: 'Arum lillies',
         },
         maintenance_jobs: {
             dimensions: true,
@@ -121,6 +137,8 @@ export const VARIABLES = {
     alcaldias: variableDef({
         CW_budget: {
             dimensions: true,
+            colorScale: 'CW',
+            scaleMapping: 'CW_budget',
         },
     }),
     cdmx: {},

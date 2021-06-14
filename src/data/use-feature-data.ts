@@ -1,7 +1,8 @@
+import { scaleThreshold } from 'd3-scale';
 import { useCallback, useMemo } from 'react';
 
-import { COLOR_SCALES } from '../config/color-scales';
 import { DATA_SOURCES } from '../config/data-sources';
+import { COLOR_SCALES, SCALE_MAPPINGS } from '../config/scales';
 import {
     DimensionSpec,
     GeoLevel,
@@ -52,28 +53,74 @@ export function useGetManyVariables(
         },
         [variableKeys],
     );
+}
 
-    // return useMemo(() => {
+export function useColorScale(variableSpec: VariableSpec) {
+    const { colorScale: csDef = null, scaleMapping: smDef = null } =
+        VARIABLES[variableSpec.dataset][variableSpec.variable];
 
-    //     return objectMap(variableKeys, (variableKey) => {
-    //         (feature) =>
-    //     });
+    const colorScale = COLOR_SCALES[csDef];
+    const scaleMapping = SCALE_MAPPINGS[smDef];
 
-    // }, [variables, dimensions, dataset]);
+    return useMemo(() => {
+        const scaleDomain = scaleMapping.map(x => x.from);
+        scaleDomain.push(scaleMapping[scaleMapping.length - 1].to);
 
-    // return objectMap();
+        const scaleRange = ['#ccc', ...colorScale, '#000'];
+
+        if (scaleMapping[0].exclusiveFrom) {
+            // if the first threshold should not be included, we need to add a tiny number
+            scaleDomain[0] = scaleDomain[0] + 0.001;
+        }
+
+        const d3Scale = scaleThreshold<number, string>().domain(scaleDomain).range(scaleRange);
+
+        return (val: number) => {
+            if (val == null) {
+                return 'rgba(0,0,0,0)';
+            } else return d3Scale(val);
+        };
+    }, [scaleMapping, colorScale]);
+}
+
+export function useTextScale(variableSpec: VariableSpec) {
+    const { scaleMapping: smDef = null } = VARIABLES[variableSpec.dataset][variableSpec.variable];
+
+    const scaleMapping = SCALE_MAPPINGS[smDef];
+
+    return useMemo(() => {
+        const scaleDomain = scaleMapping.map(x => x.from);
+        scaleDomain.push(scaleMapping[scaleMapping.length - 1].to);
+
+        const scaleRange = ['&&&', ...scaleMapping.map(x => x.class), '>>>'];
+
+        const d3Scale = scaleThreshold<number, string>().domain(scaleDomain).range(scaleRange);
+
+        return (val: number) => {
+            return val && d3Scale(val);
+        };
+    }, [scaleMapping]);
 }
 
 export function useDataColor(variableSpec: VariableSpec) {
-    return useCallback((d: any) => COLOR_SCALES[variableSpec.variable](d), [variableSpec]);
+    const colorScaleFn = useColorScale(variableSpec);
+
+    return useCallback((d: any) => colorScaleFn(d), [colorScaleFn]);
+}
+
+export function useDataClass(variableSpec: VariableSpec) {
+    const textScaleFn = useTextScale(variableSpec);
+
+    return useCallback((d: any) => textScaleFn(d), [textScaleFn]);
 }
 
 export function useFeatureDataColor(variableSpec: VariableSpec) {
     const fullKey = getVariableFullKey(variableSpec);
+    const colorScaleFn = useColorScale(variableSpec);
 
     return useCallback(
-        f => fullKey && COLOR_SCALES[variableSpec.variable](f.properties[fullKey]),
-        [variableSpec, fullKey],
+        f => fullKey && colorScaleFn(f.properties[fullKey]),
+        [colorScaleFn, fullKey],
     );
 }
 

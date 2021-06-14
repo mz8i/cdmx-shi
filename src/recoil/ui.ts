@@ -7,7 +7,7 @@ export const featureHoverState = atom<DataFeature | null>({
     default: null,
 });
 
-export const featureHighlightState = atom<string[]>({
+export const featureHighlightState = atom<DataFeature[]>({
     key: 'featureHighlight',
     default: [],
 });
@@ -16,3 +16,5 @@ export const featureSelectionState = atom<DataFeature | null>({
     key: 'featureSelection',
     default: null,
 });
+
+// export const featureDetailsState = select;

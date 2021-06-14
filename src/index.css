@@ -4,11 +4,11 @@
 
 @layer utilities {
     .text-shadow-white {
-        text-shadow: 0 0 2px #fff;
+        text-shadow: 0 0 1px #fff;
     }
 
     .text-shadow-black {
-        text-shadow: 0 0 2px #000;
+        text-shadow: 0 0 1px #000;
     }
     .text-shadow-none {
         text-shadow: none;

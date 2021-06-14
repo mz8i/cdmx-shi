@@ -13,12 +13,16 @@ export const alcaldiasVariableState = atom<VariableName>({
     default: 'CW_budget',
 });
 
-export const geoLevelVariableState = selector<VariableName>({
+export const currentVariableState = selector<VariableName>({
     key: 'geoLevelVariable',
     get: ({ get }) =>
         get(geoLevelState) === 'colonias'
             ? get(coloniasVariableState)
             : get(alcaldiasVariableState),
+    set: ({ get, set }, newVal) =>
+        get(geoLevelState) === 'colonias'
+            ? set(coloniasVariableState, newVal)
+            : set(alcaldiasVariableState, newVal),
 });
 
 export const budgetDimensionState = atom<BudgetName>({
@@ -54,7 +58,7 @@ export const variableSpecState = selector<VariableSpec>({
     key: 'variableSpec',
     get: ({ get }) => ({
         dataset: get(geoLevelState),
-        variable: get(geoLevelVariableState),
+        variable: get(currentVariableState),
         dimensions: get(dimensionsSpecState),
     }),
 });
