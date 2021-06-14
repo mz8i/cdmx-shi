@@ -12,20 +12,26 @@ export function ScenarioWeightings({ scenario }) {
     const weighting = WEIGHTING_SCENARIOS[scenario];
 
     return (
-        <div>
+        <>
             <div className="flex flex-row">
                 {WSIVariables.map(v => {
                     return (
                         <CircularGauge
                             key={v}
-                            className="flex-0 h-20 w-20"
-                            radius={50}
-                            strokeWidth={10}
+                            className="flex-0 m-2"
+                            radius={30}
+                            strokeWidth={7}
                             strokeColor="blue"
                             ratio={weighting[v]}
-                            text={v}
-                            tooltip={WEIGHTED_VARIABLES[v].fullName}
-                        />
+                            tooltip={`${WEIGHTED_VARIABLES[v].fullName} - ${weighting[v]}`}
+                        >
+                            <span
+                                // title={WEIGHTED_VARIABLES[v].fullName}
+                                className="text-wsi-900 font-bold text-sm"
+                            >
+                                {v}
+                            </span>
+                        </CircularGauge>
                     );
                 })}
             </div>
@@ -34,17 +40,23 @@ export function ScenarioWeightings({ scenario }) {
                     return (
                         <CircularGauge
                             key={v}
-                            className="flex-0 h-20 w-20"
-                            radius={50}
-                            strokeWidth={10}
+                            className="flex-0 m-2"
+                            radius={30}
+                            strokeWidth={7}
                             strokeColor="green"
                             ratio={weighting[v]}
-                            text={v}
-                            tooltip={WEIGHTED_VARIABLES[v].fullName}
-                        />
+                            tooltip={`${WEIGHTED_VARIABLES[v].fullName} - ${weighting[v]}`}
+                        >
+                            <span
+                                // title={WEIGHTED_VARIABLES[v].fullName}
+                                className="text-aci-900 font-bold text-sm"
+                            >
+                                {v}
+                            </span>
+                        </CircularGauge>
                     );
                 })}
             </div>
-        </div>
+        </>
     );
 }

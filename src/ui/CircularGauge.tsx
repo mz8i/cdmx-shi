@@ -3,20 +3,22 @@ export function CircularGauge({
     strokeWidth = 10,
     strokeColor,
     ratio,
-    text,
-    tooltip = null,
     className = '',
+    tooltip = '',
+    children,
 }) {
-    const normalizedRadius = radius - strokeWidth * 2;
+    const normalizedRadius = radius - strokeWidth;
     const circumference = normalizedRadius * 2 * Math.PI;
     const strokeDashoffset = circumference - ratio * circumference;
 
     return (
         <div className={`${className} relative left-0`} title={`${tooltip}`}>
-            {/* <div className="absolute top-0 left-0">{text}</div> */}
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                {children}
+            </div>
             <svg className="" height={radius * 2} width={radius * 2}>
                 <circle
-                    stroke="#ccc"
+                    stroke="#e5e5e5"
                     fill="transparent"
                     strokeWidth={strokeWidth}
                     r={normalizedRadius}
