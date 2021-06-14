@@ -12,8 +12,8 @@ export const mapStyles = {
 export const mapLayers = {
     colonias: {
         dataStyle: {
-            weight: 0.5,
-            color: '#ccc',
+            weight: 0.4,
+            color: '#bbb',
             smoothFactor: 0.7,
         },
     },
@@ -24,15 +24,15 @@ export const mapLayers = {
             smoothFactor: 0,
         },
         borderStyle: {
-            color: '#777',
-            weight: 1,
+            color: '#555',
+            weight: 0.7,
             fill: false,
         },
     },
     cdmx: {
         borderStyle: {
-            color: '#777',
-            weight: 2,
+            color: '#555',
+            weight: 1,
             fill: false,
         },
     },
