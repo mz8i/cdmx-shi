@@ -1,5 +1,5 @@
 import { valueType } from '../util';
-import { ColorScale, ScaleMapping } from './scales';
+import { ColorScaleName, ScaleMappingName } from './scales';
 
 export enum Dim {
     Weighting = 'weighting',
@@ -23,8 +23,20 @@ interface BaseVariableDefinition {
     description?: string;
     unit?: string;
     dimensions: boolean;
-    colorScale?: ColorScale;
-    scaleMapping?: ScaleMapping;
+    colorScale?: ColorScaleName;
+    scaleMapping?: ScaleMappingName;
+
+    /**
+     * The default natural order of sorting values (in the data list, legend etc) is assumed to be descending,
+     * because most variables are about vulnerability etc.
+     * However, some variables, most notable Adaptive Capacity Index, should be sorted in the opposite direction than the others.
+     */
+    invertOrderToAscending?: boolean;
+
+    /**
+     * How many digits after the comma to display when formating values in the legend.
+     */
+    legendFractionalDigits?: number;
 }
 interface RawVariableDefinition extends BaseVariableDefinition {}
 
@@ -54,21 +66,27 @@ export const VARIABLES = {
             dimensions: false,
             colorScale: 'CW',
             scaleMapping: 'pop',
+            description: 'Population',
+            legendFractionalDigits: 0,
         },
         SHI: {
             dimensions: true,
             colorScale: 'SHI',
             scaleMapping: 'SHI',
+            description: 'Socio-Hydrological Vulnerability',
         },
         WSI: {
             dimensions: true,
             colorScale: 'WSI',
             scaleMapping: 'WSI',
+            description: 'Water Stress',
         },
         ACI: {
             dimensions: true,
             colorScale: 'ACI',
             scaleMapping: 'ACI',
+            invertOrderToAscending: true,
+            description: 'Adaptive Capacity',
         },
         CW_perc: {
             dimensions: true,
@@ -77,6 +95,8 @@ export const VARIABLES = {
             dimensions: true,
             colorScale: 'CW',
             scaleMapping: 'CW_sqm',
+            description: 'Constructed Wetlands (sq.m.)',
+            legendFractionalDigits: 0,
         },
         population_impacted: {
             dimensions: true,
@@ -87,6 +107,7 @@ export const VARIABLES = {
 
             colorScale: 'CW',
             scaleMapping: 'pop',
+            legendFractionalDigits: 0,
         },
         homes_impacted: {
             dimensions: true,
@@ -139,6 +160,8 @@ export const VARIABLES = {
             dimensions: true,
             colorScale: 'CW',
             scaleMapping: 'CW_budget',
+            description: 'Constructed Wetlands Budget (pesos)',
+            legendFractionalDigits: 0,
         },
     }),
     cdmx: {},

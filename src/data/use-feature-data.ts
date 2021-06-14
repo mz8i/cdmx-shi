@@ -92,7 +92,7 @@ export function useTextScale(variableSpec: VariableSpec) {
         const scaleDomain = scaleMapping.map(x => x.from);
         scaleDomain.push(scaleMapping[scaleMapping.length - 1].to);
 
-        const scaleRange = ['&&&', ...scaleMapping.map(x => x.class), '>>>'];
+        const scaleRange = ['---', ...scaleMapping.map(x => x.class), '---'];
 
         const d3Scale = scaleThreshold<number, string>().domain(scaleDomain).range(scaleRange);
 
@@ -155,4 +155,18 @@ export function useGetMetadata(geoLevel: GeoLevel) {
         }),
         [getId, getName, getParentName],
     );
+}
+
+export function useCompareData(variableSpec: VariableSpec) {
+    const { invertOrderToAscending } = VARIABLES[variableSpec.dataset][variableSpec.variable];
+
+    const getData = useFeatureDataValue(variableSpec);
+
+    return useMemo(() => {
+        if (invertOrderToAscending) {
+            return (a, b) => getData(a) - getData(b);
+        } else {
+            return (a, b) => getData(b) - getData(a);
+        }
+    }, [invertOrderToAscending, getData]);
 }

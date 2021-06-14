@@ -53,7 +53,16 @@ export const COLOR_SCALES = {
     ],
 };
 
-export type ColorScale = keyof typeof COLOR_SCALES;
+export type ColorScaleName = keyof typeof COLOR_SCALES;
+export type ColorScale = typeof COLOR_SCALES[ColorScaleName];
+
+export interface ScaleMappingItem {
+    from: number;
+    to: number;
+    exclusiveFrom?: boolean;
+    class?: string;
+}
+export type ScaleMapping = ScaleMappingItem[];
 
 export const SCALE_MAPPINGS = {
     SHI: [
@@ -134,4 +143,4 @@ export const SCALE_MAPPINGS = {
     ],
 };
 
-export type ScaleMapping = keyof typeof SCALE_MAPPINGS;
+export type ScaleMappingName = keyof typeof SCALE_MAPPINGS;

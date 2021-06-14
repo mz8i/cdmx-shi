@@ -3,7 +3,7 @@ import { FixedSizeList } from 'react-window';
 import { useRecoilValue } from 'recoil';
 
 import { useData } from '../data/data-context';
-import { useFeatureDataValue } from '../data/use-feature-data';
+import { useCompareData, useFeatureDataValue } from '../data/use-feature-data';
 import { geoLevelState } from '../recoil/data-selection';
 import { variableSpecState } from '../recoil/data-selection';
 import { DataListItem } from './DataListItem';
@@ -14,14 +14,15 @@ export function DataList({ count = 10, height, itemHeight }) {
 
     const { data: currentData } = useData(geoLevel);
     const getFeatureData = useFeatureDataValue(variableSpec);
+    const compareData = useCompareData(variableSpec);
 
     const sorted = useMemo(
         () =>
             currentData?.features
                 .filter(x => (getFeatureData(x) ?? 0) !== 0)
                 .slice()
-                .sort((a, b) => getFeatureData(b) - getFeatureData(a)),
-        [currentData, getFeatureData],
+                .sort(compareData),
+        [currentData, compareData, getFeatureData],
     );
 
     return (
