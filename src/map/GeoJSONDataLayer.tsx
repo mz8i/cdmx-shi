@@ -62,9 +62,9 @@ export function GeoJSONDataLayer({
                 fillOpacity: 0,
                 ...baseStyle,
                 ...dataStyle,
-                ...selectedStyle,
                 ...highlightStyle,
                 ...hoveredStyle,
+                ...selectedStyle,
             };
         },
         [getData, getDataColor, layerDefinition, type],
@@ -87,7 +87,7 @@ export function GeoJSONDataLayer({
 
                 const style = getStyle(x, isHovered, isHighlighted, isSelected);
                 layer.setStyle(style);
-                if (isHighlighted || isHovered) {
+                if (isHighlighted || isHovered || isSelected) {
                     layer.bringToFront();
                 }
             }
@@ -104,7 +104,12 @@ export function GeoJSONDataLayer({
 
     const onMouseOver = useCallback(
         (layer, feature) => {
-            const style = styleFn.current?.(feature, true, null, selectionRef.current === feature);
+            const style = styleFn.current?.(
+                feature,
+                true,
+                null,
+                selectionRef.current != null && selectionRef.current === feature,
+            );
             style && layer.setStyle(style);
             layer.bringToFront();
             onHover(feature);
@@ -114,7 +119,12 @@ export function GeoJSONDataLayer({
 
     const onMouseOut = useCallback(
         (layer, feature) => {
-            const style = styleFn.current?.(feature, false, null, selectionRef.current === feature);
+            const style = styleFn.current?.(
+                feature,
+                false,
+                null,
+                selectionRef.current != null && selectionRef.current === feature,
+            );
             style && layer.setStyle(style);
             onHover(null);
         },
@@ -123,10 +133,10 @@ export function GeoJSONDataLayer({
 
     const onClick = useCallback(
         (layer, feature) => {
-            console.log(feature, selectedFeature);
-            onFeatureSelect?.(feature === selectedFeature ? null : feature);
+            const newSelection = feature === selectionRef.current ? null : feature;
+            onFeatureSelect?.(newSelection);
         },
-        [onFeatureSelect, selectedFeature],
+        [onFeatureSelect],
     );
 
     const onEachFeature = useCallback(
