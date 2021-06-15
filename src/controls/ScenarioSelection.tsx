@@ -4,7 +4,7 @@ import * as portals from 'react-reverse-portal';
 import { useRecoilState } from 'recoil';
 
 import { WeightingName } from '../config/variables';
-import { weightingDimensionState } from '../recoil/data-selection';
+import { weightingDimensionState } from '../recoil/data-selection-state';
 import { W1Icon, W2Icon, W3Icon } from '../ui/icons';
 import { ScenarioWeightings } from './scenarios/ScenarioWeightings';
 

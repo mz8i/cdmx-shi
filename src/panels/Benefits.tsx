@@ -3,8 +3,8 @@ import { useRecoilValue } from 'recoil';
 
 import { VARIABLES, VariableName } from '../config/variables';
 import { useGetManyVariables } from '../data/use-feature-data';
-import { dimensionsSpecState } from '../recoil/data-selection';
-import { featureHoverState } from '../recoil/ui';
+import { dimensionsSpecState } from '../recoil/data-selection-state';
+import { mapHoverState } from '../recoil/ui-state';
 import { BenefitIcon } from '../ui/icons';
 
 const benefitVariables: VariableName[] = [
@@ -51,7 +51,7 @@ function formatNumber(number, unit) {
 }
 
 export function Benefits() {
-    const featureHover = useRecoilValue(featureHoverState);
+    const featureHover = useRecoilValue(mapHoverState);
     const dimensions = useRecoilValue(dimensionsSpecState);
 
     const getVariables = useGetManyVariables(benefitVariables, dimensions, 'colonias');

@@ -1,13 +1,13 @@
 import { useRecoilValue } from 'recoil';
 
 import { useFeatureDataValue, useGetMetadata } from '../../data/use-feature-data';
-import { geoLevelState, variableSpecState } from '../../recoil/data-selection';
-import { featureHoverState } from '../../recoil/ui';
+import { geoLevelState, variableSpecState } from '../../recoil/data-selection-state';
+import { featureDetailsState, mapHoverState } from '../../recoil/ui-state';
 import { ValueIndicator } from '../../ui/ValueIndicator';
-import { ColoniaDetailsPane } from './ColoniaDetailsPane';
+import { IndexDetailsPane } from './ColoniaDetailsPane';
 
 export function HoverDetailsPane() {
-    const feature = useRecoilValue(featureHoverState);
+    const feature = useRecoilValue(featureDetailsState);
     const geoLevel = useRecoilValue(geoLevelState);
     const variableSpec = useRecoilValue(variableSpecState);
 
@@ -37,12 +37,12 @@ export function HoverDetailsPane() {
                 )}
             </section>
             <section>
-                {geoLevel === 'colonias' ? <ColoniaDetailsPane feature={feature} /> : null}
+                {geoLevel === 'colonias' ? <IndexDetailsPane feature={feature} /> : null}
             </section>
-            <section className="w-full mt-3">
+            {/* <section className="w-full mt-3">
                 <h2>{variableSpec.variable}</h2>
                 <ValueIndicator variableSpec={variableSpec} feature={feature} />
-            </section>
+            </section> */}
             <section></section>
         </>
     );

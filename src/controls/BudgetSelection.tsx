@@ -2,7 +2,7 @@ import { SliderHandle, SliderInput, SliderMarker, SliderTrack } from '@reach/sli
 import { useRecoilState } from 'recoil';
 
 import { BudgetName } from '../config/variables';
-import { budgetDimensionState } from '../recoil/data-selection';
+import { budgetDimensionState } from '../recoil/data-selection-state';
 
 export function BudgetSelection() {
     const [budget, setBudget] = useRecoilState(budgetDimensionState);

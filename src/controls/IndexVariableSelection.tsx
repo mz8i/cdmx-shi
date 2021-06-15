@@ -1,6 +1,6 @@
 import { useRecoilState, useSetRecoilState } from 'recoil';
 
-import { coloniasVariableState, geoLevelState } from '../recoil/data-selection';
+import { coloniasVariableState, geoLevelState } from '../recoil/data-selection-state';
 import { ToggleButton } from '../ui/ToggleButton';
 
 export function IndexVariableSelection() {

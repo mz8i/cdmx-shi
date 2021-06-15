@@ -17,7 +17,7 @@ import {
     coloniasVariableState,
     currentVariableState,
     geoLevelState,
-} from './recoil/data-selection';
+} from './recoil/data-selection-state';
 
 function App() {
     const geoLevel = useRecoilValue(geoLevelState);

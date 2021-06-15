@@ -1,6 +1,6 @@
 import { useRecoilState } from 'recoil';
 
-import { timeDimensionState } from '../recoil/data-selection';
+import { timeDimensionState } from '../recoil/data-selection-state';
 import { ToggleButton } from '../ui/ToggleButton';
 
 export function TimeSelection() {

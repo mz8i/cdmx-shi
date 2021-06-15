@@ -26,7 +26,9 @@ export function getVariableFullKey({ dataset, variable, dimensions }: VariableSp
     }
 }
 
-export function useFeatureDataValue(variableSpec: VariableSpec) {
+export type DataType = number;
+
+export function useFeatureDataValue(variableSpec: VariableSpec): (x: DataFeature) => DataType {
     const fullKey = getVariableFullKey(variableSpec);
     return useCallback(x => fullKey && x.properties[fullKey], [fullKey]);
 }
@@ -106,6 +108,39 @@ export function useDataColor(variableSpec: VariableSpec) {
     const colorScaleFn = useColorScale(variableSpec);
 
     return useCallback((d: any) => colorScaleFn(d), [colorScaleFn]);
+}
+
+export type TextColorTheme = 'light' | 'dark';
+
+function hex2rgb(hex: string) {
+    // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
+    var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+    hex = hex.replace(shorthandRegex, function (m, r, g, b) {
+        return r + r + g + g + b + b;
+    });
+
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result
+        ? {
+              r: parseInt(result[1], 16),
+              g: parseInt(result[2], 16),
+              b: parseInt(result[3], 16),
+          }
+        : null;
+}
+
+function getBrightness({ r, g, b }: { r: number; g: number; b: number }) {
+    return (r * 299 + g * 587 + b * 114) / 1000;
+}
+
+export function useDataTextColorTheme(
+    variableSpec: VariableSpec,
+): (x: DataType, bgColor: string) => TextColorTheme {
+    return (x, bgColor) => {
+        const rgb = hex2rgb(bgColor);
+        const brightness = rgb && getBrightness(rgb);
+        return (brightness ?? 130) > 200 ? 'dark' : 'light';
+    };
 }
 
 export function useDataClass(variableSpec: VariableSpec) {

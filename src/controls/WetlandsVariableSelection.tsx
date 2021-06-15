@@ -5,7 +5,7 @@ import {
     coloniasVariableState,
     currentVariableState,
     geoLevelState,
-} from '../recoil/data-selection';
+} from '../recoil/data-selection-state';
 import { ToggleButton } from '../ui/ToggleButton';
 
 export function WetlandsVariableSelection() {

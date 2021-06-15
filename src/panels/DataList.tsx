@@ -4,8 +4,8 @@ import { useRecoilValue } from 'recoil';
 
 import { useData } from '../data/data-context';
 import { useCompareData, useFeatureDataValue } from '../data/use-feature-data';
-import { geoLevelState } from '../recoil/data-selection';
-import { variableSpecState } from '../recoil/data-selection';
+import { geoLevelState } from '../recoil/data-selection-state';
+import { variableSpecState } from '../recoil/data-selection-state';
 import { DataListItem } from './DataListItem';
 
 export function DataList({ count = 10, height, itemHeight }) {

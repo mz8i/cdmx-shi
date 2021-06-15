@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef } from 'react';
 import { GeoJSON } from 'react-leaflet';
 
 import { mapStyles } from '../config/map-layers';
+import { DataFeature } from '../data/data-context';
 
 const MemoizedGeoJSONLayer = React.memo(GeoJSON);
 
@@ -13,7 +14,9 @@ interface GeoJSONDataLayerProps {
     getId?;
     getData?;
     getDataColor?;
-    highlightedFeatures?: any[];
+    highlightedFeature?: DataFeature;
+    selectedFeature?: DataFeature;
+    onFeatureSelect?: (x: DataFeature) => void;
 }
 
 export function GeoJSONDataLayer({
@@ -24,15 +27,18 @@ export function GeoJSONDataLayer({
     getId,
     getData,
     getDataColor,
-    highlightedFeatures,
+    highlightedFeature,
+    selectedFeature,
+    onFeatureSelect,
 }: GeoJSONDataLayerProps) {
     const layerRef = useRef<any>();
     const featureLookup = useRef<any>({});
 
     const styleFn = useRef<any>();
+    const selectionRef = useRef<any>();
 
     const getStyle = useCallback(
-        (x, hovered, highlighted = false) => {
+        (x, hovered, highlighted = false, selected = false) => {
             const baseStyle =
                 type === 'data' ? layerDefinition.dataStyle : layerDefinition.borderStyle;
 
@@ -48,11 +54,15 @@ export function GeoJSONDataLayer({
                 ? layerDefinition.highlightStyle ?? mapStyles.highlightStyle
                 : {};
             const hoveredStyle = hovered ? layerDefinition.hoverStyle ?? mapStyles.hoverStyle : {};
+            const selectedStyle = selected
+                ? layerDefinition.selectedStyle ?? mapStyles.selectedStyle
+                : {};
 
             return {
                 fillOpacity: 0,
                 ...baseStyle,
                 ...dataStyle,
+                ...selectedStyle,
                 ...highlightStyle,
                 ...hoveredStyle,
             };
@@ -64,6 +74,7 @@ export function GeoJSONDataLayer({
 
     useEffect(() => {
         styleFn.current = getStyle;
+        selectionRef.current = selectedFeature;
 
         layerRef.current?.eachLayer(layer => {
             const layerId = layer._leaflet_id;
@@ -71,16 +82,17 @@ export function GeoJSONDataLayer({
 
             if (x != null) {
                 const isHovered = x === hovered.current;
-                const isHighlighted = highlightedFeatures?.includes(x);
+                const isHighlighted = highlightedFeature === x;
+                const isSelected = selectedFeature === x;
 
-                const style = getStyle(x, isHovered, isHighlighted);
+                const style = getStyle(x, isHovered, isHighlighted, isSelected);
                 layer.setStyle(style);
                 if (isHighlighted || isHovered) {
                     layer.bringToFront();
                 }
             }
         });
-    }, [getStyle, highlightedFeatures]);
+    }, [getStyle, highlightedFeature, selectedFeature]);
 
     const onHover = useCallback(
         feature => {
@@ -92,7 +104,7 @@ export function GeoJSONDataLayer({
 
     const onMouseOver = useCallback(
         (layer, feature) => {
-            const style = styleFn.current?.(feature, true);
+            const style = styleFn.current?.(feature, true, null, selectionRef.current === feature);
             style && layer.setStyle(style);
             layer.bringToFront();
             onHover(feature);
@@ -102,11 +114,19 @@ export function GeoJSONDataLayer({
 
     const onMouseOut = useCallback(
         (layer, feature) => {
-            const style = styleFn.current?.(feature, false);
+            const style = styleFn.current?.(feature, false, null, selectionRef.current === feature);
             style && layer.setStyle(style);
             onHover(null);
         },
         [onHover],
+    );
+
+    const onClick = useCallback(
+        (layer, feature) => {
+            console.log(feature, selectedFeature);
+            onFeatureSelect?.(feature === selectedFeature ? null : feature);
+        },
+        [onFeatureSelect, selectedFeature],
     );
 
     const onEachFeature = useCallback(
@@ -117,8 +137,9 @@ export function GeoJSONDataLayer({
 
             layer.on('mouseover', () => onMouseOver(layer, feature));
             layer.on('mouseout', () => onMouseOut(layer, feature));
+            layer.on('click', () => onClick(layer, feature));
         },
-        [getId, onMouseOver, onMouseOut],
+        [getId, onMouseOver, onMouseOut, onClick],
     );
 
     return (

@@ -7,6 +7,10 @@ export const mapStyles = {
         weight: 2,
         color: '#f00',
     },
+    selectedStyle: {
+        weight: 3,
+        color: '#f00',
+    },
 };
 
 export const mapLayers = {
