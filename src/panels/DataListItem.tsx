@@ -14,7 +14,7 @@ export function DataListItem({ geoLevel, feature }) {
     const getDataColor = useFeatureDataColor(variableSpec);
     return (
         <>
-            <li
+            <div
                 className={`w-full cursor-pointer p-2 filter hover:brightness-105`}
                 onMouseOver={() => {
                     setHighlight(feature);
@@ -32,7 +32,7 @@ export function DataListItem({ geoLevel, feature }) {
                         backgroundColor: getDataColor(feature),
                     }}
                 ></div>
-            </li>
+            </div>
         </>
     );
 }
