@@ -41,7 +41,7 @@ function formatWithThousandsSeparator(num, separator = ' ') {
 function formatNumber(number, unit) {
     let isMillions = false;
     if (number > 1_000_000) {
-        number = number / 1_000_1000;
+        number = number / 1_000_000;
         isMillions = true;
     }
 
