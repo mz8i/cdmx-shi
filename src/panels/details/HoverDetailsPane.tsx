@@ -1,15 +1,13 @@
 import { useRecoilValue } from 'recoil';
 
 import { useFeatureDataValue, useGetMetadata } from '../../data/use-feature-data';
-import { geoLevelState, variableSpecState } from '../../recoil/data-selection-state';
-import { featureDetailsState, mapHoverState } from '../../recoil/ui-state';
-import { ValueIndicator } from '../../ui/ValueIndicator';
+import { geoLevelState } from '../../recoil/data-selection-state';
+import { featureDetailsState } from '../../recoil/ui-state';
 import { IndexDetailsPane } from './ColoniaDetailsPane';
 
 export function HoverDetailsPane() {
     const feature = useRecoilValue(featureDetailsState);
     const geoLevel = useRecoilValue(geoLevelState);
-    const variableSpec = useRecoilValue(variableSpecState);
 
     const getPopulation = useFeatureDataValue({ variable: 'pop', dataset: 'colonias' });
 
