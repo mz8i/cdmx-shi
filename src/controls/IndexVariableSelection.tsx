@@ -1,10 +1,11 @@
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 
-import { coloniasVariableState } from '../recoil/data-selection';
+import { coloniasVariableState, geoLevelState } from '../recoil/data-selection';
 import { ToggleButton } from '../ui/ToggleButton';
 
 export function IndexVariableSelection() {
     const [variable, setVariable] = useRecoilState(coloniasVariableState);
+    const setGeoLevel = useSetRecoilState(geoLevelState);
 
     return (
         <div className="border-none rounded-none my-1 flex flex-row gap-4">
@@ -12,7 +13,10 @@ export function IndexVariableSelection() {
                 <ToggleButton
                     value="SHI"
                     toggleValue={variable}
-                    onChange={setVariable}
+                    onChange={newVal => {
+                        setGeoLevel('colonias');
+                        setVariable(newVal);
+                    }}
                     selectedClassName="border-shi-700"
                     hoverClassName="hover:border-shi-700"
                 >
@@ -22,7 +26,10 @@ export function IndexVariableSelection() {
                     <ToggleButton
                         value="WSI"
                         toggleValue={variable}
-                        onChange={setVariable}
+                        onChange={newVal => {
+                            setGeoLevel('colonias');
+                            setVariable(newVal);
+                        }}
                         selectedClassName="border-wsi-800"
                         hoverClassName="hover:border-wsi-800"
                     >
@@ -31,7 +38,10 @@ export function IndexVariableSelection() {
                     <ToggleButton
                         value="ACI"
                         toggleValue={variable}
-                        onChange={setVariable}
+                        onChange={newVal => {
+                            setGeoLevel('colonias');
+                            setVariable(newVal);
+                        }}
                         selectedClassName="border-aci-800"
                         hoverClassName="hover:border-aci-800"
                     >

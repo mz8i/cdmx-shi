@@ -1,46 +1,45 @@
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
-import { currentVariableState, geoLevelState } from '../recoil/data-selection';
+import {
+    alcaldiasVariableState,
+    coloniasVariableState,
+    currentVariableState,
+    geoLevelState,
+} from '../recoil/data-selection';
 import { ToggleButton } from '../ui/ToggleButton';
 
 export function WetlandsVariableSelection() {
-    const geoLevel = useRecoilValue(geoLevelState);
-    const [variable, setVariable] = useRecoilState(currentVariableState);
+    const [, setGeoLevel] = useRecoilState(geoLevelState);
+    const setColoniasVariable = useSetRecoilState(coloniasVariableState);
+    const setAlcaldiasVariable = useSetRecoilState(alcaldiasVariableState);
+    const variable = useRecoilValue(currentVariableState);
 
-    const isColonias = geoLevel === 'colonias';
     return (
-        <div className="border-none rounded-none my-1 w-full">
+        <div className="border-none rounded-none my-1 w-full flex flex-row">
             <ToggleButton
-                value={isColonias ? 'CW_sqm' : 'CW_budget'}
+                value={'CW_sqm'}
                 toggleValue={variable}
-                onChange={setVariable}
+                onChange={newVal => {
+                    setGeoLevel('colonias');
+                    setColoniasVariable(newVal);
+                }}
                 selectedClassName="border-green-800"
                 hoverClassName="hover:border-green-800"
             >
-                CW
+                m<sup>2</sup>
             </ToggleButton>
-            {isColonias && (
-                <>
-                    <ToggleButton
-                        value="population_impacted"
-                        toggleValue={variable}
-                        onChange={setVariable}
-                        selectedClassName="border-blue-900"
-                        hoverClassName="hover:border-blue-900"
-                    >
-                        Pop.
-                    </ToggleButton>
-                    {/* <ToggleButton
-                        value="pop"
-                        toggleValue={variable}
-                        onChange={setVariable}
-                        selectedClassName="border-green-800"
-                        hoverClassName="hover:border-green-800"
-                    >
-                        Total Pop.
-                    </ToggleButton> */}
-                </>
-            )}
+            <ToggleButton
+                value={'CW_budget'}
+                toggleValue={variable}
+                onChange={newVal => {
+                    setGeoLevel('alcaldias');
+                    setAlcaldiasVariable(newVal);
+                }}
+                selectedClassName="border-green-800"
+                hoverClassName="hover:border-green-800"
+            >
+                $
+            </ToggleButton>
         </div>
     );
 }

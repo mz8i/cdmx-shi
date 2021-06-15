@@ -4,7 +4,6 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { useRecoilValue } from 'recoil';
 
-import { GeoLevelSelection } from './controls/GeoLevelSelection';
 import { IndexVariableSelection } from './controls/IndexVariableSelection';
 import { TimeSelection } from './controls/TimeSelection';
 import { WetlandsVariableSelection } from './controls/WetlandsVariableSelection';
@@ -37,21 +36,15 @@ function App() {
                 <div className="h-screen col-span-9 relative">
                     <MexicoMap />
                     <div className="absolute top-0 left-0 my-4 mx-8 z-50 bg-none w-52">
-                        <div className="mb-4 w-full">
-                            <h3 className="text-center">Geography</h3>
-                            <GeoLevelSelection />
-                        </div>
-                        <div className="flex flex-row gap-4 w-full">
+                        <div className="flex flex-column gap-4 w-full">
+                            <div className="flex-0">
+                                <h3 className="text-center">Indices</h3>
+                                <IndexVariableSelection />
+                            </div>
                             <div className="flex-0 w-24">
-                                <h3 className="text-center">Impacts</h3>
+                                <h3 className="text-center">Constructed Wetlands</h3>
                                 <WetlandsVariableSelection />
                             </div>
-                            {geoLevel === 'colonias' && (
-                                <div className="flex-0">
-                                    <h3 className="text-center">Vulnerability</h3>
-                                    <IndexVariableSelection />
-                                </div>
-                            )}
                         </div>
                     </div>
                     <div className="absolute top-0 right-1/2 m-4 z-50">
