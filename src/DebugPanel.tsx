@@ -10,7 +10,7 @@ const wetlandsOptions = [
     { color: '#2A344B', opacity: 0.55 },
 ];
 
-export function DebugPanel({}) {
+export function DebugPanel() {
     const [wetlandsColor, setWetlandsColor] = useRecoilState(wetlandsBackdropColorState);
     const [wetlandsOpacity, setWetlandsOpacity] = useRecoilState(wetlandsBackdropOpacityState);
 

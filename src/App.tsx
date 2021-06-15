@@ -65,16 +65,18 @@ function App() {
                             <DataList height={350} itemHeight={70} />
                         </div>
                     </div>
-                    {/* <div className="absolute bottom-0 left-0 my-4 mx-8 w-64 z-50">
-                        {geoLevel === 'colonias' &&
-                            (coloniasVariable === 'CW_sqm' ||
-                                coloniasVariable === 'population_impacted') && (
-                                <div className="p-4 mb-6 w-full bg-blue-900 bg-opacity-90 filter brightness-125 text-white rounded-xl flex-0">
-                                    <h2>Constructed Wetlands Benefits</h2>
-                                    <Benefits />
-                                </div>
-                            )}
-                    </div> */}
+                    {false && (
+                        <div className="absolute bottom-0 left-0 my-4 mx-8 w-64 z-50">
+                            {geoLevel === 'colonias' &&
+                                (coloniasVariable === 'CW_sqm' ||
+                                    coloniasVariable === 'population_impacted') && (
+                                    <div className="p-4 mb-6 w-full bg-blue-900 bg-opacity-90 filter brightness-125 text-white rounded-xl flex-0">
+                                        <h2>Constructed Wetlands Benefits</h2>
+                                        <Benefits />
+                                    </div>
+                                )}
+                        </div>
+                    )}
                     <DebugPanel />
                 </div>
             </div>
