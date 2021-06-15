@@ -7,6 +7,7 @@ import { useRecoilValue } from 'recoil';
 import { IndexVariableSelection } from './controls/IndexVariableSelection';
 import { TimeSelection } from './controls/TimeSelection';
 import { WetlandsVariableSelection } from './controls/WetlandsVariableSelection';
+import { DebugPanel } from './DebugPanel';
 import { Legend } from './legend/Legend';
 import { MexicoMap } from './map/MexicoMap';
 import { Benefits } from './panels/Benefits';
@@ -64,7 +65,7 @@ function App() {
                             <DataList height={350} itemHeight={70} />
                         </div>
                     </div>
-                    <div className="absolute bottom-0 left-0 my-4 mx-8 w-64 z-50">
+                    {/* <div className="absolute bottom-0 left-0 my-4 mx-8 w-64 z-50">
                         {geoLevel === 'colonias' &&
                             (coloniasVariable === 'CW_sqm' ||
                                 coloniasVariable === 'population_impacted') && (
@@ -73,7 +74,8 @@ function App() {
                                     <Benefits />
                                 </div>
                             )}
-                    </div>
+                    </div> */}
+                    <DebugPanel />
                 </div>
             </div>
         </>

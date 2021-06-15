@@ -8,6 +8,7 @@ import { useFeatureDataValue, useFeatureId } from '../data/use-feature-data';
 import { useDataColor } from '../data/use-feature-data';
 import { geoLevelState } from '../recoil/data-selection-state';
 import { variableSpecState } from '../recoil/data-selection-state';
+import { wetlandsBackdropColorState, wetlandsBackdropOpacityState } from '../recoil/debugging';
 import {
     mapHoverState,
     singleFeatureHighlightState,
@@ -40,8 +41,31 @@ export function MexicoMap() {
     const getColoniasId = useFeatureId('colonias');
     const getAlcaldiasId = useFeatureId('alcaldias');
 
+    const wetlandsColor = useRecoilValue(wetlandsBackdropColorState);
+    const wetlandsOpacity = useRecoilValue(wetlandsBackdropOpacityState);
+
     return (
         <LeafletMap>
+            <Pane name="alcaldias-background">
+                <PaneVisibility
+                    paneName="alcaldias-background"
+                    visible={isColonias && variableSpec?.variable === 'CW_sqm'}
+                />
+                {alcaldiasData && (
+                    <MemoizedGeoJSON
+                        data={alcaldiasData}
+                        style={{
+                            stroke: false,
+                            fill: true,
+                            fillColor: /#([0-9a-fA-F]{3})|([0-9a-fA-F]{6})/.test(wetlandsColor)
+                                ? wetlandsColor
+                                : '#f00',
+                            fillOpacity: wetlandsOpacity,
+                        }}
+                        interactive={false}
+                    />
+                )}
+            </Pane>
             <Pane name="colonias">
                 <PaneVisibility paneName="colonias" visible={isColonias} />
                 {coloniasData && (

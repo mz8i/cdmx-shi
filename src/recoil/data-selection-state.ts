@@ -5,7 +5,7 @@ import { BudgetName, GeoLevel, TimeName, VariableName, WeightingName } from '../
 
 export const coloniasVariableState = atom<VariableName>({
     key: 'coloniasVariable',
-    default: 'SHI',
+    default: 'CW_sqm',
 });
 
 export const alcaldiasVariableState = atom<VariableName>({
