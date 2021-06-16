@@ -8,7 +8,7 @@ import { useFeatureDataValue, useFeatureId } from '../data/use-feature-data';
 import { useDataColor } from '../data/use-feature-data';
 import { geoLevelState } from '../recoil/data-selection-state';
 import { variableSpecState } from '../recoil/data-selection-state';
-import { wetlandsBackdropColorState, wetlandsBackdropOpacityState } from '../recoil/debugging';
+// import { wetlandsBackdropColorState, wetlandsBackdropOpacityState } from '../recoil/debugging';
 import {
     mapHoverState,
     singleFeatureHighlightState,
@@ -41,8 +41,8 @@ export function MexicoMap() {
     const getColoniasId = useFeatureId('colonias');
     const getAlcaldiasId = useFeatureId('alcaldias');
 
-    const wetlandsColor = useRecoilValue(wetlandsBackdropColorState);
-    const wetlandsOpacity = useRecoilValue(wetlandsBackdropOpacityState);
+    // const wetlandsColor = useRecoilValue(wetlandsBackdropColorState);
+    // const wetlandsOpacity = useRecoilValue(wetlandsBackdropOpacityState);
 
     return (
         <LeafletMap>
@@ -57,10 +57,12 @@ export function MexicoMap() {
                         style={{
                             stroke: false,
                             fill: true,
-                            fillColor: /#([0-9a-fA-F]{3})|([0-9a-fA-F]{6})/.test(wetlandsColor)
-                                ? wetlandsColor
-                                : '#f00',
-                            fillOpacity: wetlandsOpacity,
+                            fillColor: '#fff',
+                            fillOpacity: 1,
+                            // fillColor: /#([0-9a-fA-F]{3})|([0-9a-fA-F]{6})/.test(wetlandsColor)
+                            //     ? wetlandsColor
+                            //     : '#f00',
+                            // fillOpacity: wetlandsOpacity,
                         }}
                         interactive={false}
                     />

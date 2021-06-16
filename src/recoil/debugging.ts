@@ -9,3 +9,8 @@ export const wetlandsBackdropOpacityState = atom<number>({
     key: 'wetlandsOpacity',
     default: 0.0,
 });
+
+export const mapPositionState = atom<[number, number]>({
+    key: 'mapPosition',
+    default: [0, 0],
+});

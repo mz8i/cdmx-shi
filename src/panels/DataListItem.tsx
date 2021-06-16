@@ -7,7 +7,7 @@ import { singleFeatureHighlightState } from '../recoil/ui-state';
 export function DataListItem({ geoLevel, feature }) {
     const variableSpec = useRecoilValue(variableSpecState);
 
-    const { getName } = useGetMetadata(geoLevel);
+    const { getName, getId } = useGetMetadata(geoLevel);
     const setHighlight = useSetRecoilState(singleFeatureHighlightState);
     const resetHighlight = useResetRecoilState(singleFeatureHighlightState);
 
@@ -15,7 +15,7 @@ export function DataListItem({ geoLevel, feature }) {
     return (
         <>
             <div
-                className={`w-full cursor-pointer p-2 filter hover:brightness-105`}
+                className={`w-full cursor-pointer p-2 filter hover:brightness-110 mb-2`}
                 onMouseOver={() => {
                     setHighlight(feature);
                 }}
@@ -23,11 +23,20 @@ export function DataListItem({ geoLevel, feature }) {
                     resetHighlight();
                 }}
             >
-                <h3 className="text-gray-900 text-shadow-white font-normal uppercase">
-                    {getName(feature)}
+                <h3
+                    className="text-gray-900 text-shadow-white text-sm font-normal uppercase truncate"
+                    title={getName(feature)}
+                >
+                    {getName(feature) ?? (
+                        <span className="italic">
+                            {geoLevel === 'colonias'
+                                ? `Colonia ${getId(feature).toFixed(0)}`
+                                : 'Alcaldia'}
+                        </span>
+                    )}
                 </h3>
                 <div
-                    className="w-full cursor-pointer p-2 h-8"
+                    className="w-full cursor-pointer p-2 h-5"
                     style={{
                         backgroundColor: getDataColor(feature),
                     }}

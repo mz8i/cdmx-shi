@@ -1,6 +1,6 @@
 import { atom, selector } from 'recoil';
 
-import { budgetDimensionState, currentVariableState, geoLevelState } from './data-selection-state';
+import { budgetDimensionState, currentVariableState } from './data-selection-state';
 
 export type WalkthroughPhase = 'scenarios' | 'solutions' | 'impact';
 

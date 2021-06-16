@@ -1,8 +1,12 @@
 import { SketchPicker } from 'react-color';
 import Draggable from 'react-draggable';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { wetlandsBackdropColorState, wetlandsBackdropOpacityState } from '../recoil/debugging';
+import {
+    mapPositionState,
+    wetlandsBackdropColorState,
+    wetlandsBackdropOpacityState,
+} from '../recoil/debugging';
 
 const wetlandsOptions = [
     { color: '#13313A', opacity: 0.6 },
@@ -14,11 +18,13 @@ const wetlandsOptions = [
 export function DebugPanel() {
     const [wetlandsColor, setWetlandsColor] = useRecoilState(wetlandsBackdropColorState);
     const [wetlandsOpacity, setWetlandsOpacity] = useRecoilState(wetlandsBackdropOpacityState);
+    const mapPosition = useRecoilValue(mapPositionState);
 
     return (
         <Draggable cancel=".draggable-no">
             <div className="absolute top-40 left-2 z-50 outline-black bg-gray-50 rounded-xl p-3 pt-5 cursor-move">
                 <div className="draggable-no cursor-auto">
+                    {mapPosition}
                     <h2 className="text-lg">Wetlands backdrop color?</h2>
                     <div className="flex flex-row gap-1 m-1">
                         {wetlandsOptions.map(({ color, opacity }, i) => (
