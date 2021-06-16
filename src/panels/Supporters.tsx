@@ -1,4 +1,11 @@
-import { LogoAAIcon, LogoBCIcon, LogoBGSIcon, LogoCASAIcon, LogoNFIcon } from '../ui/icons';
+import {
+    LogoAAIcon,
+    LogoBCIcon,
+    LogoBGSIcon,
+    LogoCASAIcon,
+    LogoIUIcon,
+    LogoNFIcon,
+} from '../ui/icons';
 
 export function Supporters() {
     return (
@@ -38,6 +45,14 @@ export function Supporters() {
                             rel="noreferrer"
                         >
                             <LogoNFIcon height={23} fill="#333" />
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h3 className="uppercase font-bold text-xs mb-2">A special thanks to:</h3>
+                    <div className="flex flex-row gap-2">
+                        <a href="https://islaurbana.org/english/" target="_blank" rel="noreferrer">
+                            <LogoIUIcon height={26} fill="#333" />
                         </a>
                     </div>
                 </div>

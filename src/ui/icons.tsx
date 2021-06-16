@@ -14,11 +14,12 @@ import { ReactComponent as LogoAAIcon } from '../assets/logo_AA.svg';
 import { ReactComponent as LogoBCIcon } from '../assets/logo_BC.svg';
 import { ReactComponent as LogoBGSIcon } from '../assets/logo_BGS.svg';
 import { ReactComponent as LogoCASAIcon } from '../assets/logo_CASA.svg';
+import { ReactComponent as LogoIUIcon } from '../assets/logo_IU.svg';
 import { ReactComponent as LogoNFIcon } from '../assets/logo_NF.svg';
 
 export { W1Icon, W2Icon, W3Icon };
 
-export { LogoAAIcon, LogoBCIcon, LogoBGSIcon, LogoCASAIcon, LogoNFIcon };
+export { LogoAAIcon, LogoBCIcon, LogoBGSIcon, LogoCASAIcon, LogoNFIcon, LogoIUIcon };
 
 export { IndexDiagramShape };
 
