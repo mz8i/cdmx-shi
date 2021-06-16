@@ -1,6 +1,4 @@
 import { Tab, TabList, TabPanel, TabPanels, Tabs, TabsOrientation } from '@reach/tabs';
-import { useMemo } from 'react';
-import * as portals from 'react-reverse-portal';
 import { useRecoilState } from 'recoil';
 
 import { WeightingName } from '../config/variables';
@@ -11,15 +9,10 @@ import { ScenarioWeightings } from './scenarios/ScenarioWeightings';
 export function ScenarioSelection() {
     const [value, onChange] = useRecoilState(weightingDimensionState);
 
-    const portalNode = useMemo(() => portals.createHtmlPortalNode(), []);
-
     return (
         <>
-            <portals.InPortal node={portalNode}>
-                <ScenarioWeightings scenario={value} />
-            </portals.InPortal>
             <Tabs
-                className="my-4 h-64 rounded-2xl bg-blue-900 text-white overflow-hidden"
+                className="my-4 h-80 rounded-2xl bg-blue-900 text-white overflow-hidden"
                 orientation={TabsOrientation.Vertical}
                 index={parseInt(value.substring(1), 10) - 1}
                 onChange={index => onChange(`w${index + 1}` as WeightingName)}
@@ -51,26 +44,58 @@ export function ScenarioSelection() {
                     </Tab>
                 </TabList>
                 <TabPanels className="w-full p-3">
-                    <TabPanel className="text-center p-2 rounded-xl align-middle bg-white py-2 px-3 box-border h-full">
-                        <h3 className="text-l font-extrabold uppercase text-blue-900 text-left">
+                    <TabPanel className="text-center p-2 rounded-xl align-middle bg-white py-2 px-3 box-border h-full relative">
+                        <h3 className="text-l font-extrabold uppercase text-blue-900 text-left mb-2">
                             Stakeholder scenario
                         </h3>
-                        {value === 'w1' && <portals.OutPortal node={portalNode} />}
-                        {/* <ScenarioWeightings scenario="w1" /> */}
+                        <p className="text-xs text-black text-left">
+                            Derived from surveys with different authorities of the CDMX that are
+                            experts in related topics, including authorities from the Secretaría de
+                            Protección Civil, Fondo para la Comunicación y Educación Ambiental, Isla
+                            Urbana and Loreto y Peña Ecological Park.{' '}
+                        </p>
+                        {value === 'w1' && (
+                            <div className="absolute bottom-3 left-0 right-0 flex flex-row align-middle justify-center">
+                                <div className="flex-0">
+                                    <ScenarioWeightings scenario={value} />
+                                </div>
+                            </div>
+                        )}
                     </TabPanel>
-                    <TabPanel className="text-center p-2 rounded-xl align-middle bg-white py-2 px-3 box-border h-full">
-                        <h3 className="text-l font-extrabold uppercase text-blue-900 text-left">
+                    <TabPanel className="text-center p-2 rounded-xl align-middle bg-white py-2 px-3 box-border h-full relative">
+                        <h3 className="text-l font-extrabold uppercase text-blue-900 text-left mb-2">
                             Environmental scenario
                         </h3>
-                        {value === 'w2' && <portals.OutPortal node={portalNode} />}
-                        {/* <ScenarioWeightings scenario="w2" /> */}
+                        <p className="text-xs text-black text-left">
+                            Environmental scientist who believes that water scarcity is the most
+                            important factor of water stress and that the natural and physical
+                            capacities of an area are essential for it to be able to face climate
+                            change.{' '}
+                        </p>
+                        {value === 'w2' && (
+                            <div className="absolute bottom-3 left-0 right-0 flex flex-row align-middle justify-center">
+                                <div className="flex-0">
+                                    <ScenarioWeightings scenario={value} />
+                                </div>
+                            </div>
+                        )}
                     </TabPanel>
-                    <TabPanel className="text-center p-2 rounded-xl align-middle bg-white py-2 px-3 box-border h-full">
-                        <h3 className="text-l font-extrabold uppercase text-blue-900 text-left">
+                    <TabPanel className="text-center p-2 rounded-xl align-middle bg-white py-2 px-3 box-border h-full relative">
+                        <h3 className="text-l font-extrabold uppercase text-blue-900 text-left mb-2">
                             Social scenario
                         </h3>
-                        {value === 'w3' && <portals.OutPortal node={portalNode} />}
-                        {/* <ScenarioWeightings scenario="w3" /> */}
+                        <p className="text-xs text-black text-left">
+                            Expert who believes that equal access to water is fundamental for water
+                            security and that improving social aspects related to economic and human
+                            resource capacities is key to facing climate change.
+                        </p>
+                        {value === 'w3' && (
+                            <div className="absolute bottom-3 left-0 right-0 flex flex-row align-middle justify-center">
+                                <div className="flex-0">
+                                    <ScenarioWeightings scenario={value} />
+                                </div>
+                            </div>
+                        )}
                     </TabPanel>
                 </TabPanels>
             </Tabs>
