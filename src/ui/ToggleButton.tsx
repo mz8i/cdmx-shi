@@ -6,6 +6,8 @@ export function ToggleButton({
     onChange,
     selectedClassName,
     hoverClassName,
+    onMouseOver = null,
+    onMouseOut = null,
     children,
 }) {
     const isSelected = value === toggleValue;
@@ -22,6 +24,8 @@ export function ToggleButton({
                 e.preventDefault();
                 onChange(value);
             }}
+            onMouseOver={() => onMouseOver?.()}
+            onMouseOut={() => onMouseOut?.()}
         >
             {children}
         </button>
