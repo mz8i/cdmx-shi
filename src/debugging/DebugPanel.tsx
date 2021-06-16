@@ -19,13 +19,13 @@ const wetlandsOptions = [
 export function DebugPanel() {
     const [wetlandsColor, setWetlandsColor] = useRecoilState(wetlandsBackdropColorState);
     const [wetlandsOpacity, setWetlandsOpacity] = useRecoilState(wetlandsBackdropOpacityState);
-    // const mapPosition = useRecoilValue(mapPositionState);
+    const mapPosition = useRecoilValue(mapPositionState);
 
     return (
         <Draggable cancel=".draggable-no">
             <div className="absolute top-4 left-40 z-50 outline-black bg-gray-50 rounded-xl p-3 pt-5 cursor-move">
                 <div className="draggable-no cursor-auto">
-                    {/* {mapPosition} */}
+                    {mapPosition}
                     <h2 className="text-lg">Wetlands backdrop color</h2>
                     <div className="flex flex-row gap-1 m-1">
                         {wetlandsOptions.map(({ color, opacity }, i) => (
