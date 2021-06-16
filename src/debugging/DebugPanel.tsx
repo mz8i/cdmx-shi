@@ -13,6 +13,7 @@ const wetlandsOptions = [
     { color: '#fff', opacity: 1.0 },
     { color: '#FFBA9E', opacity: 0.1 },
     { color: '#2A344B', opacity: 0.55 },
+    { color: '#161617', opacity: 0.5 },
 ];
 
 export function DebugPanel() {
