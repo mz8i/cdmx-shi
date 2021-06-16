@@ -17,8 +17,8 @@ export function DebugPanel() {
 
     return (
         <Draggable cancel=".draggable-no">
-            <div className="absolute top-40 left-2 z-50 outline-black bg-gray-50 rounded-xl p-3 pt-5">
-                <div className="draggable-no">
+            <div className="absolute top-40 left-2 z-50 outline-black bg-gray-50 rounded-xl p-3 pt-5 cursor-move">
+                <div className="draggable-no cursor-auto">
                     <h2 className="text-lg">Wetlands backdrop color?</h2>
                     <div className="flex flex-row gap-1 m-1">
                         {wetlandsOptions.map(({ color, opacity }, i) => (
