@@ -8,7 +8,7 @@ import { IndexVariableSelection } from './controls/IndexVariableSelection';
 import { TimeSelection } from './controls/TimeSelection';
 import { WetlandsVariableSelection } from './controls/WetlandsVariableSelection';
 // import { BreakpointIndicator } from './debugging/BreakpointIndicator';
-import { DebugPanel } from './debugging/DebugPanel';
+// import { DebugPanel } from './debugging/DebugPanel';
 import { Legend } from './legend/Legend';
 import { MexicoMap } from './map/MexicoMap';
 import { Benefits } from './panels/Benefits';
@@ -91,7 +91,7 @@ function App() {
                     <div className="invisible xl:visible absolute bottom-0 left-1/2 transform -translate-x-1/2 z-50 m-3">
                         <Supporters />
                     </div>
-                    <DebugPanel />
+                    {/* <DebugPanel /> */}
                 </div>
                 {/* <BreakpointIndicator /> */}
             </div>
