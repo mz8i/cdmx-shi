@@ -1,9 +1,9 @@
 import { Accordion, AccordionButton, AccordionItem, AccordionPanel } from '@reach/accordion';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 
 import { BudgetSelection } from '../controls/BudgetSelection';
 import { ScenarioSelection } from '../controls/ScenarioSelection';
-import { walkthroughPhaseState } from '../recoil/walkthrough-state';
+import { WalkthroughPhase, walkthroughPhaseState } from '../recoil/walkthrough-state';
 import { IndexDiagramShape } from '../ui/icons';
 
 function IndexDiagram({ mainName, dependencies, color }) {
@@ -29,8 +29,10 @@ function IndexDiagram({ mainName, dependencies, color }) {
     );
 }
 
+const accordionWalkthrough: WalkthroughPhase[] = ['scenarios', 'solutions', 'impact'];
+
 export function SidebarContent() {
-    const setWalkthroughPhase = useSetRecoilState(walkthroughPhaseState);
+    const [walkthroughPhase, setWalkthroughPhase] = useRecoilState(walkthroughPhaseState);
 
     return (
         <>
@@ -70,10 +72,13 @@ export function SidebarContent() {
                     color="text-aci-900"
                 />
             </div>
-            <Accordion>
+            <Accordion
+                index={accordionWalkthrough.indexOf(walkthroughPhase)}
+                onChange={index => setWalkthroughPhase(accordionWalkthrough[index])}
+            >
                 <AccordionItem>
                     <h2 className="text-xl uppercase my-4 text-blue-900">
-                        <AccordionButton onClick={() => setWalkthroughPhase('scenarios')}>
+                        <AccordionButton>
                             <span className="font-bold">01|</span> Scenarios
                         </AccordionButton>
                     </h2>
@@ -94,7 +99,7 @@ export function SidebarContent() {
                 </AccordionItem>
                 <AccordionItem>
                     <h2 className="text-xl uppercase my-4 text-blue-900">
-                        <AccordionButton onClick={() => setWalkthroughPhase('solutions')}>
+                        <AccordionButton>
                             <span className="font-bold">02|</span> Decentralised Solutions
                         </AccordionButton>
                     </h2>
@@ -111,7 +116,7 @@ export function SidebarContent() {
                 </AccordionItem>
                 <AccordionItem>
                     <h2 className="text-xl uppercase my-4 text-blue-900">
-                        <AccordionButton onClick={() => setWalkthroughPhase('impact')}>
+                        <AccordionButton>
                             <span className="font-bold">03|</span> Impact
                         </AccordionButton>
                     </h2>

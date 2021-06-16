@@ -7,7 +7,7 @@ export type WalkthroughPhase = 'scenarios' | 'solutions' | 'impact';
 // private backing field for walkthrough phase
 const _walkthroughPhaseState = atom<WalkthroughPhase>({
     key: '_walkthroughPhase',
-    default: 'scenarios',
+    default: 'solutions',
 });
 
 export const walkthroughPhaseState = selector<WalkthroughPhase>({

@@ -7,7 +7,7 @@ export const wetlandsBackdropColorState = atom<string>({
 
 export const wetlandsBackdropOpacityState = atom<number>({
     key: 'wetlandsOpacity',
-    default: 0.0,
+    default: 0.5,
 });
 
 export const mapPositionState = atom<[number, number]>({

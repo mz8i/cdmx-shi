@@ -27,12 +27,12 @@ import { BudgetName, GeoLevel, TimeName, VariableName, WeightingName } from '../
 
 export const currentVariableState = atom<VariableName>({
     key: 'currentVariable',
-    default: 'SHI',
+    default: 'CW_sqm',
 });
 
 export const budgetDimensionState = atom<BudgetName>({
     key: 'budgetDimension',
-    default: 'b0',
+    default: 'b1',
 });
 
 export const timeDimensionState = atom<TimeName>({
