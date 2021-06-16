@@ -2,7 +2,7 @@ import { SketchPicker } from 'react-color';
 import Draggable from 'react-draggable';
 import { useRecoilState } from 'recoil';
 
-import { wetlandsBackdropColorState, wetlandsBackdropOpacityState } from './recoil/debugging';
+import { wetlandsBackdropColorState, wetlandsBackdropOpacityState } from '../recoil/debugging';
 
 const wetlandsOptions = [
     { color: '#13313A', opacity: 0.6 },

@@ -21,8 +21,8 @@ function TickMark({ tickIndex, boxSize, value, separator }) {
                 <line
                     y1={yPosition}
                     y2={yPosition}
-                    x1={boxSize + 45}
-                    x2={boxSize + 180}
+                    x1={boxSize * 2.5}
+                    x2={boxSize * 7.5}
                     stroke="#aaa"
                     strokeWidth={1}
                 />

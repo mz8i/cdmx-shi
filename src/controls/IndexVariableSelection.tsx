@@ -1,11 +1,10 @@
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 
-import { coloniasVariableState, geoLevelState } from '../recoil/data-selection-state';
+import { currentVariableState } from '../recoil/data-selection-state';
 import { ToggleButton } from '../ui/ToggleButton';
 
 export function IndexVariableSelection() {
-    const [variable, setVariable] = useRecoilState(coloniasVariableState);
-    const setGeoLevel = useSetRecoilState(geoLevelState);
+    const [variable, setVariable] = useRecoilState(currentVariableState);
 
     return (
         <div className="border-none rounded-none my-1 flex flex-row gap-4">
@@ -13,10 +12,7 @@ export function IndexVariableSelection() {
                 <ToggleButton
                     value="SHI"
                     toggleValue={variable}
-                    onChange={newVal => {
-                        setGeoLevel('colonias');
-                        setVariable(newVal);
-                    }}
+                    onChange={setVariable}
                     selectedClassName="border-shi-700"
                     hoverClassName="hover:border-shi-700"
                 >
@@ -26,10 +22,7 @@ export function IndexVariableSelection() {
                     <ToggleButton
                         value="WSI"
                         toggleValue={variable}
-                        onChange={newVal => {
-                            setGeoLevel('colonias');
-                            setVariable(newVal);
-                        }}
+                        onChange={setVariable}
                         selectedClassName="border-wsi-800"
                         hoverClassName="hover:border-wsi-800"
                     >
@@ -38,10 +31,7 @@ export function IndexVariableSelection() {
                     <ToggleButton
                         value="ACI"
                         toggleValue={variable}
-                        onChange={newVal => {
-                            setGeoLevel('colonias');
-                            setVariable(newVal);
-                        }}
+                        onChange={setVariable}
                         selectedClassName="border-aci-800"
                         hoverClassName="hover:border-aci-800"
                     >

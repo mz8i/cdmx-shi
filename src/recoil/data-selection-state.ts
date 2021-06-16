@@ -3,31 +3,36 @@ import { atom, selector } from 'recoil';
 import { DimensionSpec, VariableSpec } from '../config/variables';
 import { BudgetName, GeoLevel, TimeName, VariableName, WeightingName } from '../config/variables';
 
-export const coloniasVariableState = atom<VariableName>({
-    key: 'coloniasVariable',
-    default: 'CW_sqm',
-});
+// export const coloniasVariableState = atom<VariableName>({
+//     key: 'coloniasVariable',
+//     default: 'CW_sqm',
+// });
 
-export const alcaldiasVariableState = atom<VariableName>({
-    key: 'alcaldiasVariable',
-    default: 'CW_budget',
-});
+// export const alcaldiasVariableState = atom<VariableName>({
+//     key: 'alcaldiasVariable',
+//     default: 'CW_budget',
+// });
 
-export const currentVariableState = selector<VariableName>({
-    key: 'geoLevelVariable',
-    get: ({ get }) =>
-        get(geoLevelState) === 'colonias'
-            ? get(coloniasVariableState)
-            : get(alcaldiasVariableState),
-    set: ({ get, set }, newVal) =>
-        get(geoLevelState) === 'colonias'
-            ? set(coloniasVariableState, newVal)
-            : set(alcaldiasVariableState, newVal),
+// export const currentVariableState = selector<VariableName>({
+//     key: 'geoLevelVariable',
+//     get: ({ get }) =>
+//         get(geoLevelState) === 'colonias'
+//             ? get(coloniasVariableState)
+//             : get(alcaldiasVariableState),
+//     set: ({ get, set }, newVal) =>
+//         get(geoLevelState) === 'colonias'
+//             ? set(coloniasVariableState, newVal)
+//             : set(alcaldiasVariableState, newVal),
+// });
+
+export const currentVariableState = atom<VariableName>({
+    key: 'currentVariable',
+    default: 'SHI',
 });
 
 export const budgetDimensionState = atom<BudgetName>({
     key: 'budgetDimension',
-    default: 'b2',
+    default: 'b0',
 });
 
 export const timeDimensionState = atom<TimeName>({
@@ -40,9 +45,14 @@ export const weightingDimensionState = atom<WeightingName>({
     default: 'w1',
 });
 
-export const geoLevelState = atom<GeoLevel>({
+// export const geoLevelState = atom<GeoLevel>({
+//     key: 'geoLevel',
+//     default: 'colonias',
+// });
+
+export const geoLevelState = selector<GeoLevel>({
     key: 'geoLevel',
-    default: 'colonias',
+    get: ({ get }) => (get(currentVariableState) === 'CW_budget' ? 'alcaldias' : 'colonias'),
 });
 
 export const dimensionsSpecState = selector<DimensionSpec>({

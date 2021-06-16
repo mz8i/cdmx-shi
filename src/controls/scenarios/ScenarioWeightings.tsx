@@ -32,12 +32,12 @@ export function ScenarioWeightings({ scenario }) {
 
     return (
         <>
-            <div className="flex flex-row">
+            <div className="flex flex-row justify-around">
                 {WSIVariables.map(v => {
                     return (
                         <CircularGauge
                             key={v}
-                            className="flex-0 m-2"
+                            className="flex-shrink-1"
                             radius={30}
                             strokeWidth={7}
                             strokeColor={interpolateColor(WSIColor0, WSIColor1, weighting[v])}
@@ -54,12 +54,12 @@ export function ScenarioWeightings({ scenario }) {
                     );
                 })}
             </div>
-            <div className="flex flex-row">
+            <div className="flex flex-row justify-around">
                 {ACIVariables.map(v => {
                     return (
                         <CircularGauge
                             key={v}
-                            className="flex-0 m-2"
+                            className="flex-shrink-1"
                             radius={30}
                             strokeWidth={7}
                             strokeColor={interpolateColor(ACIColor0, ACIColor1, weighting[v])}

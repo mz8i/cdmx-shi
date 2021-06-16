@@ -20,12 +20,12 @@ export const Legend: React.FC<LegendProps> = ({ variable, dataset }) => {
             : undefined;
 
     return (
-        <div className="w-64 bg-gray-50 p-5 pb-8 rounded-xl border-4 border-blue-900">
+        <div className="w-60 bg-gray-50 p-5 pb-8 rounded-xl border-4 border-blue-900">
             <h3 className="font-bold mb-5">{varDef.description ?? ''}</h3>
             <ThresholdScaleLegend
                 colorScale={colorScale}
                 scaleMapping={scaleMapping}
-                boxSize={30}
+                boxSize={25}
                 inverted={!ascending}
                 valueFormatFn={formatFn}
                 variableHint={varDef.legendClassHint}

@@ -1,20 +1,12 @@
 import { useState } from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 
 import { GeoLevel } from '../config/variables';
-import {
-    alcaldiasVariableState,
-    coloniasVariableState,
-    currentVariableState,
-    geoLevelState,
-} from '../recoil/data-selection-state';
+import { currentVariableState } from '../recoil/data-selection-state';
 import { ToggleButton } from '../ui/ToggleButton';
 
 export function WetlandsVariableSelection() {
-    const setGeoLevel = useSetRecoilState(geoLevelState);
-    const setColoniasVariable = useSetRecoilState(coloniasVariableState);
-    const setAlcaldiasVariable = useSetRecoilState(alcaldiasVariableState);
-    const variable = useRecoilValue(currentVariableState);
+    const [variable, setVariable] = useRecoilState(currentVariableState);
 
     const [hoverGeoLevel, setHoverGeoLevel] = useState<GeoLevel>(null);
 
@@ -24,10 +16,7 @@ export function WetlandsVariableSelection() {
                 <ToggleButton
                     value={'CW_budget'}
                     toggleValue={variable}
-                    onChange={newVal => {
-                        setGeoLevel('alcaldias');
-                        setAlcaldiasVariable(newVal);
-                    }}
+                    onChange={setVariable}
                     selectedClassName="border-green-800"
                     hoverClassName="hover:border-green-800"
                     onMouseOver={() => setHoverGeoLevel('alcaldias')}
@@ -38,10 +27,7 @@ export function WetlandsVariableSelection() {
                 <ToggleButton
                     value={'CW_sqm'}
                     toggleValue={variable}
-                    onChange={newVal => {
-                        setGeoLevel('colonias');
-                        setColoniasVariable(newVal);
-                    }}
+                    onChange={setVariable}
                     selectedClassName="border-green-800"
                     hoverClassName="hover:border-green-800"
                     onMouseOver={() => setHoverGeoLevel('colonias')}
