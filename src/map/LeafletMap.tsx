@@ -22,8 +22,8 @@ export const LeafletMap: React.FC<{}> = ({ children }) => {
                 maxZoom={19}
                 updateWhenZooming={true}
             />
+            <AttributionControl position="bottomright" />
             <ZoomControl position="bottomright" />
-            <AttributionControl position="bottomleft" />
             {children}
         </MapContainer>
     );

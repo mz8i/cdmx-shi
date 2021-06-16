@@ -37,6 +37,12 @@ interface BaseVariableDefinition {
      * How many digits after the comma to display when formating values in the legend.
      */
     legendFractionalDigits?: number;
+
+    /**
+     * Used to format legend tooltip for every colored box - should be a simple word corresponding to the class values in the scale mapping,
+     * e.g. class: Very high -- legendClassHint: vulnerability -> tooltip will be "Very high vulnerability"
+     */
+    legendClassHint?: string;
 }
 interface RawVariableDefinition extends BaseVariableDefinition {}
 
@@ -74,12 +80,14 @@ export const VARIABLES = {
             colorScale: 'SHI',
             scaleMapping: 'SHI',
             description: 'Socio-Hydrological Vulnerability',
+            legendClassHint: 'vulnerability',
         },
         WSI: {
             dimensions: true,
             colorScale: 'WSI',
             scaleMapping: 'WSI',
             description: 'Water Stress',
+            legendClassHint: 'stress',
         },
         ACI: {
             dimensions: true,
@@ -87,6 +95,7 @@ export const VARIABLES = {
             scaleMapping: 'ACI',
             invertOrderToAscending: true,
             description: 'Adaptive Capacity',
+            legendClassHint: 'capacity',
         },
         CW_perc: {
             dimensions: true,

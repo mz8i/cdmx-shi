@@ -61,14 +61,18 @@ export interface ScaleMappingItem {
     to: number;
     exclusiveFrom?: boolean;
     class?: string;
+    classHint?: string;
+
+    /** whether to keep the class string as-is in the tooltip */
+    rawClass?: boolean;
 }
 export type ScaleMapping = ScaleMappingItem[];
 
 export const SCALE_MAPPINGS = {
     SHI: [
-        { from: 0, to: 0.6, class: 'Little to no' },
-        { from: 0.6, to: 0.8, class: 'Little to no' },
-        { from: 0.8, to: 1, class: 'Little to no' },
+        { from: 0, to: 0.6, class: 'Little to no', classHint: '(best)' },
+        { from: 0.6, to: 0.8, class: 'Little to no', classHint: '(best)' },
+        { from: 0.8, to: 1, class: 'Little to no', classHint: '(best)' },
         { from: 1, to: 1.2, class: 'Moderate' },
         { from: 1.2, to: 1.4, class: 'Moderate' },
         { from: 1.4, to: 1.6, class: 'Moderate' },
@@ -79,31 +83,31 @@ export const SCALE_MAPPINGS = {
         { from: 2.4, to: 2.6, class: 'Significant' },
         { from: 2.6, to: 2.8, class: 'Significant' },
         { from: 2.8, to: 3, class: 'Significant' },
-        { from: 3, to: 8, class: 'Extreme' },
+        { from: 3, to: 8, class: 'Extreme', classHint: '(worst)' },
     ],
     WSI: [
-        { from: 0, to: 0.1, class: 'Very low' },
-        { from: 0.1, to: 0.2, class: 'Very low' },
-        { from: 0.2, to: 0.3, class: 'Low' },
-        { from: 0.3, to: 0.4, class: 'Low' },
-        { from: 0.4, to: 0.5, class: 'Moderate' },
+        { from: 0, to: 0.1, class: '(Not present)', rawClass: true },
+        { from: 0.1, to: 0.2, class: '(Not present)', rawClass: true },
+        { from: 0.2, to: 0.3, class: '(Not present)', rawClass: true },
+        { from: 0.3, to: 0.4, class: '(Not present)', rawClass: true },
+        { from: 0.4, to: 0.5, class: '(Not present)', rawClass: true },
         { from: 0.5, to: 0.6, class: 'Moderate' },
         { from: 0.6, to: 0.7, class: 'High' },
         { from: 0.7, to: 0.8, class: 'High' },
-        { from: 0.8, to: 0.9, class: 'Very high' },
-        { from: 0.9, to: 1, class: 'Very high' },
+        { from: 0.8, to: 0.9, class: 'Very high', classHint: '(worst)' },
+        { from: 0.9, to: 1, class: 'Very high', classHint: '(worst)' },
     ],
     ACI: [
-        { from: 0, to: 0.1, class: 'Very low' },
-        { from: 0.1, to: 0.2, class: 'Very low' },
+        { from: 0, to: 0.1, class: 'Very low', classHint: '(worst)' },
+        { from: 0.1, to: 0.2, class: 'Very low', classHint: '(worst)' },
         { from: 0.2, to: 0.3, class: 'Low' },
         { from: 0.3, to: 0.4, class: 'Low' },
         { from: 0.4, to: 0.5, class: 'Moderate' },
         { from: 0.5, to: 0.6, class: 'Moderate' },
         { from: 0.6, to: 0.7, class: 'High' },
         { from: 0.7, to: 0.8, class: 'High' },
-        { from: 0.8, to: 0.9, class: 'Very high' },
-        { from: 0.9, to: 1, class: 'Very high' },
+        { from: 0.8, to: 0.9, class: 'Very high', classHint: '(best)' },
+        { from: 0.9, to: 1, class: 'Very high', classHint: '(best)' },
     ],
     CW_sqm: [
         { exclusiveFrom: true, from: 0, to: 286 },
