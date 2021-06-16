@@ -9,8 +9,15 @@ import { ReactComponent as PopulationIcon } from '../assets/icon_benefits_popula
 import { ReactComponent as W1Icon } from '../assets/icon_w1.svg';
 import { ReactComponent as W2Icon } from '../assets/icon_w2.svg';
 import { ReactComponent as W3Icon } from '../assets/icon_w3.svg';
+import { ReactComponent as LogoAAIcon } from '../assets/logo_AA.svg';
+import { ReactComponent as LogoBCIcon } from '../assets/logo_BC.svg';
+import { ReactComponent as LogoBGSIcon } from '../assets/logo_BGS.svg';
+import { ReactComponent as LogoCASAIcon } from '../assets/logo_CASA.svg';
+import { ReactComponent as LogoNFIcon } from '../assets/logo_NF.svg';
 
 export { W1Icon, W2Icon, W3Icon };
+
+export { LogoAAIcon, LogoBCIcon, LogoBGSIcon, LogoCASAIcon, LogoNFIcon };
 
 const benefitIcons = {
     arum_lillies_yearly: ArumIcon,

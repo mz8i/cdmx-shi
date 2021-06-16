@@ -14,6 +14,7 @@ import { Benefits } from './panels/Benefits';
 import { DataList } from './panels/DataList';
 import { HoverDetailsPane } from './panels/details/HoverDetailsPane';
 import { SidebarContent } from './panels/SidebarContent';
+import { Supporters } from './panels/Supporters';
 import {
     coloniasVariableState,
     currentVariableState,
@@ -77,6 +78,9 @@ function App() {
                                 )}
                         </div>
                     )}
+                    <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 z-50 m-3">
+                        <Supporters />
+                    </div>
                     <DebugPanel />
                 </div>
             </div>
