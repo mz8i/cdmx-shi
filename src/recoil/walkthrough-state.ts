@@ -2,7 +2,7 @@ import { atom, selector } from 'recoil';
 
 import { budgetDimensionState, currentVariableState } from './data-selection-state';
 
-export type WalkthroughPhase = 'scenarios' | 'solutions' | 'impact';
+export type WalkthroughPhase = 'intro' | 'scenarios' | 'solutions' | 'impact';
 
 // private backing field for walkthrough phase
 const _walkthroughPhaseState = atom<WalkthroughPhase>({
@@ -18,7 +18,10 @@ export const walkthroughPhaseState = selector<WalkthroughPhase>({
 
         if (newValue === currentValue) return;
 
-        if (newValue === 'scenarios') {
+        if (newValue === 'intro') {
+            set(currentVariableState, 'SHI');
+            set(budgetDimensionState, 'b0');
+        } else if (newValue === 'scenarios') {
             set(currentVariableState, 'SHI');
             set(budgetDimensionState, 'b0');
         } else if (newValue === 'solutions') {

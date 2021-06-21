@@ -21,6 +21,8 @@ export function WetlandsVariableSelection() {
                     hoverClassName="hover:border-green-800"
                     onMouseOver={() => setHoverGeoLevel('alcaldias')}
                     onMouseOut={() => setHoverGeoLevel(null)}
+                    title="Constructed Wetlands budget"
+                    className="rounded-r-none -mr-px"
                 >
                     $
                 </ToggleButton>
@@ -32,6 +34,8 @@ export function WetlandsVariableSelection() {
                     hoverClassName="hover:border-green-800"
                     onMouseOver={() => setHoverGeoLevel('colonias')}
                     onMouseOut={() => setHoverGeoLevel(null)}
+                    title="Constructed Wetlands sq. m."
+                    className="rounded-l-none -ml-px"
                 >
                     m<sup>2</sup>
                 </ToggleButton>

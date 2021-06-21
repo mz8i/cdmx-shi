@@ -64,18 +64,20 @@ export function Benefits() {
                 const value = data?.[bv];
                 const varDef = VARIABLES.colonias[bv];
                 return (
-                    <div key={bv} className="flex flex-row items-center h-14 mb-1">
+                    <div key={bv} className="flex flex-row items-center mb-2">
                         <BenefitIcon
-                            className="flex-0 mr-2 h-8"
+                            className="flex-0 mr-2"
                             fill="white"
-                            height={32}
-                            width={32}
+                            height={28}
+                            width={28}
                             icon={bv}
                         />
-                        <div className="flex-auto h-10 align-center">
-                            <h3 className="font-bold">{varDef.description}</h3>
-                            {value != null ? (
-                                <div className="font-light">{formatNumber(value, varDef.unit)}</div>
+                        <div className="flex-auto align-center">
+                            <h3 className="font-bold text-sm">{varDef.description}</h3>
+                            {value != null && !isNaN(value) ? (
+                                <div className="font-light text-sm">
+                                    {formatNumber(value, varDef.unit)}
+                                </div>
                             ) : (
                                 <div className="font-light text-sm">---</div>
                             )}

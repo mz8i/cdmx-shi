@@ -4,10 +4,12 @@ export function ToggleButton({
     value,
     toggleValue,
     onChange,
+    className = '',
     selectedClassName,
     hoverClassName,
     onMouseOver = null,
     onMouseOut = null,
+    title = undefined,
     children,
 }) {
     const isSelected = value === toggleValue;
@@ -16,9 +18,9 @@ export function ToggleButton({
             disabled={isSelected}
             className={cn(
                 {
-                    [`border-2 ${selectedClassName}`]: isSelected,
+                    [`border-2 relative z-30 ${selectedClassName}`]: isSelected,
                 },
-                `p-2 rounded bg-white text-gray-900 focus:outline-none outline-none border-2 ${hoverClassName} w-full`,
+                `p-2 rounded-lg bg-white text-gray-900 focus:outline-none outline-none border-2 ${hoverClassName} relative hover:z-50 w-full ${className}`,
             )}
             onClick={e => {
                 e.preventDefault();
@@ -26,6 +28,7 @@ export function ToggleButton({
             }}
             onMouseOver={() => onMouseOver?.()}
             onMouseOut={() => onMouseOut?.()}
+            title={title}
         >
             {children}
         </button>

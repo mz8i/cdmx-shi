@@ -36,7 +36,7 @@ export function DataListItem({ geoLevel, feature }) {
                     )}
                 </h3>
                 <div
-                    className="w-full cursor-pointer p-2 h-5"
+                    className="w-full cursor-pointer p-2 h-4 rounded"
                     style={{
                         backgroundColor: getDataColor(feature),
                     }}

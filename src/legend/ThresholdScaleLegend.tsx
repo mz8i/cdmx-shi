@@ -186,7 +186,7 @@ export const ThresholdScaleLegend: React.FC<ThresholdScaleLegendProps> = ({
     const lastTick = ticks[ticks.length - 1];
 
     return (
-        <svg width={100} height={colorScale.length * boxSize} style={{ overflow: 'visible' }}>
+        <svg width={200} height={colorScale.length * boxSize} style={{ overflow: 'visible' }}>
             {boxes.map((box, i) => {
                 const tick = ticks[i];
                 return (

@@ -29,103 +29,143 @@ function IndexDiagram({ mainName, dependencies, color }) {
     );
 }
 
-const accordionWalkthrough: WalkthroughPhase[] = ['scenarios', 'solutions', 'impact'];
+const WSIDiagram = () => (
+    <IndexDiagram
+        mainName="WSI"
+        dependencies={[
+            'Water Variation (WV)',
+            'Water Scarcity (WS)',
+            'Water Exploitation (WE)',
+            'Water Pollution (WP)',
+        ]}
+        color="text-wsi-900"
+    />
+);
+
+const ACIDiagram = () => (
+    <IndexDiagram
+        mainName="ACI"
+        dependencies={[
+            'Natural Capacity (NC)',
+            'Physical Capacity (PC)',
+            'Human Resource Capacity (HC)',
+            'Economic Capacity (EC)',
+        ]}
+        color="text-aci-900"
+    />
+);
+
+const accordionWalkthrough: WalkthroughPhase[] = ['intro', 'scenarios', 'solutions', 'impact'];
 
 export function SidebarContent() {
     const [walkthroughPhase, setWalkthroughPhase] = useRecoilState(walkthroughPhaseState);
 
     return (
-        <>
-            <h1 className="my-10 md:my-0 md:mb-4 text-3xl uppercase font-extrabold text-blue-900">
-                Socio-Hydrological Vulnerability Index (SHI)
-            </h1>
-            <p className="my-4 text-sm">
-                Indicator based method of evaluating the vulnerability of the socio-hydrological
-                system, based on a{' '}
-                <strong className="font-extrabold text-wsi-800">Water Stress Index (WSI)</strong>,
-                or ability to meet human and ecological demands for fresh water and an{' '}
-                <strong className="font-extrabold text-aci-800">
-                    Adaptive Capacity Index (ACI)
-                </strong>
-                , or ability of environmental and social systems to adjust and respond to potential
-                pressures.
-            </p>
-            <div className="flex flex-row justify-around flex-wrap gap-x-0 gap-y-4">
-                <IndexDiagram
-                    mainName="WSI"
-                    dependencies={[
-                        'Water Variation (WV)',
-                        'Water Scarcity (WS)',
-                        'Water Exploitation (WE)',
-                        'Water Pollution (WP)',
-                    ]}
-                    color="text-wsi-900"
-                />
-                <IndexDiagram
-                    mainName="ACI"
-                    dependencies={[
-                        'Natural Capacity (NC)',
-                        'Physical Capacity (PC)',
-                        'Human Resource Capacity (HC)',
-                        'Economic Capacity (EC)',
-                    ]}
-                    color="text-aci-900"
-                />
-            </div>
+        <section>
             <Accordion
                 index={accordionWalkthrough.indexOf(walkthroughPhase)}
                 onChange={index => setWalkthroughPhase(accordionWalkthrough[index])}
             >
-                <AccordionItem>
-                    <h2 className="text-xl uppercase my-4 text-blue-900">
-                        <AccordionButton>
-                            <span className="font-bold">01|</span> Scenarios
-                        </AccordionButton>
-                    </h2>
-                    <AccordionPanel className="transitions-all duration-1000">
-                        <p className="my-4 text-sm">
-                            Choose scenario based on the weights of the indicators within the{' '}
-                            <strong className="font-extrabold text-wsi-800">Water Stress</strong>{' '}
-                            and the{' '}
-                            <strong className="font-extrabold text-aci-800">
-                                Adaptive Capacity
+                <StyledAccordionItem>
+                    <StyledAccordionButton>
+                        <span className="font-bold">01|</span> Introduction
+                    </StyledAccordionButton>
+                    <StyledAccordionPanel>
+                        <p>
+                            The method is based on a{' '}
+                            <strong className="font-extrabold text-wsi-800">
+                                Water Stress Index (WSI)
                             </strong>
-                            .
+                            , or ability to meet human and ecological demands for fresh water and an{' '}
+                            <strong className="font-extrabold text-aci-800">
+                                Adaptive Capacity Index (ACI)
+                            </strong>
+                            , or ability of environmental and social systems to adjust and respond
+                            to potential pressures.
+                        </p>
+                        <div className="flex flex-row justify-around items-start flex-wrap gap-x-0 gap-y-4 max-w-md my-6">
+                            <div className="w-56 flex-shrink-1">
+                                <WSIDiagram />
+                            </div>
+                            <div className="w-56 flex-shrink-1">
+                                <ACIDiagram />
+                            </div>
+                        </div>
+                        <p>
+                            The index components are combined based on a set of weightings
+                            representing their importance. The next section describes three
+                            different sets of weightings developed for this project.
+                        </p>
+                    </StyledAccordionPanel>
+                </StyledAccordionItem>
+                <StyledAccordionItem>
+                    <StyledAccordionButton>
+                        <span className="font-bold">02|</span> Scenarios
+                    </StyledAccordionButton>
+                    <StyledAccordionPanel>
+                        <p className="mb-4 text-sm">
+                            The three <i>scenarios</i>, or weightings for the indicator components
+                            of <strong className="font-extrabold text-wsi-800">WSI</strong> and{' '}
+                            <strong className="font-extrabold text-aci-800">ACI</strong>, represent
+                            different perspectives on what contributes most to socio-hydrological
+                            vulnerability.
+                        </p>
+                        <p>
+                            Switch between the scenarios and see the effect the weightings have on
+                            the index data on the map.
                         </p>
                         <ScenarioSelection />
-                    </AccordionPanel>
-                    {/* <section className="my-4 mt-10">
-                    </section> */}
-                </AccordionItem>
-                <AccordionItem>
-                    <h2 className="text-xl uppercase my-4 text-blue-900">
-                        <AccordionButton>
-                            <span className="font-bold">02|</span> Decentralised Solutions
-                        </AccordionButton>
-                    </h2>
-                    <AccordionPanel>
+                    </StyledAccordionPanel>
+                </StyledAccordionItem>
+                <StyledAccordionItem>
+                    <StyledAccordionButton>
+                        <span className="font-bold">03|</span> Decentralised Solutions
+                    </StyledAccordionButton>
+                    <StyledAccordionPanel>
                         <p className="my-4">
-                            Choose amount of{' '}
-                            <strong className="font-bold">Constructed Wetlands (CW)</strong> based
-                            on budget.
+                            Use the slider to choose the budget to allocate to the creation of
+                            artificial{' '}
+                            <strong className="font-bold">Constructed Wetlands (CW)</strong>.
+                        </p>
+                        <p>
+                            The map shows the allocation of the budget to each of the alcaldias
+                            (municipalities) in and around Mexico City.
                         </p>
                         <BudgetSelection />
-                    </AccordionPanel>
-                    {/* <section className="my-4 mt-10">
-                    </section> */}
-                </AccordionItem>
-                <AccordionItem>
-                    <h2 className="text-xl uppercase my-4 text-blue-900">
-                        <AccordionButton>
-                            <span className="font-bold">03|</span> Impact
-                        </AccordionButton>
-                    </h2>
-                    <AccordionPanel>
+                        <p>
+                            Next, use the{' '}
+                            <i>
+                                m<sup>2</sup>
+                            </i>{' '}
+                            button to switch to{' '}
+                        </p>
+                    </StyledAccordionPanel>
+                </StyledAccordionItem>
+                <StyledAccordionItem>
+                    <StyledAccordionButton>
+                        <span className="font-bold">04|</span> Impact
+                    </StyledAccordionButton>
+
+                    <StyledAccordionPanel>
                         <p></p>
                         <BudgetSelection />
-                    </AccordionPanel>
-                </AccordionItem>
+                    </StyledAccordionPanel>
+                </StyledAccordionItem>
             </Accordion>
-        </>
+        </section>
     );
 }
+
+const StyledAccordionButton = ({ children }) => (
+    <AccordionButton className="text-xl uppercase text-blue-900 bg-gray-50 p-2 w-full text-left h-12">
+        {children}
+    </AccordionButton>
+);
+
+const StyledAccordionItem = ({ children }) => (
+    <AccordionItem className="border-b border-gray-200">{children}</AccordionItem>
+);
+
+const StyledAccordionPanel = ({ children }) => (
+    <AccordionPanel className="p-4 h-50 md:h-96 text-sm">{children}</AccordionPanel>
+);

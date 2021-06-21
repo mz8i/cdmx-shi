@@ -29,8 +29,8 @@ export const ValueIndicator: React.FC<ValueIndicatorProps> = ({ variableSpec, fe
 
     return (
         <div
-            className={`flex-1 flex flex-row text-center items-center transition-colors duration-500 h-16 ${
-                hasData ? '' : 'border-2 border-gray-200 border-dashed'
+            className={`flex-1 flex flex-row text-center items-center transition-colors duration-500 h-12 ${
+                hasData ? '' : 'border border-gray-300 border-dashed'
             }`}
             style={{ backgroundColor: color }}
         >
@@ -39,8 +39,7 @@ export const ValueIndicator: React.FC<ValueIndicatorProps> = ({ variableSpec, fe
                     hasData ? dataTextColor : 'text-gray-300'
                 } font-bold text-xl flex-row align-middle justify-center flex transition-colors ease-out duration-200`}
             >
-                {hasData ? dataClass ?? value : <span className="text-normal">NO DATA</span>}
-                {/* {feature && (getDataClass?.(value) ?? value ?? '')} */}
+                {hasData ? dataClass ?? value : <span className="text-base">NO DATA</span>}
             </div>
         </div>
     );

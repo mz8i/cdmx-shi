@@ -15,6 +15,7 @@ module.exports = {
     variants: {
         extend: {
             brightness: ['hover', 'focus'],
+            zIndex: ['hover', 'active'],
         },
     },
     plugins: [],

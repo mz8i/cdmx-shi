@@ -15,6 +15,7 @@ export function TimeSelection() {
                     onChange={setTime}
                     selectedClassName="border-blue-900"
                     hoverClassName="hover:border-blue-900"
+                    className="rounded-r-none -mr-px"
                 >
                     2020
                 </ToggleButton>
@@ -24,6 +25,7 @@ export function TimeSelection() {
                     onChange={setTime}
                     selectedClassName="border-blue-900"
                     hoverClassName="hover:border-blue-900"
+                    className="rounded-l-none -ml-px"
                 >
                     2050
                 </ToggleButton>

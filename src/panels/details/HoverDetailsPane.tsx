@@ -30,13 +30,19 @@ export function HoverDetailsPane() {
 
     return (
         <>
-            <section className="h-28">
+            <section className="h-20">
                 {feature ? (
                     <>
-                        <h3 className="font-bold min-h-8 text-lg uppercase" title="Colonia">
+                        <h3
+                            className="font-bold min-h-8 max-h-8 text-lg uppercase truncate"
+                            title={`Colonia: ${getName(feature)}`}
+                        >
                             {getName(feature)}
                         </h3>
-                        <h4 className="font-normal min-h-8" title="Alcaldía (Municipality)">
+                        <h4
+                            className="font-normal min-h-8"
+                            title={`Alcaldía (Municipality): ${getParentName(feature)}`}
+                        >
                             {getParentName(feature)}
                         </h4>
                         {population && (
@@ -49,7 +55,7 @@ export function HoverDetailsPane() {
                     <h2 className="uppercase font-light">No region selected</h2>
                 )}
             </section>
-            <section className="w-full mt-3">
+            <section className="w-full mt-1">
                 {indexVariables.includes(variable) && <IndexDetailsPane feature={feature} />}
                 {wetlandsVariables.includes(variable) && (
                     <>

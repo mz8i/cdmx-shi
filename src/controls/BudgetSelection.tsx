@@ -7,7 +7,7 @@ import { budgetDimensionState } from '../recoil/data-selection-state';
 export function BudgetSelection() {
     const [budget, setBudget] = useRecoilState(budgetDimensionState);
     return (
-        <div className="m-5 mb-10">
+        <div className="mx-2 mt-5 mb-10">
             <SliderInput
                 name="budget"
                 min={0}

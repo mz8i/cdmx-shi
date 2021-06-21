@@ -25,18 +25,22 @@ export function DataList({ count = 10, height, itemHeight }) {
         [currentData, compareData, getFeatureData],
     );
 
+    const hasData = (sorted?.length ?? 0) > 0;
+
     return (
-        <FixedSizeList
-            itemCount={sorted?.length ?? 0}
-            width="100%"
-            height={height}
-            itemSize={itemHeight}
-        >
-            {({ index, style }) => (
-                <div className="text-white" style={style}>
-                    <DataListItem geoLevel={geoLevel} feature={sorted?.[index]} />
-                </div>
-            )}
-        </FixedSizeList>
+        hasData && (
+            <FixedSizeList
+                itemCount={sorted?.length ?? 0}
+                width="100%"
+                height={height}
+                itemSize={itemHeight}
+            >
+                {({ index, style }) => (
+                    <div className="text-white" style={style}>
+                        <DataListItem geoLevel={geoLevel} feature={sorted?.[index]} />
+                    </div>
+                )}
+            </FixedSizeList>
+        )
     );
 }

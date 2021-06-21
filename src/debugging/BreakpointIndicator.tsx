@@ -1,6 +1,6 @@
 export function BreakpointIndicator() {
     return (
-        <div className="absolute bottom-0 right-0 z-50 h-20 w-20">
+        <div className="absolute bottom-0 left-0 z-50 h-10 w-20">
             <div className="absolute inset-0 bg-red-500 text-center sm:invisible">ph</div>
             <div className="absolute inset-0 bg-yellow-500 text-center invisible sm:visible md:invisible">
                 sm

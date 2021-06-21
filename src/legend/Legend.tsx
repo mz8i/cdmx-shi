@@ -20,7 +20,7 @@ export const Legend: React.FC<LegendProps> = ({ variable, dataset }) => {
             : undefined;
 
     return (
-        <div className="w-60 bg-gray-50 p-5 pb-8 rounded-xl border-4 border-blue-900">
+        <div className="w-60 bg-gray-50 p-4 pt-3 pb-5 rounded-xl border-2 border-gray-200">
             <h3 className="font-bold mb-5">{varDef.description ?? ''}</h3>
             <ThresholdScaleLegend
                 colorScale={colorScale}
