@@ -167,5 +167,5 @@ const StyledAccordionItem = ({ children }) => (
 );
 
 const StyledAccordionPanel = ({ children }) => (
-    <AccordionPanel className="p-4 h-50 md:h-96 text-sm">{children}</AccordionPanel>
+    <AccordionPanel className="p-4 min-h-50 md:h-96 text-sm">{children}</AccordionPanel>
 );
