@@ -37,3 +37,23 @@ jobs:
           REMOTE_USER: ${{ secrets.SERVER_USER }}
           TARGET: ${{ secrets.SERVER_DIRECTORY }}
           SOURCE: build/
+  pages-deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: gh-pages
+          fetch-depth: 0
+      - run: |
+          git rm -rf .
+          git clean -fdx
+      - uses: actions/download-artifact@v2
+        with:
+          name: build
+      - uses: EndBug/add-and-commit@v7
+        with:
+          author_name: GitHub Action
+          author_email: action-noreply@github.com
+          branch: gh-pages
+          message: Create build for revision ${{ github.sha }}
