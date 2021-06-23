@@ -169,7 +169,7 @@ export const VARIABLES = {
             dimensions: true,
             colorScale: 'CW',
             scaleMapping: 'CW_budget',
-            description: 'Constructed Wetlands Budget (pesos)',
+            description: 'Constructed Wetlands Budget (Mexican pesos)',
             legendFractionalDigits: 0,
         },
     }),

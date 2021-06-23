@@ -12,7 +12,7 @@ export function ScenarioSelection() {
     return (
         <>
             <Tabs
-                className="my-4 h-72 rounded-2xl bg-blue-900 text-white overflow-hidden"
+                className="my-4 h-72 sm:h-80 xl:h-72 rounded-2xl bg-blue-900 text-white overflow-hidden"
                 orientation={TabsOrientation.Vertical}
                 index={parseInt(value.substring(1), 10) - 1}
                 onChange={index => onChange(`w${index + 1}` as WeightingName)}
@@ -90,7 +90,7 @@ export function ScenarioSelection() {
                             resource capacities is key to facing climate change.
                         </p>
                         {value === 'w3' && (
-                            <div className="flex flex-row align-middle justify-center">
+                            <div className="absolute bottom-3 left-0 right-0 flex flex-row align-middle justify-center">
                                 <div className="flex-0">
                                     <ScenarioWeightings scenario={value} />
                                 </div>

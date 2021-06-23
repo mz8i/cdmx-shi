@@ -8,10 +8,10 @@ import { IndexDiagramShape } from '../ui/icons';
 
 function IndexDiagram({ mainName, dependencies, color }) {
     return (
-        <figure className="flex flex-row nowrap items-center h-16 my-1 w-54 ">
+        <figure className="flex flex-row items-center h-16 my-1 nowrap w-54 ">
             <div className={`flex-0 ${color} font-extrabold text-sm`}>{mainName}</div>
             <IndexDiagramShape className="max-h-full -m-4" />
-            <div className="flex flex-col nowrap gap-1">
+            <div className="flex flex-col gap-1 nowrap">
                 <div className={`flex-0 ${color} text-xs font-normal whitespace-nowrap`}>
                     {dependencies[0]}
                 </div>
@@ -83,7 +83,7 @@ export function SidebarContent() {
                             , or ability of environmental and social systems to adjust and respond
                             to potential pressures.
                         </p>
-                        <div className="flex flex-row justify-around items-start flex-wrap gap-x-0 gap-y-4 max-w-md my-6">
+                        <div className="flex flex-row flex-wrap items-start justify-around max-w-md my-6 gap-x-0 gap-y-4">
                             <div className="w-56 flex-shrink-1">
                                 <WSIDiagram />
                             </div>
@@ -110,10 +110,7 @@ export function SidebarContent() {
                             different perspectives on what contributes most to socio-hydrological
                             vulnerability.
                         </p>
-                        <p>
-                            Switch between the scenarios and see the effect the weightings have on
-                            the index data on the map.
-                        </p>
+                        <p>Switch between the scenarios to see their effect on the map.</p>
                         <ScenarioSelection />
                     </StyledAccordionPanel>
                 </StyledAccordionItem>
@@ -123,21 +120,22 @@ export function SidebarContent() {
                     </StyledAccordionButton>
                     <StyledAccordionPanel>
                         <p className="my-4">
-                            Use the slider to choose the budget to allocate to the creation of
-                            artificial{' '}
+                            By using the slider, choose the budget for building{' '}
                             <strong className="font-bold">Constructed Wetlands (CW)</strong>.
                         </p>
                         <p>
-                            The map shows the allocation of the budget to each of the alcaldias
+                            The map will show the allocation of the budget to alcaldías
                             (municipalities) in and around Mexico City.
                         </p>
-                        <BudgetSelection />
+                        <div className="py-4">
+                            <BudgetSelection />
+                        </div>
                         <p>
-                            Next, use the{' '}
+                            Switch to a more detailed view using the{' '}
                             <i>
                                 m<sup>2</sup>
                             </i>{' '}
-                            button to switch to{' '}
+                            button.
                         </p>
                     </StyledAccordionPanel>
                 </StyledAccordionItem>
@@ -148,7 +146,9 @@ export function SidebarContent() {
 
                     <StyledAccordionPanel>
                         <p></p>
-                        <BudgetSelection />
+                        <div className="py-4">
+                            <BudgetSelection />
+                        </div>
                     </StyledAccordionPanel>
                 </StyledAccordionItem>
             </Accordion>
@@ -157,7 +157,7 @@ export function SidebarContent() {
 }
 
 const StyledAccordionButton = ({ children }) => (
-    <AccordionButton className="text-xl uppercase text-blue-900 bg-gray-50 p-2 w-full text-left h-12">
+    <AccordionButton className="w-full h-12 p-2 text-xl text-left text-blue-900 uppercase bg-gray-50">
         {children}
     </AccordionButton>
 );
@@ -167,5 +167,5 @@ const StyledAccordionItem = ({ children }) => (
 );
 
 const StyledAccordionPanel = ({ children }) => (
-    <AccordionPanel className="p-4 min-h-50 md:h-96 text-sm">{children}</AccordionPanel>
+    <AccordionPanel className="p-4 text-sm sm:h-3/4">{children}</AccordionPanel>
 );
