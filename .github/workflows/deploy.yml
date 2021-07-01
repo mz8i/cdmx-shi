@@ -17,6 +17,7 @@ jobs:
     - run: yarn install
     - run: yarn test
     - run: CI=false yarn build
+    - run: cp CNAME build/CNAME
     - uses: actions/upload-artifact@v2
       with:
         name: build
