@@ -23,7 +23,7 @@ const PageTitle = ({ children }) => (
 );
 
 const Sidebar = ({ children }) => (
-    <div className="bg-none z-50 sm:relative sm:max-w-sm xl:max-w-lg sm:bg-white sm:h-screen sm:max-h-screen sm:overflow-x-visible sm:overflow-y-auto">
+    <div className="bg-none z-50 sm:relative sm:max-w-sm xl:max-w-lg sm:bg-white sm:h-screen sm:max-h-screen sm:overflow-x-visible sm:overflow-y-scroll">
         {children}
     </div>
 );
@@ -43,10 +43,22 @@ function App() {
                 </div>
                 <div className="absolute h-2/6 bottom-0 left-0 right-0 sm:h-auto sm:w-full sm:static overflow-y-auto">
                     <p className="mx-4 mb-4 sm:my-4 text-sm">
-                        This online tool presents an indicator-based method of evaluating the
-                        vulnerability of the socio-hydrological system of Mexico City.
+                        This online tool presents an indicator-based method to evaluate the
+                        socio-hydrological vulnerability of Mexico City considering perspectives
+                        from stakeholders, environmental and social experts. The tool provides the
+                        optimal spatial distribution of constructed wetlands for a range of budgets,
+                        allowing the user to assess the impact of different mitigation strategies
+                        through the changes in the index. A forecast scenario accounting for the
+                        impact of climate, land-uses and population changes for 2050 is presented,
+                        considering that no intervention is made before that year.
                     </p>
                     <SidebarContent />
+                    <div className="text-xs text-gray-700 p-3  bg-white text-right">
+                        For more information{' '}
+                        <a className="text-blue-900 underline" href="https://www.mexicoshr.com/">
+                            click here
+                        </a>
+                    </div>
                 </div>
             </Sidebar>
             <div className="relative h-3/6 z-0 sm:h-full sm:flex-1">

@@ -72,16 +72,18 @@ export function SidebarContent() {
                     </StyledAccordionButton>
                     <StyledAccordionPanel>
                         <p>
-                            The method is based on a{' '}
+                            {' '}
+                            Two indices intervene in the construction of the SHI: the{' '}
                             <strong className="font-extrabold text-wsi-800">
                                 Water Stress Index (WSI)
                             </strong>
-                            , or ability to meet human and ecological demands for fresh water and an{' '}
+                            , which indicates the ability to meet human and ecological demands for
+                            fresh water; and the{' '}
                             <strong className="font-extrabold text-aci-800">
                                 Adaptive Capacity Index (ACI)
                             </strong>
-                            , or ability of environmental and social systems to adjust and respond
-                            to potential pressures.
+                            , which indicates the ability of environmental and social systems to
+                            adjust and respond to potential pressures.
                         </p>
                         <div className="flex flex-row flex-wrap items-start justify-around max-w-md my-6 gap-x-0 gap-y-4">
                             <div className="w-56 flex-shrink-1">
@@ -94,23 +96,26 @@ export function SidebarContent() {
                         <p>
                             The index components are combined based on a set of weightings
                             representing their importance. The next section describes three
-                            different sets of weightings developed for this project.
+                            different sets of weightings developed for this project following the
+                            perspectives of different experts.
                         </p>
                     </StyledAccordionPanel>
                 </StyledAccordionItem>
                 <StyledAccordionItem>
                     <StyledAccordionButton>
-                        <span className="font-bold">02|</span> Scenarios
+                        <span className="font-bold">02|</span> Expert and Community Perspectives
                     </StyledAccordionButton>
                     <StyledAccordionPanel>
                         <p className="mb-4 text-sm">
-                            The three <i>scenarios</i>, or weightings for the indicator components
-                            of <strong className="font-extrabold text-wsi-800">WSI</strong> and{' '}
-                            <strong className="font-extrabold text-aci-800">ACI</strong>, represent
-                            different perspectives on what contributes most to socio-hydrological
+                            Three different perspectives are presented according to the views of
+                            stakeholders, environmental and social experts. Each of them provides
+                            different weightings for the components of the two indices,{' '}
+                            <strong className="font-extrabold text-wsi-800">WSI</strong> and{' '}
+                            <strong className="font-extrabold text-aci-800">ACI</strong>, depending
+                            on their views on what contributes the most to the socio-hydrological
                             vulnerability.
                         </p>
-                        <p>Switch between the scenarios to see their effect on the map.</p>
+                        <p>Switch between the perspectives to see their effect on the map.</p>
                         <ScenarioSelection />
                     </StyledAccordionPanel>
                 </StyledAccordionItem>
@@ -120,12 +125,9 @@ export function SidebarContent() {
                     </StyledAccordionButton>
                     <StyledAccordionPanel>
                         <p className="my-4">
-                            By using the slider, choose the budget for building{' '}
-                            <strong className="font-bold">Constructed Wetlands (CW)</strong>.
-                        </p>
-                        <p>
-                            The map will show the allocation of the budget to alcaldías
-                            (municipalities) in and around Mexico City.
+                            The tool provides an optimised distribution of{' '}
+                            <strong className="font-bold">Constructed Wetlands (CW)</strong>{' '}
+                            according to the selected budget provided by the slider.
                         </p>
                         <div className="py-4">
                             <BudgetSelection />
@@ -145,7 +147,14 @@ export function SidebarContent() {
                     </StyledAccordionButton>
 
                     <StyledAccordionPanel>
-                        <p></p>
+                        <p>
+                            The impact of the different interventions, given by the number of
+                            Constructed Wetlands (CW) according to the selected budget, is
+                            evaluated. The maps show the positive effect of CWs on reducing water
+                            stress and on increasing the adaptive capacity, improving the
+                            socio-hydrological resilience of the city. The scenario for 2050
+                            considers that no intervention took place before this year.
+                        </p>
                         <div className="py-4">
                             <BudgetSelection />
                         </div>

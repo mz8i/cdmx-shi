@@ -46,7 +46,7 @@ export function ScenarioSelection() {
                 <TabPanels className="w-full p-3">
                     <TabPanel className="text-center p-2 rounded-xl align-middle bg-white py-2 px-3 box-border h-full relative">
                         <h3 className="text-l font-extrabold uppercase text-blue-900 text-left mb-2">
-                            Stakeholder scenario
+                            Stakeholder perspective
                         </h3>
                         <p className="text-xs text-black text-left">
                             Derived from surveys with different authorities of the CDMX that are
@@ -64,13 +64,12 @@ export function ScenarioSelection() {
                     </TabPanel>
                     <TabPanel className="text-center p-2 rounded-xl align-middle bg-white py-2 px-3 box-border h-full relative">
                         <h3 className="text-l font-extrabold uppercase text-blue-900 text-left mb-2">
-                            Environmental scenario
+                            Environmental perspective
                         </h3>
                         <p className="text-xs text-black text-left">
-                            Environmental scientist who believes that water scarcity is the most
-                            important factor of water stress and that the natural and physical
-                            capacities of an area are essential for it to be able to face climate
-                            change.{' '}
+                            Water scarcity is considered the most important factor of water stress;
+                            the natural and physical capacities of an area are essential for
+                            mitigating the effects of climate change.
                         </p>
                         {value === 'w2' && (
                             <div className="absolute bottom-3 left-0 right-0 flex flex-row align-middle justify-center">
@@ -82,12 +81,12 @@ export function ScenarioSelection() {
                     </TabPanel>
                     <TabPanel className="text-center p-2 rounded-xl align-middle bg-white py-2 px-3 box-border h-full relative">
                         <h3 className="text-l font-extrabold uppercase text-blue-900 text-left mb-2">
-                            Social scenario
+                            Social perspective
                         </h3>
                         <p className="text-xs text-black text-left">
-                            Expert who believes that equal access to water is fundamental for water
-                            security and that improving social aspects related to economic and human
-                            resource capacities is key to facing climate change.
+                            Equal access to water is considered fundamental for water security;
+                            improving social aspects related to economic and human resource
+                            capacities is key to affronting climate change.
                         </p>
                         {value === 'w3' && (
                             <div className="absolute bottom-3 left-0 right-0 flex flex-row align-middle justify-center">
