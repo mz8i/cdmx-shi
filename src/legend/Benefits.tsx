@@ -3,6 +3,7 @@ import { useRecoilValue } from 'recoil';
 
 import { VARIABLES, VariableName } from '../config/variables';
 import { useGetManyVariables } from '../data/use-feature-data';
+import { formatNumber } from '../format';
 import { dimensionsSpecState } from '../recoil/data-selection-state';
 import { mapHoverState } from '../recoil/ui-state';
 import { BenefitIcon } from '../ui/icons';
@@ -17,38 +18,6 @@ const benefitVariables: VariableName[] = [
     'maintenance_jobs',
     'manufacture_jobs',
 ];
-
-// from https://phrase.com/blog/posts/how-convert-a-decimal-to-a-string-with-thousands-separators/
-function formatWithThousandsSeparator(num, separator = ' ') {
-    let numAsString = num.toString();
-
-    let characters = numAsString.split('').reverse();
-
-    let parts: any[] = [];
-
-    for (let i = 0; i < characters.length; i += 3) {
-        let part = characters
-            .slice(i, i + 3)
-            .reverse()
-            .join('');
-
-        parts.unshift(part);
-    }
-
-    return parts.join(separator);
-}
-
-function formatNumber(number, unit) {
-    let isMillions = false;
-    if (number > 1_000_000) {
-        number = number / 1_000_000;
-        isMillions = true;
-    }
-
-    const rounded = Math.round(number);
-
-    return `${formatWithThousandsSeparator(rounded)}${isMillions ? ' million' : ''} ${unit ?? ''}`;
-}
 
 export function Benefits() {
     const featureHover = useRecoilValue(mapHoverState);

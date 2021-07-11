@@ -10,9 +10,14 @@ import {
 interface ValueIndicatorProps {
     variableSpec: VariableSpec;
     feature: DataFeature | null;
+    formatFn?: (x: number) => string;
 }
 
-export const ValueIndicator: React.FC<ValueIndicatorProps> = ({ variableSpec, feature }) => {
+export const ValueIndicator: React.FC<ValueIndicatorProps> = ({
+    variableSpec,
+    feature,
+    formatFn,
+}) => {
     const getData = useFeatureDataValue(variableSpec);
     const getDataColor = useDataColor(variableSpec);
     const getDataTextColor = useDataTextColorTheme(variableSpec);
@@ -39,7 +44,11 @@ export const ValueIndicator: React.FC<ValueIndicatorProps> = ({ variableSpec, fe
                     hasData ? dataTextColor : 'text-gray-300'
                 } font-bold text-xl flex-row align-middle justify-center flex transition-colors ease-out duration-200`}
             >
-                {hasData ? dataClass ?? value : <span className="text-base">NO DATA</span>}
+                {hasData ? (
+                    dataClass ?? (formatFn ? formatFn(value) : value)
+                ) : (
+                    <span className="text-base">NO DATA</span>
+                )}
             </div>
         </div>
     );

@@ -43,6 +43,8 @@ interface BaseVariableDefinition {
      * e.g. class: Very high -- legendClassHint: vulnerability -> tooltip will be "Very high vulnerability"
      */
     legendClassHint?: string;
+
+    formatAsLargeNumber?: boolean;
 }
 interface RawVariableDefinition extends BaseVariableDefinition {}
 
@@ -105,7 +107,7 @@ export const VARIABLES = {
             colorScale: 'CW',
             scaleMapping: 'CW_sqm',
             description: 'Constructed Wetlands (sq.m.)',
-            legendFractionalDigits: 0,
+            formatAsLargeNumber: true,
         },
         population_impacted: {
             dimensions: true,
@@ -170,7 +172,7 @@ export const VARIABLES = {
             colorScale: 'CW',
             scaleMapping: 'CW_budget',
             description: 'Constructed Wetlands Budget (Mexican pesos)',
-            legendFractionalDigits: 0,
+            formatAsLargeNumber: true,
         },
     }),
     cdmx: {},
