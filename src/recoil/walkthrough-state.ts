@@ -1,13 +1,22 @@
-import { atom, selector } from 'recoil';
+import { DefaultValue, atom, atomFamily, selector } from 'recoil';
 
 import { budgetDimensionState, currentVariableState } from './data-selection-state';
 
-export type WalkthroughPhase = 'intro' | 'scenarios' | 'solutions' | 'impact';
+const walkthroughPhases = ['intro', 'scenarios', 'solutions', 'impact'] as const;
+
+const defaultWalkthroughPhase = 'intro';
+
+export type WalkthroughPhase = typeof walkthroughPhases[number];
 
 // private backing field for walkthrough phase
 const _walkthroughPhaseState = atom<WalkthroughPhase>({
     key: '_walkthroughPhase',
-    default: 'intro',
+    default: defaultWalkthroughPhase,
+});
+
+const walkthroughPhaseVisitedStateFamily = atomFamily<boolean, WalkthroughPhase>({
+    key: 'WalkthroughPhaseVisited',
+    default: param => param === defaultWalkthroughPhase,
 });
 
 export const walkthroughPhaseState = selector<WalkthroughPhase>({
@@ -16,7 +25,14 @@ export const walkthroughPhaseState = selector<WalkthroughPhase>({
     set: ({ get, set }, newValue) => {
         const currentValue = get(_walkthroughPhaseState);
 
+        if (newValue instanceof DefaultValue) {
+            set(_walkthroughPhaseState, newValue);
+            return;
+        }
+
         if (newValue === currentValue) return;
+
+        const newValueVisited = get(walkthroughPhaseVisitedStateFamily(newValue));
 
         if (newValue === 'intro') {
             set(currentVariableState, 'SHI');
@@ -25,11 +41,17 @@ export const walkthroughPhaseState = selector<WalkthroughPhase>({
             set(currentVariableState, 'SHI');
             set(budgetDimensionState, 'b0');
         } else if (newValue === 'solutions') {
-            if (currentValue === 'scenarios') {
+            const currentValueIndex = walkthroughPhases.indexOf(currentValue);
+            const newValueIndex = walkthroughPhases.indexOf(newValue);
+
+            if (currentValueIndex < newValueIndex) {
                 // going forward in the narrative
                 set(currentVariableState, 'CW_budget');
-                set(budgetDimensionState, 'b0');
-            } else if (currentValue === 'impact') {
+
+                if (!newValueVisited) {
+                    set(budgetDimensionState, 'b0');
+                }
+            } else if (currentValueIndex > newValueIndex) {
                 set(currentVariableState, 'CW_sqm');
 
                 // don't change, since we're setting budget in impact screen
@@ -37,9 +59,12 @@ export const walkthroughPhaseState = selector<WalkthroughPhase>({
             }
         } else if (newValue === 'impact') {
             set(currentVariableState, 'SHI');
-            set(budgetDimensionState, 'b1'); // or b0?
+            if (!newValueVisited) {
+                set(budgetDimensionState, 'b1'); // or b0?
+            }
         }
 
         set(_walkthroughPhaseState, newValue);
+        set(walkthroughPhaseVisitedStateFamily(newValue), true);
     },
 });
